@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-image: url(&quot;resources/signup.jpg&quot;);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SignUpController">
+    <children>
+        <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true">
+            <!-- <Image url="resources/signup.jpg"/> -->
+        </ImageView>
+        <Pane layoutX="193.0" layoutY="94.0" prefHeight="581.0" prefWidth="645.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);">
+         <children>
+            <JFXTextField layoutX="381.0" layoutY="143.0">
+               <font>
+                  <Font name="IRKoodak" size="14.0" />
+               </font>
+            </JFXTextField>
+            <Text fill="#909090" layoutX="525.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="نام:" wrappingWidth="70.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#909090" layoutX="299.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="نام خانوادگی:" wrappingWidth="70.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#909090" layoutX="504.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="کد ملی:" wrappingWidth="70.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#909090" layoutX="485.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="شماره تلفن:" wrappingWidth="70.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#909090" layoutX="461.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="پست الکترونیک:" wrappingWidth="91.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <JFXTextField layoutX="155.0" layoutY="143.0">
+               <font>
+                  <Font name="IRKoodak" size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField layoutX="352.0" layoutY="274.0" prefHeight="25.0" prefWidth="142.0">
+               <font>
+                  <Font name="IRKoodak" size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField layoutX="321.0" layoutY="343.0" prefHeight="25.0" prefWidth="155.0">
+               <font>
+                  <Font name="IRKoodak" size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField layoutX="166.0" layoutY="421.0" prefHeight="25.0" prefWidth="288.0">
+               <font>
+                  <Font name="IRKoodak" size="14.0" />
+               </font>
+            </JFXTextField>
+            <Text layoutX="243.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign UP" wrappingWidth="209.13671875">
+               <font>
+                  <Font name="UniSansThinCAPS" size="48.0" />
+               </font>
+            </Text>
+            <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="500.0" prefHeight="48.0" prefWidth="108.0" ripplerFill="WHITE" style="-fx-background-color: green;" text="تأیید" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="18.0" />
+               </font>
+            </JFXButton>
+            <Text fill="#909090" layoutX="497.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="رمز عبور:" wrappingWidth="70.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#909090" layoutX="268.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="تکرار رمز عبور:" wrappingWidth="79.13671875">
+               <font>
+                  <Font name="IRKoodak" size="13.0" />
+               </font>
+            </Text>
+            <JFXPasswordField layoutX="351.0" layoutY="213.0" />
+            <JFXPasswordField layoutX="126.0" layoutY="213.0" />
+         </children></Pane>
+    </children>
+</AnchorPane>
