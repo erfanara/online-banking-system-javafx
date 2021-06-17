@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -8,12 +7,26 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.TestController">
    <children>
-      <JFXListView fx:id="listView" layoutX="273.0" layoutY="168.0" prefHeight="467.0" prefWidth="708.0" />
-      <Text fx:id="text" layoutX="75.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="185.13671875">
+      <Text fx:id="name" layoutX="40.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name:" wrappingWidth="526.13671875">
          <font>
-            <Font name="UniSansThinCAPS" size="48.0" />
+            <Font name="UniSansThinCAPS" size="24.0" />
          </font>
       </Text>
-      <JFXButton layoutX="138.0" layoutY="453.0" onAction="#click" prefHeight="48.0" prefWidth="68.0" text="OK" />
+      <Text fx:id="code" layoutX="40.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="national code:" wrappingWidth="526.13671875">
+         <font>
+            <Font name="UniSansThinCAPS" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="phone_number" layoutX="40.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number:" wrappingWidth="526.13671875">
+         <font>
+            <Font name="UniSansThinCAPS" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="email" layoutX="40.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e-mail:" wrappingWidth="526.13671875">
+         <font>
+            <Font name="UniSansThinCAPS" size="24.0" />
+         </font>
+      </Text>
+      <JFXListView fx:id="listView" layoutX="26.0" layoutY="227.0" prefHeight="491.0" prefWidth="791.0" />
    </children>
 </AnchorPane>

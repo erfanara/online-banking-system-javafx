@@ -1,9 +1,6 @@
 package sample;
 
 import com.jfoenix.controls.JFXListView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
@@ -13,24 +10,26 @@ import java.util.ResourceBundle;
 
 public class TestController implements Initializable {
 
-    @FXML
-    private ObservableList<String> items = FXCollections.observableArrayList("Online", "Banking", "System", "Service");
+    @FXML Text name = new Text();
+    @FXML Text code = new Text();
+    @FXML Text phone_number = new Text();
+    @FXML Text email = new Text();
 
     @FXML
-    private Text text = new Text();
-
-    @FXML
-    private JFXListView<String> listView = new JFXListView<>();
+    JFXListView<String> listView = new JFXListView<String>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listView.getItems().addAll(items);
     }
 
-    @FXML
-    public void click(ActionEvent event) {
-        String temp;
-        temp = listView.getSelectionModel().getSelectedItem();
-        text.setText(temp);
+    public void InitializeData(User user){
+        name.setText(user.getFirstname() + user.getLastName());
+        code.setText(user.getNationalCode());
+        phone_number.setText(user.getPhoneNumber());
+        email.setText(user.getEmail());
+        for (Account account: user.getAccounts()){
+            listView.getItems().add(String.valueOf(account.getId()));
+        }
     }
+
 }
