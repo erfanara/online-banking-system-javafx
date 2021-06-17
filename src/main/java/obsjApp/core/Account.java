@@ -1,6 +1,7 @@
-package com.github.erfanara.obsj.core;
+package obsjApp.core;
 
 public class Account {
     private String alias;
     private int id;
+    private Double balance;
 }

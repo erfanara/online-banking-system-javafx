@@ -1,4 +1,4 @@
-package com.github.erfanara.obsj.core;
+package obsjApp.core;
 
 public class User {
     private String name;
