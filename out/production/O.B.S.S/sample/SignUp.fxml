@@ -3,21 +3,16 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-image: url(&quot;resources/signup.jpg&quot;);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-image: url(&quot;resources/signup.jpg&quot;);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SignUpController">
     <children>
-        <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true">
-            <Image url="resources/signup.jpg"/>
-        </ImageView>
         <Pane layoutX="193.0" layoutY="94.0" prefHeight="581.0" prefWidth="645.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);">
          <children>
-            <JFXTextField layoutX="381.0" layoutY="143.0">
+            <JFXTextField fx:id="first_name" layoutX="381.0" layoutY="143.0">
                <font>
                   <Font name="IRKoodak" size="14.0" />
                </font>
@@ -47,22 +42,22 @@
                   <Font name="IRKoodak" size="13.0" />
                </font>
             </Text>
-            <JFXTextField layoutX="155.0" layoutY="143.0">
+            <JFXTextField fx:id="last_name" layoutX="155.0" layoutY="143.0">
                <font>
                   <Font name="IRKoodak" size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField layoutX="352.0" layoutY="274.0" prefHeight="25.0" prefWidth="142.0">
+            <JFXTextField fx:id="national_code" layoutX="352.0" layoutY="274.0" prefHeight="25.0" prefWidth="142.0">
                <font>
                   <Font name="IRKoodak" size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField layoutX="321.0" layoutY="343.0" prefHeight="25.0" prefWidth="155.0">
+            <JFXTextField fx:id="phone_number" layoutX="321.0" layoutY="343.0" prefHeight="25.0" prefWidth="155.0">
                <font>
                   <Font name="IRKoodak" size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField layoutX="166.0" layoutY="421.0" prefHeight="25.0" prefWidth="288.0">
+            <JFXTextField fx:id="email" layoutX="166.0" layoutY="421.0" prefHeight="25.0" prefWidth="288.0">
                <font>
                   <Font name="IRKoodak" size="14.0" />
                </font>
@@ -72,7 +67,7 @@
                   <Font name="UniSansThinCAPS" size="48.0" />
                </font>
             </Text>
-            <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="500.0" prefHeight="48.0" prefWidth="108.0" ripplerFill="WHITE" style="-fx-background-color: green;" text="تأیید" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="500.0" onAction="#SubmitUserInfo" prefHeight="48.0" prefWidth="108.0" ripplerFill="WHITE" style="-fx-background-color: green;" text="تأیید" textFill="WHITE">
                <font>
                   <Font name="IRKoodak" size="18.0" />
                </font>
