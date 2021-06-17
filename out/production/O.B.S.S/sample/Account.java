@@ -1,9 +1,8 @@
 package sample;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Account implements Serializable {
+public class Account {
     private String alias;
     private int id;
     private long Balance;
