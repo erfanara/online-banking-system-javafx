@@ -67,14 +67,17 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Test.fxml"));
+
         Parent root = loader.load();
         Scene scene = new Scene(root);
+
         TestController testController = loader.getController();
         User target = SearchByUserName(user_name.getText());
         if (target == null) {
             System.out.println("Fail!");
             System.exit(1);
         }
+
         stage.setScene(scene);
         stage.show();
         testController.InitializeData(target);
