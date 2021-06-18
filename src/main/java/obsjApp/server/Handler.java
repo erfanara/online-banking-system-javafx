@@ -1,8 +1,5 @@
 package obsjApp.server;
 
-import netscape.javascript.JSException;
-import netscape.javascript.JSObject;
-
 import java.io.*;
 import java.net.Socket;
 

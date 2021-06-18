@@ -1,6 +1,7 @@
 package obsjApp.server;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -8,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public final class Server {
-    static final int PORT = 48080;
+    public static final int PORT = 48080;
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     private static boolean finished = false;
 

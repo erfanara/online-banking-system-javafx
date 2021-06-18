@@ -1,0 +1,23 @@
+
+## msgId ,attachments Convention
+
+1   ->  User LogIn Request              :   username , passhash
+2   ->  User SignUp Request             :   json
+3   ->  Create Account                  :   String json
+4   ->  Get All Accounts info           :   List of Accounts in json
+5   ->  Get Account info                :   Account id or alias
+6   ->  Set Account info                :   json
+7   ->  Move Account to the Favorites   :   Account id or alias
+8   ->  Set alias for account           :   json
+9   ->  Transaction request             :   Transaction Object (?)
+10  ->  Paying the bill                 :   json
+11  ->  Loan request                    :   json
+12  ->  Sending passhash of acc for auth:   json
+13  ->  close account                   :   Account id or alias
+
+only Server-side:
+0   ->  Accepted                        :
+-1  ->  Rejected                        :   Reason (String maybe)
+20  ->  Requesting acc auth from Client :
+
+
