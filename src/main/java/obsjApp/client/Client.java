@@ -9,20 +9,9 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args)
             throws IOException {
-        // Passing null to getByName() produces the
-        // special "Local Loopback" IP address, for
-        // testing on one machine w/o a network:
-        InetAddress addr =
-                InetAddress.getByName(null);
-        // Alternatively, you can use
-        // the address or name:
-        // InetAddress addr =
-        //    InetAddress.getByName("127.0.0.1");
-        // InetAddress addr =
-        //    InetAddress.getByName("localhost");
+        InetAddress addr = InetAddress.getByName(null);
         System.out.println("addr = " + addr);
-        // Guard everything in a try-finally to make
-        // sure that the socket is closed:
+
         try (Socket socket = new Socket(addr, Server.PORT)) {
             System.out.println("socket = " + socket);
             BufferedReader in =
@@ -36,6 +25,19 @@ public class Client {
                             new BufferedWriter(
                                     new OutputStreamWriter(
                                             socket.getOutputStream())), true);
+
+
+            for (int i = 0; i < 10; i++) {
+                System.out.println("sending: ping" + i);
+                out.println("ping" + i);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                System.out.println("received: " + in.readLine());
+            }
+            out.println("END");
 
         }
     }
