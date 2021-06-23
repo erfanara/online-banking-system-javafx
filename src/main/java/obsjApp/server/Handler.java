@@ -3,7 +3,7 @@ package obsjApp.server;
 import java.io.*;
 import java.net.Socket;
 
-public class Handler implements Runnable{
+public class Handler implements Runnable {
     private Socket sock;
     PrintWriter out;
     BufferedReader in;
@@ -19,16 +19,18 @@ public class Handler implements Runnable{
                         new OutputStreamWriter(
                                 sock.getOutputStream())), true);
 
-//        this.start();
     }
 
     @Override
     public void run() {
         try {
-            for (int i = 0; i < 10; i++) {
-                System.out.println("received: " + in.readLine());
-                System.out.println("sending: pong" + i);
-                out.println("pong" + i);
+//            for (int i = 0; i < 10; i++) {
+//                System.out.println("received: " + in.readLine());
+//                System.out.println("sending: pong" + i);
+//                out.println("pong" + i);
+//            }
+            while(true){
+                System.out.println("received : " + in.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();

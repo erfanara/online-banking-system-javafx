@@ -3,8 +3,8 @@
 
 1   ->  User LogIn Request              :   username , passhash
 2   ->  User SignUp Request             :   json
-3   ->  Create Account                  :   String json
-4   ->  Get All Accounts info           :   List of Accounts in json
+3   ->  Create Account                  :   json
+4   ->  Get All Accounts info           :   List of Accounts using json
 5   ->  Get Account info                :   Account id or alias
 6   ->  Set Account info                :   json
 7   ->  Move Account to the Favorites   :   Account id or alias
