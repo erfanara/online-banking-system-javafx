@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
+    // TODO: type of Account should specified using enum or maybe inheritance
     private String alias;
     private int id;
     private long Balance;
+    // TODO: constructors should updated
+    private String passHash;
+    private int cvv2;
     private final ArrayList<Transaction> transactions;
 
     public Account(int id) {
@@ -47,6 +51,10 @@ public class Account implements Serializable {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public void setPassHash(String passHash) {
+        this.passHash = passHash;
     }
 
     public int getId() {

@@ -3,6 +3,7 @@ package obsjApp.core;
 import java.io.Serializable;
 
 public class Transaction implements Serializable {
+    // TODO: type of transaction should specified using enum or maybe inheritance
     private final char type;
     private long amount = 0;
     private final long balance;
