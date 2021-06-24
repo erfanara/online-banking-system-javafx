@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String nationalCode;
     private String phoneNumber;
     private String email;
+
     // encrypted password along with it's salt
     private String passHash;
     private String passSalt;
@@ -17,8 +18,9 @@ public class User implements Serializable {
     // TODO: counting incorrect passwords for protection
     //    private int incorrectPass;
 
-
+    //TODO : i think we should use maps here:
     private final ArrayList<Account> accounts;
+
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
     public User(String firstname,
@@ -33,8 +35,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.email = email;
 
-        this.passSalt = SecurePass.getNewSalt();
-        this.passHash = SecurePass.getPassHash(password, passSalt);
+        setPassHash(password);
 
         accounts = new ArrayList<>();
     }
@@ -63,5 +64,18 @@ public class User implements Serializable {
         return accounts;
     }
 
+//    public void createAcc(){
+//
+//    }
 //    public void closeAcc()
+
+    // authenticate for User
+    public boolean auth(String password) throws Exception {
+        return this.passHash.equals(SecurePass.getPassHash(password, this.passSalt));
+    }
+
+    public void setPassHash(String newPassword) throws Exception {
+        this.passSalt = SecurePass.getNewSalt();
+        this.passHash = SecurePass.getPassHash(newPassword, passSalt);
+    }
 }
