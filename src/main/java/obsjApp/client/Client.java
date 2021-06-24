@@ -1,6 +1,5 @@
 package obsjApp.client;
 
-import obsjApp.core.Account;
 import obsjApp.server.Server;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,13 +18,13 @@ public class Client {
 
         try (Socket socket = new Socket(addr, Server.DEFAULT_PORT)) {
             System.out.println("socket = " + socket);
-            BufferedReader in =
+            in =
                     new BufferedReader(
                             new InputStreamReader(
                                     socket.getInputStream()));
             // Output is automatically flushed
             // by PrintWriter:
-            PrintWriter out =
+            out =
                     new PrintWriter(
                             new BufferedWriter(
                                     new OutputStreamWriter(
@@ -51,8 +50,7 @@ public class Client {
 
         blockingSend(ja.toString());
 
-        if (blockingReceive().equals("0")) return true;
-        return false;
+        return blockingReceive().equals("0");
     }
 
     public boolean signupRequest(String firstName,
@@ -74,8 +72,7 @@ public class Client {
 
         blockingSend(ja.toString());
 
-        if (blockingReceive().equals("0")) return true;
-        return false;
+        return blockingReceive().equals("0");
     }
 
 //    public boolean createAcc() throws IOException {
@@ -104,8 +101,7 @@ public class Client {
         blockingSend("" + accid);
         blockingSend("" + newId);
 
-        if (blockingReceive().equals("0")) return true;
-        return false;
+        return blockingReceive().equals("0");
     }
 
     public boolean setAccInfo(int accId, String alias) throws IOException {
@@ -115,8 +111,7 @@ public class Client {
         blockingSend("" + accId);
         blockingSend(alias);
 
-        if (blockingReceive().equals("0")) return true;
-        return false;
+        return blockingReceive().equals("0");
     }
 
 //    public boolean transaction()
@@ -132,8 +127,7 @@ public class Client {
         blockingSend(passHash);
         blockingSend("" + cvv2);
 
-        if (blockingReceive().equals("0")) return true;
-        return false;
+        return blockingReceive().equals("0");
     }
 
     public boolean closeAcc(int id) throws IOException {

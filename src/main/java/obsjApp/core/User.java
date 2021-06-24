@@ -3,15 +3,21 @@ package obsjApp.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+// TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
     private String firstname;
     private String lastName;
     private String nationalCode;
     private String phoneNumber;
     private String email;
-    // TODO: password (hash)?? https://duckduckgo.com/?t=ffab&q=how+to+store+password+in+java&ia=web
+    // encrypted password along with it's salt
     private String passHash;
+    private String passSalt;
+
+    // TODO: counting incorrect passwords for protection
     //    private int incorrectPass;
+
+
     private final ArrayList<Account> accounts;
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
@@ -20,13 +26,16 @@ public class User implements Serializable {
                 String nationalCode,
                 String phoneNumber,
                 String email,
-                String passHash) {
+                String password) throws Exception {
         this.firstname = firstname;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.passHash = passHash;
+
+        this.passSalt = SecurePass.getNewSalt();
+        this.passHash = SecurePass.getPassHash(password, passSalt);
+
         accounts = new ArrayList<>();
     }
 
