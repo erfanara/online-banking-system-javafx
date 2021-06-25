@@ -13,16 +13,16 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Message {
-    Stage messageStage = new Stage();
-    double xOffset, yOffset;
-    Pane root;
-    Scene scene;
-    Text message_show = new Text();
 
-    public Message(String message) throws IOException {
+    public static void ShowMessage(String message) {
+        Stage messageStage = new Stage();
+        final double[] xOffset = new double[1];
+        final double[] yOffset = new double[1];
+        Pane root;
+        Scene scene;
+        Text message_show = new Text();
         root = new Pane();
         scene = new Scene(root, 400, 250);
         messageStage.setScene(scene);
@@ -71,12 +71,12 @@ public class Message {
         scene.setFill(Color.TRANSPARENT);
 
         root.setOnMousePressed(event -> { // for dragging the window
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
+            xOffset[0] = event.getSceneX();
+            yOffset[0] = event.getSceneY();
         });
         root.setOnMouseDragged(event -> {
-            messageStage.setX(event.getScreenX() - xOffset);
-            messageStage.setY(event.getScreenY() - yOffset);
+            messageStage.setX(event.getScreenX() - xOffset[0]);
+            messageStage.setY(event.getScreenY() - yOffset[0]);
         });
 
         button.setOnMousePressed(Event -> messageStage.close());
