@@ -11,36 +11,33 @@ public class Account implements Serializable {
     private String alias;
 
     // Account id is a 16-digit number that we obtain this number using the hashcode of the Account object
+    // operation of obtaining Account id is in User class
     private String id;
 
     private BigDecimal Balance;
 
     private final LocalDateTime creationDate = LocalDateTime.now();
 
-    // TODO: constructors should updated
+    // encrypted password along with it's salt
     private String passHash;
-    private final ArrayList<Transaction> transactions;
+    private String passSalt;
 
-    public Account(String id) {
-        this.id = id;
-        transactions = new ArrayList<>();
-    }
+    private final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
-    public Account(String alias, String id) {
+    // alias in parameters can be null
+    public Account(String id, String password, String alias) throws Exception {
         this.alias = alias;
         this.id = id;
-        transactions = new ArrayList<>();
+        setPassHash(password);
     }
 
-    public Account(String alias, String id, BigDecimal balance) {
-        this.alias = alias;
-        this.id = id;
-        Balance = balance;
-        transactions = new ArrayList<>();
+    public Account(String id, String password, String alias, BigDecimal balance) throws Exception {
+        this(id, password, alias);
+        this.Balance = balance;
     }
 
     public void withdraw(BigDecimal amount) {
-        if (getBalance().compareTo(amount) == -1) {
+        if (getBalance().compareTo(amount) < 0) {
             transactions.add(new Transaction(Transaction.Type.WITHDRAW, amount, getBalance(), false));
             return;
         }
@@ -61,8 +58,14 @@ public class Account implements Serializable {
         this.alias = alias;
     }
 
-    public void setPassHash(String passHash) {
-        this.passHash = passHash;
+    // authenticate for Account
+    public boolean auth(String password) throws Exception {
+        return this.passHash.equals(SecurePass.getPassHash(password, this.passSalt));
+    }
+
+    public void setPassHash(String newPassword) throws Exception {
+        this.passSalt = SecurePass.getNewSalt();
+        this.passHash = SecurePass.getPassHash(newPassword, passSalt);
     }
 
     public String getId() {
