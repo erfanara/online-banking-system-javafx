@@ -35,16 +35,16 @@ public class Account implements Serializable {
 
     public void withdraw(BigDecimal amount) {
         if (getBalance().compareTo(amount) == -1) {
-            transactions.add(new Transaction('W', amount, getBalance(), false));
+            transactions.add(new Transaction(Transaction.Type.WITHDRAW, amount, getBalance(), false));
             return;
         }
         setBalance(getBalance().add(amount.negate()));
-        transactions.add(new Transaction('W', amount, getBalance(), true));
+        transactions.add(new Transaction(Transaction.Type.WITHDRAW, amount, getBalance(), true));
     }
 
     public void Deposit(BigDecimal amount) {
         setBalance(getBalance().add(amount));
-        transactions.add(new Transaction('D', amount, getBalance(), true));
+        transactions.add(new Transaction(Transaction.Type.DEPOSIT, amount, getBalance(), true));
     }
 
     public String getAlias() {
