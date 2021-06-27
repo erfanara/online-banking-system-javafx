@@ -1,47 +1,49 @@
 package obsjApp.core;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
     // TODO: type of Account should specified using enum or maybe inheritance
     private String alias;
-    private int id;
-    private long Balance;
+    private String id;
+    private BigDecimal Balance;
+    private final LocalDateTime creationDate = LocalDateTime.now();
     // TODO: constructors should updated
     private String passHash;
-    private int cvv2;
     private final ArrayList<Transaction> transactions;
 
-    public Account(int id) {
+    public Account(String id) {
         this.id = id;
         transactions = new ArrayList<>();
     }
 
-    public Account(String alias, int id) {
+    public Account(String alias, String id) {
         this.alias = alias;
         this.id = id;
         transactions = new ArrayList<>();
     }
 
-    public Account(String alias, int id, long balance) {
+    public Account(String alias, String id, BigDecimal balance) {
         this.alias = alias;
         this.id = id;
         Balance = balance;
         transactions = new ArrayList<>();
     }
 
-    public void withdraw(long amount) {
-        if (getBalance() - amount < 0) {
+    public void withdraw(BigDecimal amount) {
+        if (getBalance().compareTo(amount) == -1) {
             transactions.add(new Transaction('W', amount, getBalance(), false));
             return;
         }
-        setBalance(getBalance() - amount);
+        setBalance(getBalance().add(amount.negate()));
         transactions.add(new Transaction('W', amount, getBalance(), true));
     }
 
-    public void Deposit(long amount) {
-        setBalance(getBalance() + amount);
+    public void Deposit(BigDecimal amount) {
+        setBalance(getBalance().add(amount));
         transactions.add(new Transaction('D', amount, getBalance(), true));
     }
 
@@ -57,15 +59,15 @@ public class Account implements Serializable {
         this.passHash = passHash;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public long getBalance() {
+    public BigDecimal getBalance() {
         return Balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(BigDecimal balance) {
         Balance = balance;
     }
 
