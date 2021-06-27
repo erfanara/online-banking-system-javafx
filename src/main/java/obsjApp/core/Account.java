@@ -7,10 +7,16 @@ import java.util.ArrayList;
 
 public class Account implements Serializable {
     // TODO: type of Account should specified using enum or maybe inheritance
+
     private String alias;
+
+    // Account id is a 16-digit number that we obtain this number using the hashcode of the Account object
     private String id;
+
     private BigDecimal Balance;
+
     private final LocalDateTime creationDate = LocalDateTime.now();
+
     // TODO: constructors should updated
     private String passHash;
     private final ArrayList<Transaction> transactions;

@@ -1,15 +1,15 @@
 package obsjApp.core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 // TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
-    private String firstname;
-    private String lastName;
-    private String nationalCode;
-    private String phoneNumber;
-    private String email;
+    private String firstname, lastName, nationalCode, phoneNumber, email;
+
+    private final LocalDateTime signUpDate = LocalDateTime.now();
 
     // encrypted password along with it's salt
     private String passHash;
@@ -18,8 +18,13 @@ public class User implements Serializable {
     // TODO: counting incorrect passwords for protection
     //    private int incorrectPass;
 
-    //TODO : i think we should use maps here:
-    private final ArrayList<Account> accounts;
+    // this map is global for all of users that key represent Acc id using String
+    private static final Map<String, Account> allAccounts = new LinkedHashMap<String, Account>();
+
+    // these maps are just for one user and contains user owned Accounts
+    // that represents <String id, Account> or <String alias,Account>
+    private final Map<String, Account> userAccountsById = new LinkedHashMap<String, Account>();
+    private final Map<String, Account> userAccountsByAlias = new LinkedHashMap<String, Account>();
 
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
@@ -36,8 +41,6 @@ public class User implements Serializable {
         this.email = email;
 
         setPassHash(password);
-
-        accounts = new ArrayList<>();
     }
 
     public String getFirstname() {
@@ -60,13 +63,13 @@ public class User implements Serializable {
         return email;
     }
 
-    public ArrayList<Account> getAccounts() {
-        return accounts;
+    public Account[] getAccounts() {
+        return (Account[]) (userAccountsById.values().toArray());
     }
 
-//    public void createAcc(){
-//
-//    }
+    public void createAcc() {
+
+    }
 //    public void closeAcc()
 
     // authenticate for User
