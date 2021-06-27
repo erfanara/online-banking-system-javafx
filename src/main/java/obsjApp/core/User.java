@@ -7,6 +7,12 @@ import java.util.Map;
 
 // TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
+    private static int numberOfUsers;
+
+    // this map is global for all of users that key represent Acc id using String
+    private static final Map<String, Account> allAccounts = new LinkedHashMap<String, Account>();
+
+
     private String firstname, lastName, nationalCode, phoneNumber, email;
 
     private final LocalDateTime signUpDate = LocalDateTime.now();
@@ -17,9 +23,6 @@ public class User implements Serializable {
 
     // TODO: counting incorrect passwords for protection
     //    private int incorrectPass;
-
-    // this map is global for all of users that key represent Acc id using String
-    private static final Map<String, Account> allAccounts = new LinkedHashMap<String, Account>();
 
     // these maps are just for one user and contains user owned Accounts
     // that represents <String id, Account> or <String alias,Account>
@@ -39,8 +42,8 @@ public class User implements Serializable {
         this.nationalCode = nationalCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
-
         setPassHash(password);
+        numberOfUsers++;
     }
 
     public String getFirstname() {
@@ -65,6 +68,10 @@ public class User implements Serializable {
 
     public Account[] getAccounts() {
         return (Account[]) (userAccountsById.values().toArray());
+    }
+
+    public static int getNumberOfUsers() {
+        return numberOfUsers;
     }
 
     // TODO: Account type ...
