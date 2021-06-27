@@ -67,8 +67,18 @@ public class User implements Serializable {
         return (Account[]) (userAccountsById.values().toArray());
     }
 
-    public void createAcc() {
+    // TODO: Account type ...
+    public void createAcc(Account.Type type, String accPassword) throws Exception {
+        Account acc = new Account(accPassword, null);
+        allAccounts.put(acc.getId(), acc);
+        userAccountsById.put(acc.getId(), acc);
+    }
 
+    public void createAcc(Account.Type type, String alias, String accPassword) throws Exception {
+        Account acc = new Account(accPassword, alias);
+        allAccounts.put(acc.getId(), acc);
+        userAccountsById.put(acc.getId(), acc);
+        userAccountsByAlias.put(alias, acc);
     }
 //    public void closeAcc()
 

@@ -6,12 +6,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
-    // TODO: type of Account should specified using enum or maybe inheritance
+    public static final long ACC_ID_START = 6037000000000000L;
+
+    // TODO: type of Account should specified using enum or maybe inheritance ?
+    public static enum Type {
+
+    }
 
     private String alias;
 
     // Account id is a 16-digit number that we obtain this number using the hashcode of the Account object
-    // operation of obtaining Account id is in User class
     private String id;
 
     private BigDecimal Balance;
@@ -25,14 +29,14 @@ public class Account implements Serializable {
     private final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
     // alias in parameters can be null
-    public Account(String id, String password, String alias) throws Exception {
+    public Account(String password, String alias) throws Exception {
         this.alias = alias;
-        this.id = id;
+        this.id = String.valueOf(this.hashCode() + ACC_ID_START);
         setPassHash(password);
     }
 
-    public Account(String id, String password, String alias, BigDecimal balance) throws Exception {
-        this(id, password, alias);
+    public Account(String password, String alias, BigDecimal balance) throws Exception {
+        this(password, alias);
         this.Balance = balance;
     }
 
