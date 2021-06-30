@@ -8,14 +8,16 @@ public class Transaction implements Serializable {
         WITHDRAW,DEPOSIT;
     }
     private final Type type;
+    private final Account peerAcc;
     private BigDecimal amount;
     private final BigDecimal balance;
     private String description;
     private final boolean isSuccessful;
 
-    Transaction(Type type, BigDecimal amount, BigDecimal balance, boolean isSuccessful) {
-        this.balance = balance;
+    Transaction(Type type,Account peerAcc, BigDecimal amount, BigDecimal balance, boolean isSuccessful) {
+        this.peerAcc = peerAcc;
         this.type = type;
+        this.balance = balance;
         this.amount = amount;
         this.isSuccessful = isSuccessful;
     }
