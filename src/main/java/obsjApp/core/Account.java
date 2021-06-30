@@ -1,11 +1,13 @@
 package obsjApp.core;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Account implements Serializable {
+public class Account extends RecursiveTreeObject<Account> implements Serializable {
     public static final long ACC_ID_START = 6037000000000000L;
 
     // TODO: type of Account should specified using enum or maybe inheritance ?

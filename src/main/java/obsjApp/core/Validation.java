@@ -1,4 +1,4 @@
-package core;
+package obsjApp.core;
 
 import java.util.regex.Pattern;
 
