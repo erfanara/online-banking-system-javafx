@@ -1,6 +1,7 @@
-package sample;
+package Controllers;
 
 import com.jfoenix.controls.JFXTextArea;
+import core.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +19,9 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     @FXML
-    private JFXTextArea user_name = new JFXTextArea();
+    private final JFXTextArea user_name = new JFXTextArea();
 
-    private ArrayList<User> users = new ArrayList<>();
+    private static final ArrayList<User> users = new ArrayList<>();
 
 
     @Override
@@ -35,16 +36,14 @@ public class LoginController implements Initializable {
         while (true) {
             try {
                 user_input = (User) inputStream.readObject();
-            }
-            catch (EOFException e){
+            } catch (EOFException e) {
                 try {
                     inputStream.close();
                     break;
                 } catch (IOException ev) {
                     e.printStackTrace();
                 }
-            }
-            catch (IOException | ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
             if (user_input != null) {
@@ -56,7 +55,7 @@ public class LoginController implements Initializable {
     @FXML
     public void SetOnSignUpPressed(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Form_Views/SignUp.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -84,7 +83,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public User SearchByUserName(String user_name) {
+    public static User SearchByUserName(String user_name) {
         for (User user : users) {
             if (user.getFirstname().equals(user_name))
                 return user;
