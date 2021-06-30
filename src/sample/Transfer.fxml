@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.TransferController">
+   <children>
+      <Pane prefHeight="768.0" prefWidth="210.0" style="-fx-background-color: darkblue;">
+         <children>
+            <Text fill="WHITE" layoutX="7.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O.B.S.S" wrappingWidth="196.0">
+               <font>
+                  <Font name="GORECH" size="55.0" />
+               </font>
+            </Text>
+            <JFXButton layoutX="7.0" layoutY="301.0" onAction="#SwitchToServices" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-effect: innershadow( gaussian, rgba( 0.5, 0, 0, 0.5 ), 3, 0, 3, 3 );" text="خدمات">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="7.0" layoutY="377.0" onAction="#SwitchToAccountManagement" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="مدیریت حساب ها" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="7.0" layoutY="223.0" onAction="#SwitchToMain" prefHeight="54.0" prefWidth="196.0" ripplerFill="#1a00ff" text="صفحه اصلی" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+      <JFXTextField fx:id="amount_type" layoutX="572.0" layoutY="353.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="220.0" promptText="شماره حساب">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton buttonType="RAISED" layoutX="572.0" layoutY="544.0" prefHeight="54.0" prefWidth="122.0" ripplerFill="WHITE" style="-fx-background-color: green;" text="پرداخت" textFill="WHITE">
+         <font>
+            <Font name="IRKoodak" size="24.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
