@@ -1,5 +1,8 @@
-package sample;
+package Controllers;
 
+import Form_Views.Message;
+import core.User;
+import core.Validation;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,42 +22,79 @@ import java.util.ResourceBundle;
 public class SignUpController implements Initializable {
 
     @FXML
-    private JFXTextField first_name = new JFXTextField();
+    private final JFXTextField first_name = new JFXTextField();
 
     @FXML
-    private JFXTextField last_name = new JFXTextField();
+    private final JFXTextField last_name = new JFXTextField();
 
     @FXML
-    private JFXTextField national_code = new JFXTextField();
+    private final JFXTextField national_code = new JFXTextField();
 
     @FXML
-    private JFXTextField phone_number = new JFXTextField();
+    private final JFXTextField phone_number = new JFXTextField();
 
     @FXML
-    private JFXTextField email = new JFXTextField();
+    private final JFXTextField email = new JFXTextField();
+
+    @FXML
+    private final JFXTextField pass = new JFXTextField();
+
+    @FXML
+    private final JFXTextField repeat_pass = new JFXTextField();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     @FXML
-    public void SubmitUserInfo(ActionEvent event) throws IOException {
-        ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("object.java"));
+    public void SubmitUserInfo(ActionEvent event) throws Exception {
 
-        if (first_name.getText() == null || last_name.getText() == null || national_code.getText() == null || phone_number.getText() == null || email.getText() == null)
-            return;
+        if (isValidSignUp()){
+            User new_user = new User(first_name.getText(), last_name.getText(), national_code.getText(), phone_number.getText(), email.getText(), pass.getText());
 
-        User new_user = new User(first_name.getText(), last_name.getText(), national_code.getText(), phone_number.getText(), email.getText());
+            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new_user.getFirstname() + "_" + new_user.getLastName() + ".java"));
+            stream.writeObject(new_user);
+            stream.close();
 
-        stream.writeObject(new_user);
-        stream.close();
+            Message.ShowMessage("اطلاعات کاربر با موفقیت ثبت شد!");
 
-        ReturnToLogin(event);
+            ReturnToLogin(event);
+        }
+    }
+
+    public boolean isValidSignUp(){
+        Message message = new Message();
+        if (first_name.getText().length() < 3 || last_name.getText().length() < 3)
+            message.AddStatement("نام باید بیش از 3 کاراکتر باشد!");
+
+        if(!Validation.isValidEmail(email.getText()))
+            message.AddStatement("آدرس پست الکترونیک معتبر نیست!");
+
+        if (!Validation.isValidNationalCode(national_code.getText()))
+            message.AddStatement("کد ملی معتبر نیست!");
+
+        if (!Validation.isValidPhoneNumber(phone_number.getText()))
+            message.AddStatement("شماره همراه معتبر نیست!");
+
+        if (pass.getText() != null) {
+            if (!pass.getText().equals(repeat_pass.getText()))
+                message.AddStatement("رمز عبور به درستی تکرار نشده است!");
+
+            if (pass.getText().length() < 5 || pass.getText().length() > 12)
+                message.AddStatement("رمز عبور باید بین 5 الی 12 کاراکتر داشته باشد.");
+        } else
+            message.AddStatement("لطفا رمز عبور را وارد کنید.");
+
+        if (message.getMessage() != null){
+            message.ShowFinalMessage();
+            return false;
+        }
+        return true;
     }
 
     public void ReturnToLogin(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../Form_Views/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
