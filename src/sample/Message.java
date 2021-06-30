@@ -1,4 +1,4 @@
-package sample;
+package Form_Views;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.Scene;
@@ -16,6 +16,20 @@ import java.io.File;
 
 public class Message {
 
+    public StringBuilder getMessage() {
+        return message;
+    }
+
+    private StringBuilder message;
+
+    public Message(){
+        message = new StringBuilder();
+    }
+
+    public void AddStatement(String message){
+        this.message.append(message).append("\n");
+    }
+
     public static void ShowMessage(String message) {
         Stage messageStage = new Stage();
         final double[] xOffset = new double[1];
@@ -24,7 +38,7 @@ public class Message {
         Scene scene;
         Text message_show = new Text();
         root = new Pane();
-        scene = new Scene(root, 400, 250);
+        scene = new Scene(root, 400, 350);
         messageStage.setScene(scene);
 
         messageStage.initStyle(StageStyle.TRANSPARENT);
@@ -40,12 +54,12 @@ public class Message {
         message_show.setX(50);
         message_show.setY(110);
         message_show.setWrappingWidth(300);
-        message_show.setFont(Font.loadFont("file:src/resources/font/IRKoodak.ttf", 24));
+        message_show.setFont(Font.loadFont("file:src/com.approject.OBSS.resources/font/IRKoodak.ttf", 20));
         message_show.setStyle("-fx-text-alignment: Center;");
 
         Button button = new Button();
         button.setLayoutX(160);
-        button.setLayoutY(185);
+        button.setLayoutY(285);
         button.setPrefWidth(80);
         button.setPrefHeight(40);
         button.setStyle("-fx-background-color: blue;" +
@@ -53,10 +67,10 @@ public class Message {
                 "-fx-font-weight: Bold;");
         button.setText("تأیید");
         button.setTextFill(Color.WHITE);
-        button.setFont(Font.loadFont("file:src/resources/font/IRKoodak.ttf", 20));
+        button.setFont(Font.loadFont("file:src/com.approject.OBSS.resources/font/IRKoodak.ttf", 20));
 
         JFXButton exit_button = new JFXButton();
-        ImageView exit_button_image = new ImageView(new Image(new File("src/resources/exit.png").toURI().toString()));
+        ImageView exit_button_image = new ImageView(new Image(new File("src/com.approject.OBSS.resources/exit.png").toURI().toString()));
         exit_button.setLayoutX(345);
         exit_button.setLayoutY(5);
         exit_button.setPrefWidth(35);
@@ -82,5 +96,9 @@ public class Message {
         button.setOnMousePressed(Event -> messageStage.close());
 
         messageStage.show();
+    }
+
+    public void ShowFinalMessage(){
+        ShowMessage(this.message.toString());;
     }
 }
