@@ -10,23 +10,14 @@ public class Bill {
         GAS(3),
         PHONE(4);
 
-        private int id;
-        private int countInYear;
+        private int value;
 
-        private Type(int id) {
-            this.id = id;
+        private Type(int value) {
+            this.value = value;
         }
 
-        public int getId() {
-            return id;
-        }
-
-        public void countUp() {
-            countInYear++;
-        }
-
-        public int getCountInYear() {
-            return countInYear;
+        public int getValue() {
+            return value;
         }
     }
 
@@ -45,9 +36,9 @@ public class Bill {
         this.remainingDebt = remainingDebt;
         this.subsidiaryCompanyId = subsidiaryCompanyId;
 
-        this.id = userHash + subsidiaryCompanyId + type.getId();
-        this.paymentId = this.amount.toString() + creationDate.getYear() + this.type.getCountInYear();
-        this.type.countUp();
+        this.id = userHash + subsidiaryCompanyId + type.getValue();
+        // TODO: adding Billing period to the paymentId
+        this.paymentId = this.amount.toString() + creationDate.getYear();
     }
 
     public BigDecimal getAmount() {
