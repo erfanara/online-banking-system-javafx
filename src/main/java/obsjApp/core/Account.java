@@ -44,18 +44,18 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     public boolean withdraw(BigDecimal amount, Account toAccId) {
         if (getBalance().compareTo(amount) < 0) {
-            transactions.add(new Transaction(Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), false));
+            transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), false));
             return false;
         }
         setBalance(getBalance().add(amount.negate()));
-        transactions.add(new Transaction(Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), true));
+        transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), true));
         toAccId.deposit(amount, this);
         return true;
     }
 
     public void deposit(BigDecimal amount, Account fromAcc) {
         setBalance(getBalance().add(amount));
-        transactions.add(new Transaction(Transaction.Type.DEPOSIT, fromAcc, amount, getBalance(), true));
+        transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.DEPOSIT, fromAcc, amount, getBalance(), true));
     }
 
     public String getAlias() {

@@ -1,7 +1,9 @@
 package obsjApp.core;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,6 +31,8 @@ public class User implements Serializable {
     private final Map<String, Account> userAccountsById = new LinkedHashMap<String, Account>();
     private final Map<String, Account> userAccountsByAlias = new LinkedHashMap<String, Account>();
 
+    private final ArrayList<Bill> issuedBills = new ArrayList<Bill>();
+    private BigDecimal remainingBill;
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
     public User(String firstname,
