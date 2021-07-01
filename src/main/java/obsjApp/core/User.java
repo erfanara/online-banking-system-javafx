@@ -40,7 +40,7 @@ public class User implements Serializable {
                 String nationalCode,
                 String phoneNumber,
                 String email,
-                String password) throws Exception {
+                String password){
         this.firstname = firstname;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
@@ -94,11 +94,11 @@ public class User implements Serializable {
 //    public void closeAcc()
 
     // authenticate for User
-    public boolean auth(String password) throws Exception {
+    public boolean auth(String password){
         return this.passHash.equals(SecurePass.getPassHash(password, this.passSalt));
     }
 
-    public void setPassHash(String newPassword) throws Exception {
+    public void setPassHash(String newPassword){
         this.passSalt = SecurePass.getNewSalt();
         this.passHash = SecurePass.getPassHash(newPassword, passSalt);
     }

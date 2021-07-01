@@ -14,6 +14,12 @@ class LogInFirstException extends RuntimeException {
     }
 }
 
+class InvalidUsernameException extends RuntimeException {
+    public InvalidUsernameException() {
+        super("Username is invalid");
+    }
+}
+
 public class Client {
     public final InetAddress addr = InetAddress.getByName(null);
     private BufferedReader in;
@@ -48,16 +54,19 @@ public class Client {
         switch (reason) {
             case "LogInFirst":
                 throw new LogInFirstException();
+            case "InvalidUsername":
+                throw new InvalidUsernameException();
         }
     }
 
-    public void checkServerResponse() throws Exception {
+    public boolean checkServerResponse() throws Exception {
         switch (receive()) {
             case "0":
-                return;
+                return true;
             case "-1":
                 throwException(receive());
         }
+        return false;
     }
 
     public boolean loginRequest(String username, String passHash) throws Exception {
@@ -70,7 +79,7 @@ public class Client {
 
         send(ja.toString());
 
-        return receive().equals("0");
+        return checkServerResponse();
     }
 
     public boolean signupRequest(String firstName,

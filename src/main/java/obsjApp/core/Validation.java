@@ -21,7 +21,7 @@ public final class Validation {
         if (id == null)
             return false;
 
-        Pattern pat = Pattern.compile("^[1-9][0-9]{15}$");
+        Pattern pat = Pattern.compile("^6037[0-9]{12}$");
         return pat.matcher(id).matches();
     }
 
