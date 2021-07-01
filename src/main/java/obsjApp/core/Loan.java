@@ -6,15 +6,16 @@ import java.time.LocalDateTime;
 public class Loan {
 
     private final BigDecimal amount;
-    private final LocalDateTime loan_date;
+    private final int interest;
+    private final LocalDateTime creationDate = LocalDateTime.now();
 
-    Loan(BigDecimal amount) {
+    Loan(BigDecimal amount, int interest) {
         this.amount = amount;
-        loan_date = LocalDateTime.now();
+        this.interest = interest;
     }
 
-    public LocalDateTime getLoan_date() {
-        return loan_date;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
     public BigDecimal getAmount() {

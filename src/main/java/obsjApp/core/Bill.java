@@ -26,6 +26,7 @@ public class Bill {
     private final BigDecimal remainingDebt;
     private final LocalDateTime creationDate = LocalDateTime.now();
     private final String subsidiaryCompanyId;
+    // source : https://hamrahcard.ir/%D8%B4%D9%86%D8%A7%D8%B3%D9%87-%D9%82%D8%A8%D8%B6-%D9%88-%D9%BE%D8%B1%D8%AF%D8%A7%D8%AE%D8%AA-%DA%86%D9%87-%D9%85%D8%B9%D9%86%D8%A7%DB%8C%DB%8C-%D8%AF%D8%A7%D8%B1%D8%AF%D8%9F/
     private final String id;
     private final String paymentId;
     private boolean wasPaid;

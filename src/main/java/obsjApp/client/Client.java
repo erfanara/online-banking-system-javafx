@@ -8,6 +8,12 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
+class LogInFirstException extends RuntimeException {
+    public LogInFirstException() {
+        super("you have to LogIn first");
+    }
+}
+
 public class Client {
     public final InetAddress addr = InetAddress.getByName(null);
     private BufferedReader in;
@@ -30,24 +36,41 @@ public class Client {
                                 socket.getOutputStream())), true);
     }
 
-    public void blockingSend(String msg) {
+    public void send(String msg) {
         out.println(msg);
     }
 
-    public String blockingReceive() throws IOException {
+    public String receive() throws IOException {
         return in.readLine();
     }
 
-    public boolean loginRequest(String username, String passHash) throws IOException {
-        blockingSend("1");
+    public void throwException(String reason) throws Exception {
+        switch (reason) {
+            case "LogInFirst":
+                throw new LogInFirstException();
+        }
+    }
+
+    public void checkServerResponse() throws Exception {
+        switch (receive()) {
+            case "0":
+                return;
+            case "-1":
+                throwException(receive());
+        }
+    }
+
+    public boolean loginRequest(String username, String passHash) throws Exception {
+        send("1");
+        checkServerResponse();
 
         JSONArray ja = new JSONArray();
         ja.put(username);
         ja.put(passHash);
 
-        blockingSend(ja.toString());
+        send(ja.toString());
 
-        return blockingReceive().equals("0");
+        return receive().equals("0");
     }
 
     public boolean signupRequest(String firstName,
@@ -56,8 +79,9 @@ public class Client {
                                  String phoneNumber,
                                  String email,
                                  String passHash
-    ) throws IOException {
-        blockingSend("2");
+    ) throws Exception {
+        send("2");
+        checkServerResponse();
 
         JSONArray ja = new JSONArray();
         ja.put(firstName);
@@ -67,83 +91,93 @@ public class Client {
         ja.put(email);
         ja.put(passHash);
 
-        blockingSend(ja.toString());
+        send(ja.toString());
 
-        return blockingReceive().equals("0");
+        return receive().equals("0");
     }
 
 //    public boolean createAcc() throws IOException {
 //
 //    }
 
-    public JSONArray getAllAccInfo() throws IOException {
-        blockingSend("4");
+    public JSONArray getAllAccInfo() throws Exception {
+        send("4");
+        checkServerResponse();
 
-        return new JSONArray(blockingReceive());
+        return new JSONArray(receive());
     }
 
-    public JSONObject getAccById(int id) throws IOException {
-        blockingSend("5");
+    public JSONObject getAccById(int id) throws Exception {
+        send("5");
+        checkServerResponse();
 
-        blockingSend("" + id);
+        send("" + id);
 
-        return new JSONObject(blockingReceive());
+        return new JSONObject(receive());
     }
 
 
-    public boolean setAccinfo(int accid, int newId) throws IOException {
+    public boolean setAccinfo(int accid, int newId) throws Exception {
         // TODO: new kind of exception needed if something is not valid
-        blockingSend("6");
+        send("6");
+        checkServerResponse();
 
-        blockingSend("" + accid);
-        blockingSend("" + newId);
+        send("" + accid);
+        send("" + newId);
 
-        return blockingReceive().equals("0");
+        return receive().equals("0");
     }
 
-    public boolean setAccInfo(int accId, String alias) throws IOException {
+    public boolean setAccInfo(int accId, String alias) throws Exception {
         // TODO: new kind of exception needed if something is not valid
-        blockingSend("7");
+        send("7");
+        checkServerResponse();
 
-        blockingSend("" + accId);
-        blockingSend(alias);
+        send("" + accId);
+        send(alias);
 
-        return blockingReceive().equals("0");
+        return receive().equals("0");
     }
 
 //    public boolean transaction()
 //    public JSONArray getTheBills()
 //    public JSONArray loanRequest()
 
-    public boolean authAcc() throws IOException {
+    public boolean authAcc() throws Exception {
         String passHash = null;
         int cvv2 = 0;
 
         //TODO : now we should get the password and cvv2 from the user
 
-        blockingSend(passHash);
-        blockingSend("" + cvv2);
+        send(passHash);
+        send("" + cvv2);
 
-        return blockingReceive().equals("0");
+        return receive().equals("0");
     }
 
-    public boolean closeAcc(int id) throws IOException {
-        blockingSend("13");
+    public boolean closeAcc(int id) throws Exception {
+        send("13");
+        checkServerResponse();
 
-        blockingSend("" + id);
+        send("" + id);
 
-        if (blockingReceive().equals("12")) return authAcc();
+        if (receive().equals("12")) return authAcc();
         // TODO: new kind of exception needed if something is not valid
         return false;
     }
 
-    public JSONArray getUserInfo() throws IOException {
-        blockingSend("14");
+    public JSONArray getUserInfo() throws Exception {
+        send("14");
+        checkServerResponse();
 
-        return new JSONArray(blockingReceive());
+        return new JSONArray(receive());
     }
 
+    public void closeSocket() throws Exception {
+        socket.close();
+    }
 
+    // just for test
     public static void main(String[] args)
             throws IOException {
     }

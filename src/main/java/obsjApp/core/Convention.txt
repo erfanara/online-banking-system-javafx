@@ -21,7 +21,7 @@
 
 only Server-side:
 0   ->  Accepted                        :
--1  ->  Rejected                        :   Reason (String maybe)
+-1  ->  Rejected                        :   Reason
 20  ->  Requesting acc auth from Client :
 
 
