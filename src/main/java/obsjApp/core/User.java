@@ -74,6 +74,10 @@ public class User implements Serializable {
         return (Account[]) (userAccountsById.values().toArray());
     }
 
+    public Account getAccById(String id) {
+        return (Account) (userAccountsById.get(id));
+    }
+
     public static int getNumberOfUsers() {
         return numberOfUsers;
     }

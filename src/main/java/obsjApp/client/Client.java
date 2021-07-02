@@ -20,6 +20,18 @@ class InvalidUsernameException extends RuntimeException {
     }
 }
 
+class UserAlreadyExistException extends RuntimeException {
+    public UserAlreadyExistException() {
+        super("This user with this national code already Exist");
+    }
+}
+
+class WrongPasswordException extends RuntimeException {
+    public WrongPasswordException() {
+        super("Password is wrong");
+    }
+}
+
 public class Client {
     public final InetAddress addr = InetAddress.getByName(null);
     private BufferedReader in;
@@ -56,6 +68,10 @@ public class Client {
                 throw new LogInFirstException();
             case "InvalidUsername":
                 throw new InvalidUsernameException();
+            case "UserAlreadyExist":
+                throw new UserAlreadyExistException();
+            case "wrongPassword":
+                throw new WrongPasswordException();
         }
     }
 
@@ -102,12 +118,17 @@ public class Client {
 
         send(ja.toString());
 
-        return receive().equals("0");
+        return checkServerResponse();
     }
 
-//    public boolean createAcc() throws IOException {
-//
-//    }
+    public boolean createAcc() throws Exception {
+        send("3");
+        checkServerResponse();
+
+
+
+        return checkServerResponse();
+    }
 
     public JSONArray getAllAccInfo() throws Exception {
         send("4");
@@ -116,11 +137,11 @@ public class Client {
         return new JSONArray(receive());
     }
 
-    public JSONObject getAccById(int id) throws Exception {
+    public JSONObject getAccById(String id) throws Exception {
         send("5");
         checkServerResponse();
 
-        send("" + id);
+        send(id);
 
         return new JSONObject(receive());
     }
@@ -188,6 +209,10 @@ public class Client {
 
     // just for test
     public static void main(String[] args)
-            throws IOException {
+            throws Exception {
+        Client test = new Client();
+//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+        System.out.println(test.loginRequest("123456789", "testtest321"));
+
     }
 }

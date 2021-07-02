@@ -20,7 +20,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     // Account id is a 16-digit number that we obtain this number using the hashcode of the Account object
     private String id;
 
-    private BigDecimal Balance;
+    private BigDecimal balance;
 
     private final LocalDateTime creationDate = LocalDateTime.now();
 
@@ -39,7 +39,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     public Account(String password, String alias, BigDecimal balance) throws Exception {
         this(password, alias);
-        this.Balance = balance;
+        this.balance = balance;
     }
 
     public boolean withdraw(BigDecimal amount, Account toAccId) {
@@ -81,11 +81,15 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     }
 
     public BigDecimal getBalance() {
-        return Balance;
+        return balance;
     }
 
     public void setBalance(BigDecimal balance) {
-        Balance = balance;
+        this.balance = balance;
+    }
+
+    public String getCreationDate() {
+        return creationDate.toString();
     }
 
     public ArrayList<Transaction> getTransactions() {
