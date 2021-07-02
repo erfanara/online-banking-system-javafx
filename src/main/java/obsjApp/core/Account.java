@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class Account extends RecursiveTreeObject<Account> implements Serializable {
     public static final long ACC_ID_START = 6037000000000000L;
 
-    // TODO: type of Account should specified using enum or maybe inheritance ?
+    // TODO: type of Account should specified using enum or maybe inheritance ? inheritance
     public static enum Type {
-
+        Saving, Checking;
     }
 
     private String alias;

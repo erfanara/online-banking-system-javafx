@@ -40,7 +40,7 @@ public class User implements Serializable {
                 String nationalCode,
                 String phoneNumber,
                 String email,
-                String password){
+                String password) {
         this.firstname = firstname;
         this.lastName = lastName;
         this.nationalCode = nationalCode;
@@ -79,26 +79,29 @@ public class User implements Serializable {
     }
 
     // TODO: Account type ...
-    public void createAcc(Account.Type type, String accPassword) throws Exception {
-        Account acc = new Account(accPassword, null);
-        allAccounts.put(acc.getId(), acc);
-        userAccountsById.put(acc.getId(), acc);
-    }
-
     public void createAcc(Account.Type type, String alias, String accPassword) throws Exception {
-        Account acc = new Account(accPassword, alias);
+        Account acc = null;
+        switch (type) {
+            case Saving -> {
+                acc = new SavingAccount(accPassword, alias);
+            }
+            case Checking -> {
+                acc = new CheckingAccount(accPassword, alias);
+            }
+        }
         allAccounts.put(acc.getId(), acc);
         userAccountsById.put(acc.getId(), acc);
-        userAccountsByAlias.put(alias, acc);
+        if (alias != null)
+            userAccountsByAlias.put(alias, acc);
     }
 //    public void closeAcc()
 
     // authenticate for User
-    public boolean auth(String password){
+    public boolean auth(String password) {
         return this.passHash.equals(SecurePass.getPassHash(password, this.passSalt));
     }
 
-    public void setPassHash(String newPassword){
+    public void setPassHash(String newPassword) {
         this.passSalt = SecurePass.getNewSalt();
         this.passHash = SecurePass.getPassHash(newPassword, passSalt);
     }
