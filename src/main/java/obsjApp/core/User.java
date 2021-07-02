@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 // TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
@@ -78,25 +79,35 @@ public class User implements Serializable {
         return (Account) (userAccountsById.get(id));
     }
 
+    public Account getAccByAlias(String alias) {
+        return (Account) (userAccountsByAlias.get(alias));
+    }
+
+    public String[] getAllAccIds() {
+        return userAccountsById.keySet().toArray(new String[0]);
+    }
+
     public static int getNumberOfUsers() {
         return numberOfUsers;
     }
 
-    // TODO: Account type ...
-    public void createAcc(Account.Type type, String alias, String accPassword) throws Exception {
+    // returns id of created Acc
+    public String createAcc(Account.Type type, String alias, String accPassword) {
         Account acc = null;
         switch (type) {
-            case Saving -> {
+            case SAVING -> {
                 acc = new SavingAccount(accPassword, alias);
             }
-            case Checking -> {
-                acc = new CheckingAccount(accPassword, alias);
+            case CHECKING -> {
+                acc = new Account(accPassword, alias);
             }
         }
         allAccounts.put(acc.getId(), acc);
         userAccountsById.put(acc.getId(), acc);
         if (alias != null)
             userAccountsByAlias.put(alias, acc);
+
+        return acc.getId();
     }
 //    public void closeAcc()
 

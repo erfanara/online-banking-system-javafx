@@ -12,15 +12,16 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     // TODO: type of Account should specified using enum or maybe inheritance ? inheritance
     public static enum Type {
-        Saving, Checking;
+        SAVING, CHECKING;
     }
 
+    protected Type type;
     private String alias;
 
     // Account id is a 16-digit number that we obtain this number using the hashcode of the Account object
-    private String id;
+    private final String id;
 
-    private BigDecimal balance;
+    private BigDecimal balance = new BigDecimal(0);
 
     private final LocalDateTime creationDate = LocalDateTime.now();
 
@@ -31,15 +32,17 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     private final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
     // alias in parameters can be null
-    public Account(String password, String alias) throws Exception {
+    public Account(String password, String alias) {
         this.alias = alias;
         this.id = String.valueOf(this.hashCode() + ACC_ID_START);
         setPassHash(password);
+        type = Type.CHECKING;
     }
 
-    public Account(String password, String alias, BigDecimal balance) throws Exception {
+    public Account(String password, String alias, BigDecimal balance) {
         this(password, alias);
         this.balance = balance;
+        type = Type.CHECKING;
     }
 
     public boolean withdraw(BigDecimal amount, Account toAccId) {
@@ -67,13 +70,17 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     }
 
     // authenticate for Account
-    public boolean auth(String password) throws Exception {
+    public boolean auth(String password) {
         return this.passHash.equals(SecurePass.getPassHash(password, this.passSalt));
     }
 
-    public void setPassHash(String newPassword) throws Exception {
+    public void setPassHash(String newPassword) {
         this.passSalt = SecurePass.getNewSalt();
         this.passHash = SecurePass.getPassHash(newPassword, passSalt);
+    }
+
+    public String getType() {
+        return type.toString();
     }
 
     public String getId() {

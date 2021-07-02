@@ -56,11 +56,13 @@ public class Handler implements Runnable {
                     }
                 } else {
                     switch (str) {
-//                        case "4" -> sendAllAccInfo();
+                        case "3" -> createAccResponse();
+
+                        case "4" -> sendAllAccInfo();
 
                         case "5" -> sendAccById();
 
-                        case "6" -> setAccInfo();
+                        case "7" -> setAccAlias();
                     }
                 }
                 str = in.readLine();
@@ -92,9 +94,9 @@ public class Handler implements Runnable {
                 user = u;
                 send("0");
             } else {
-                rejectionResponse("wrongPassword");
+                rejectionResponse("WrongPassword");
             }
-        } catch (ClassNotFoundException | FileNotFoundException e) {
+        } catch (FileNotFoundException | ClassNotFoundException e) {
             rejectionResponse("InvalidUsername");
         }
     }
@@ -118,11 +120,36 @@ public class Handler implements Runnable {
         }
     }
 
-//    private void sendAllAccInfo() throws IOException {
-//        send("0");
-//
-//        send(new JSONArray());
-//    }
+    private void createAccResponse() throws IOException {
+        send("0");
+        JSONArray ja = new JSONArray(receive());
+        // TODO: validation of received data
+
+        if (ja.get(1) == null || user.getAccByAlias((String) (ja.get(1))) == null) {
+            // TODO: use the returned id and send it to client
+            user.createAcc(
+                    Account.Type.valueOf((String) (ja.get(0))),
+                    (String) (ja.get(1)),
+                    (String) (ja.get(2))
+            );
+
+            // update the db
+            db.writeUser(user);
+            send("0");
+        } else
+            rejectionResponse("DuplicateAlias");
+    }
+
+    private void sendAllAccInfo() throws IOException {
+        send("0");
+
+        JSONArray ja = new JSONArray();
+        String[] ids = user.getAllAccIds();
+        for (String id : ids) {
+            ja.put(id);
+        }
+        send(ja.toString());
+    }
 
     private void sendAccById() throws IOException {
         send("0");
@@ -131,6 +158,7 @@ public class Handler implements Runnable {
         Account ac = user.getAccById(id);
 
         JSONObject jo = new JSONObject();
+        jo.put("type", ac.getType());
         jo.put("alias", ac.getAlias());
         jo.put("balance", ac.getBalance().toString());
         jo.put("creationDate", ac.getCreationDate());
@@ -142,7 +170,15 @@ public class Handler implements Runnable {
         send(jo.toString());
     }
 
-    private void setAccInfo() throws IOException {
+    private void setAccAlias() throws IOException {
+        send("0");
 
+        Account ac = user.getAccById(receive());
+        if (ac != null) {
+            // TODO: validation of received data
+            ac.setAlias(receive());
+            send("0");
+        } else
+            rejectionResponse("InvalidAccId");
     }
 }

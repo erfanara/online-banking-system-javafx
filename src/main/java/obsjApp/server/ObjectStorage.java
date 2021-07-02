@@ -24,17 +24,14 @@ public final class ObjectStorage {
     }
 
     public User readUser(String nationalCode)
-            throws FileNotFoundException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         try (
                 ObjectInputStream in =
                         new ObjectInputStream(
                                 new FileInputStream(new File(outputDir, nationalCode)))
         ) {
             return (User) (in.readObject());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     public boolean userExist(String nationalCode) {

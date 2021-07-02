@@ -1,5 +1,6 @@
 package obsjApp.client;
 
+import obsjApp.core.Account;
 import obsjApp.server.Server;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,6 +30,12 @@ class UserAlreadyExistException extends RuntimeException {
 class WrongPasswordException extends RuntimeException {
     public WrongPasswordException() {
         super("Password is wrong");
+    }
+}
+
+class DuplicateAliasExeception extends RuntimeException {
+    public DuplicateAliasExeception() {
+        super("this alias is already submited for another account");
     }
 }
 
@@ -70,8 +77,10 @@ public class Client {
                 throw new InvalidUsernameException();
             case "UserAlreadyExist":
                 throw new UserAlreadyExistException();
-            case "wrongPassword":
+            case "WrongPassword":
                 throw new WrongPasswordException();
+            case "DuplicateAlias":
+                throw new DuplicateAliasExeception();
         }
     }
 
@@ -121,20 +130,31 @@ public class Client {
         return checkServerResponse();
     }
 
-    public boolean createAcc() throws Exception {
+    public boolean createAcc(Account.Type type, String alias, String accPassword) throws Exception {
         send("3");
         checkServerResponse();
 
+        JSONArray ja = new JSONArray();
+        ja.put(type.toString());
+        ja.put((alias != null) ? alias : "");
+        ja.put(accPassword);
+        send(ja.toString());
 
-
+        // TODO: receive the id of created Acc and then fetch the accInfo
         return checkServerResponse();
     }
 
-    public JSONArray getAllAccInfo() throws Exception {
+    public void getAllAccInfo() throws Exception {
         send("4");
         checkServerResponse();
 
-        return new JSONArray(receive());
+        JSONArray idsJa = new JSONArray(receive());
+        JSONArray accJa = new JSONArray();
+        for (String id : idsJa.toList().toArray(new String[0])) {
+            accJa.put(getAccById(id));
+        }
+
+        System.out.println(accJa);
     }
 
     public JSONObject getAccById(String id) throws Exception {
@@ -146,27 +166,14 @@ public class Client {
         return new JSONObject(receive());
     }
 
-
-    public boolean setAccinfo(int accid, int newId) throws Exception {
-        // TODO: new kind of exception needed if something is not valid
-        send("6");
-        checkServerResponse();
-
-        send("" + accid);
-        send("" + newId);
-
-        return receive().equals("0");
-    }
-
-    public boolean setAccInfo(int accId, String alias) throws Exception {
-        // TODO: new kind of exception needed if something is not valid
+    public boolean setAccAlias(String accId, String alias) throws Exception {
         send("7");
         checkServerResponse();
 
-        send("" + accId);
+        send(accId);
         send(alias);
 
-        return receive().equals("0");
+        return checkServerResponse();
     }
 
 //    public boolean transaction()
@@ -211,8 +218,9 @@ public class Client {
     public static void main(String[] args)
             throws Exception {
         Client test = new Client();
-//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
         System.out.println(test.loginRequest("123456789", "testtest321"));
-
+        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
+        test.getAllAccInfo();
     }
 }
