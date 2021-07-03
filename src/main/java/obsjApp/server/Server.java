@@ -8,26 +8,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-public final class Server {
+public final class Server extends Thread {
     public static final int DEFAULT_PORT = 48080;
+    private ServerSocket ss;
 
     /*
      *  http://dev.bizo.com/2014/06/cached-thread-pool-considered-harmlful.html ,
      *  https://mucahit.io/2020/01/27/finding-ideal-jvm-thread-pool-size-with-kubernetes-and-docker/
      */
-    private static final ExecutorService threadPool = Executors.newFixedThreadPool(
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors() * 20);
 
-    private static boolean finished = false;
+    private boolean finished = false;
 
-    private static void setFinished() {
+    private void setFinished() {
         finished = true;
     }
 
     /*
      * This method is from java api doc (ExecutorService Interface)
      */
-    private static void shutdownAndAwaitTermination() {
+    public void shutdownAndAwaitTermination() {
+        setFinished();
         threadPool.shutdown(); // Disable new tasks from being submitted
         try {
             // Wait a while for existing tasks to terminate
@@ -45,18 +47,15 @@ public final class Server {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public Server() {
+        this.start();
+    }
 
-        try (ServerSocket ss = new ServerSocket(DEFAULT_PORT)) {
+    @Override
+    public void run() {
+        try {
+            this.ss = new ServerSocket(DEFAULT_PORT);
             System.out.println("Server Started , Port: " + DEFAULT_PORT);
-
-            // If process received SIGTERM, shutdown the server
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                System.out.println("\nTerminating the Server...");
-                setFinished();
-                shutdownAndAwaitTermination();
-                Runtime.getRuntime().halt(0);
-            }));
 
             while (!finished) {
                 // Blocks until a connection occurs:
@@ -69,6 +68,14 @@ public final class Server {
                     // otherwise the thread will close it
                     cs.close();
                 }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                this.ss.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

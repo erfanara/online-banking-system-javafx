@@ -21,7 +21,7 @@ public class Transaction implements Serializable {
     private String description;
     private final boolean isSuccessful;
 
-    Transaction(Reason reason,
+    public Transaction(Reason reason,
                 Type type,
                 Account peerObj,
                 BigDecimal amount,

@@ -257,15 +257,15 @@ public class Client {
     // just for test
     public static void main(String[] args)
             throws Exception {
-//        Client test = new Client();
-//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
-//        System.out.println(test.loginRequest("123456789", "testtest321"));
-//        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
-//        test.getAllAccInfo();
-        Client test2 = new Client();
-        test2.signupRequest("ali", "irv", "12312345", "0915551233", "ali@gmail.com", "aliali");
-        System.out.println(test2.loginRequest("12312345","aliali"));
-        System.out.println(test2.createAcc(Account.Type.CHECKING,null,"ahsant"));
-        test2.getAllAccInfo();
+        Client test = new Client();
+        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+        System.out.println(test.loginRequest("123456789", "testtest321"));
+        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
+        test.getAllAccInfo();
+//        Client test2 = new Client();
+//        test2.signupRequest("ali", "irv", "12312345", "0915551233", "ali@gmail.com", "aliali");
+//        System.out.println(test2.loginRequest("12312345","aliali"));
+//        System.out.println(test2.createAcc(Account.Type.CHECKING,null,"ahsant"));
+//        test2.getAllAccInfo();
     }
 }

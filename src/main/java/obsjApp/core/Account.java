@@ -23,6 +23,8 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     // Account id is a 16-digit number that we obtain this number using the hashcode of the Account object
     private final String id;
 
+    private final User owner;
+
     private BigDecimal balance = new BigDecimal(0);
 
     private final LocalDateTime creationDate = LocalDateTime.now();
@@ -32,20 +34,21 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     private String passSalt;
 
     // preventing race conditions using lock for withdraw,deposite methods
-    private final Lock lock = new ReentrantLock();
+    protected final Lock lock = new ReentrantLock();
 
-    private final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    protected final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
     // alias in parameters can be null
-    public Account(String password, String alias) {
+    public Account(String password, String alias, User owner) {
+        this.owner = owner;
         this.alias = alias;
         this.id = String.valueOf(this.hashCode() + ACC_ID_START);
         setPassHash(password);
         type = Type.CHECKING;
     }
 
-    public Account(String password, String alias, BigDecimal balance) {
-        this(password, alias);
+    public Account(String password, String alias, BigDecimal balance, User owner) {
+        this(password, alias, owner);
         this.balance = balance;
         type = Type.CHECKING;
     }
@@ -110,6 +113,20 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                ", owner=" + owner.getFirstname() + "~" + owner.getLastName() +
+                ", type=" + type +
+                ", balance=" + balance +
+                ", creationDate=" + creationDate +
+                '}';
     }
 }
 

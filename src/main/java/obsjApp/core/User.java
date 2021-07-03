@@ -96,10 +96,10 @@ public class User implements Serializable {
         Account acc = null;
         switch (type) {
             case SAVING -> {
-                acc = new SavingAccount(accPassword, alias);
+                acc = new SavingAccount(accPassword, alias,this);
             }
             case CHECKING -> {
-                acc = new Account(accPassword, alias);
+                acc = new Account(accPassword, alias, this);
             }
         }
         allAccounts.put(acc.getId(), acc);
@@ -123,6 +123,10 @@ public class User implements Serializable {
 
     public static Account getAccByIdInAll(String id) {
         return allAccounts.get(id);
+    }
+
+    public static Map<String, Account> getAllAccountsMap() {
+        return allAccounts;
     }
 
     public void removeAcc(String accId) {
