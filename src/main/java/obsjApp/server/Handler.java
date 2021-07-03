@@ -8,13 +8,10 @@ import org.json.JSONObject;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.Socket;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Handler implements Runnable {
-    private static final ObjectStorage db = new ObjectStorage("Users");
-    // Map for loading users into the ram for faster operations
-//    private static final Map<String, User> usersMap = new LinkedHashMap<String, User>();
+    private static final UserStorage db = new UserStorage("Users");
+
     private User user = null;
     private Socket sock;
     PrintWriter out;
@@ -93,15 +90,15 @@ public class Handler implements Runnable {
         send("0");
         JSONArray loginJa = new JSONArray(receive());
         // TODO: validation of received data
-        try {
-            User u = db.readUser((String) (loginJa.get(0)));
+        User u = db.readUser((String) loginJa.get(0));
+        if (u != null) {
             if (u.auth((String) (loginJa.get(1)))) {
                 user = u;
                 send("0");
             } else {
                 rejectionResponse("WrongPassword");
             }
-        } catch (FileNotFoundException | ClassNotFoundException e) {
+        } else {
             rejectionResponse("InvalidUsername");
         }
     }
