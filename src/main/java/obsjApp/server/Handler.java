@@ -103,16 +103,16 @@ public class Handler implements Runnable {
 
     private void signUpResponse() throws IOException {
         send("0");
-        JSONArray signUpJa = new JSONArray(receive());
+        JSONObject signUpJo = new JSONObject(receive());
         // TODO: validation of received data
-        if (!ServerCli.db.userExist((String) (signUpJa.get(2)))) {
+        if (!ServerCli.db.userExist((String) signUpJo.get("nationalCode"))) {
             ServerCli.db.writeUser(new User(
-                    (String) (signUpJa.get(0)),
-                    (String) (signUpJa.get(1)),
-                    (String) (signUpJa.get(2)),
-                    (String) (signUpJa.get(3)),
-                    (String) (signUpJa.get(4)),
-                    (String) (signUpJa.get(5))
+                    (String) signUpJo.get("firstname"),
+                    (String) signUpJo.get("lastname"),
+                    (String) signUpJo.get("nationalCode"),
+                    (String) signUpJo.get("phoneNumber"),
+                    (String) signUpJo.get("email"),
+                    (String) signUpJo.get("password")
             ));
             send("0");
         } else {
@@ -122,15 +122,15 @@ public class Handler implements Runnable {
 
     private void createAccResponse() throws IOException {
         send("0");
-        JSONArray ja = new JSONArray(receive());
+        JSONObject jo = new JSONObject(receive());
         // TODO: validation of received data
 
-        if (ja.get(1) == null || user.getAccByAlias((String) (ja.get(1))) == null) {
+        if (jo.get("alias") == null || user.getAccByAlias((String) (jo.get("alias"))) == null) {
             // TODO: use the returned id and send it to client
             user.createAcc(
-                    Account.Type.valueOf((String) (ja.get(0))),
-                    (String) (ja.get(1)),
-                    (String) (ja.get(2))
+                    Account.Type.valueOf((String) jo.get("type")),
+                    (String) jo.get("alias"),
+                    (String) jo.get("accPass")
             );
 
             // update the db
@@ -145,8 +145,7 @@ public class Handler implements Runnable {
         send("0");
 
         JSONArray ja = new JSONArray();
-        String[] ids = user.getAllAccIds();
-        for (String id : ids) {
+        for (String id : user.getAllAccIds()) {
             ja.put(id);
         }
         send(ja.toString());
