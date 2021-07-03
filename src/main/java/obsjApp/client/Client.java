@@ -1,7 +1,7 @@
-package OBSApp.client;
+package obsjApp.client;
 
-import OBSApp.core.Account;
-import OBSApp.server.Server;
+import obsjApp.core.Account;
+import obsjApp.server.Server;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
