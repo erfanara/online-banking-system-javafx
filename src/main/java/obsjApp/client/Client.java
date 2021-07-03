@@ -1,7 +1,7 @@
-package obsjApp.client;
+package OBSApp.client;
 
-import obsjApp.core.Account;
-import obsjApp.server.Server;
+import OBSApp.core.Account;
+import OBSApp.server.Server;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -138,9 +138,9 @@ public class Client {
         send("1");
         checkServerResponse();
 
-        JSONArray ja = new JSONArray();
-        ja.put(username);
-        ja.put(passHash);
+        JSONObject ja = new JSONObject();
+        ja.put("username", username);
+        ja.put("passhash", passHash);
 
         send(ja.toString());
 
@@ -157,13 +157,13 @@ public class Client {
         send("2");
         checkServerResponse();
 
-        JSONArray ja = new JSONArray();
-        ja.put(firstName);
-        ja.put(lastName);
-        ja.put(nationalCode);
-        ja.put(phoneNumber);
-        ja.put(email);
-        ja.put(password);
+        JSONObject ja = new JSONObject();
+        ja.put("firstname", firstName);
+        ja.put("lastname", lastName);
+        ja.put("nationalCode", nationalCode);
+        ja.put("phoneNumber", phoneNumber);
+        ja.put("email", email);
+        ja.put("password", password);
 
         send(ja.toString());
 
@@ -174,10 +174,10 @@ public class Client {
         send("3");
         checkServerResponse();
 
-        JSONArray ja = new JSONArray();
-        ja.put(type.toString());
-        ja.put((alias != null) ? alias : "");
-        ja.put(accPassword);
+        JSONObject ja = new JSONObject();
+        ja.put("type", type.toString());
+        ja.put("alias", (alias != null) ? alias : "");
+        ja.put("accPass", accPassword);
         send(ja.toString());
 
         // TODO: receive the id of created Acc and then fetch the accInfo
