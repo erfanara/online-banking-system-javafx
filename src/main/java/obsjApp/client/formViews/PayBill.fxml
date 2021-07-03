@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.PayBillController">
+   <children>
+      <JFXRadioButton fx:id="choose_power" layoutX="597.0" layoutY="348.0" text="برق">
+         <font>
+            <Font name="IRKoodak" size="15.0" />
+         </font>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="choose_water" layoutX="596.0" layoutY="439.0" text="آب">
+         <font>
+            <Font name="IRKoodak" size="15.0" />
+         </font>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="choose_gas" layoutX="596.0" layoutY="486.0" text="گاز">
+         <font>
+            <Font name="IRKoodak" size="15.0" />
+         </font>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="choose_phone" layoutX="596.0" layoutY="391.0" text="تلفن">
+         <font>
+            <Font name="IRKoodak" size="15.0" />
+         </font>
+      </JFXRadioButton>
+      <JFXTextField fx:id="account_id" layoutX="312.0" layoutY="261.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="شماره حساب">
+         <font>
+            <Font name="IRKoodak" size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="Pay" buttonType="RAISED" layoutX="353.0" layoutY="564.0" prefHeight="46.0" prefWidth="87.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="تأیید" textFill="WHITE">
+         <font>
+            <Font name="IRKoodak" size="19.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="687.0" layoutY="708.0" onAction="#ReturnToServices" prefHeight="46.0" prefWidth="113.0" ripplerFill="WHITE" style="-fx-background-color: blue;" text="بازگشت" textFill="WHITE">
+         <font>
+            <Font name="IRKoodak" size="19.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
