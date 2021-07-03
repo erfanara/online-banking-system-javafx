@@ -76,11 +76,11 @@ public class User implements Serializable {
     }
 
     public Account getAccById(String id) {
-        return (Account) (userAccountsById.get(id));
+        return userAccountsById.get(id);
     }
 
     public Account getAccByAlias(String alias) {
-        return (Account) (userAccountsByAlias.get(alias));
+        return userAccountsByAlias.get(alias);
     }
 
     public String[] getAllAccIds() {
@@ -119,5 +119,16 @@ public class User implements Serializable {
     public void setPassHash(String newPassword) {
         this.passSalt = SecurePass.getNewSalt();
         this.passHash = SecurePass.getPassHash(newPassword, passSalt);
+    }
+
+    public static Account getAccByIdInAll(String id) {
+        return allAccounts.get(id);
+    }
+
+    public void removeAcc(String accId) {
+        // this method assumes that accId is valid for this user
+        allAccounts.remove(accId);
+        userAccountsById.remove(accId);
+        userAccountsByAlias.remove(accId);
     }
 }

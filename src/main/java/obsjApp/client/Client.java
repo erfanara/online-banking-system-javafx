@@ -6,12 +6,43 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.Socket;
 
 class LogInFirstException extends RuntimeException {
     public LogInFirstException() {
         super("you have to LogIn first");
+    }
+}
+
+class InvalidSrcAccIdException extends RuntimeException {
+    public InvalidSrcAccIdException() {
+        super("Source Account id is invalid");
+    }
+}
+
+class InvalidDestAccIdException extends RuntimeException {
+    public InvalidDestAccIdException() {
+        super("Destination Account id is invalid");
+    }
+}
+
+class InvalidAmountException extends RuntimeException {
+    public InvalidAmountException() {
+        super("this amount is invalid");
+    }
+}
+
+class InsufficientFundsException extends RuntimeException {
+    public InsufficientFundsException() {
+        super("your account balance is not enough");
+    }
+}
+
+class BalanceIsNotZeroException extends RuntimeException {
+    public BalanceIsNotZeroException() {
+        super("your account balance is not zero, please deposit your balance to another account, and try agian");
     }
 }
 
@@ -71,16 +102,25 @@ public class Client {
 
     public void throwException(String reason) throws Exception {
         switch (reason) {
-            case "LogInFirst":
-                throw new LogInFirstException();
-            case "InvalidUsername":
-                throw new InvalidUsernameException();
-            case "UserAlreadyExist":
-                throw new UserAlreadyExistException();
-            case "WrongPassword":
-                throw new WrongPasswordException();
-            case "DuplicateAlias":
-                throw new DuplicateAliasExeception();
+            case "LogInFirst" -> throw new LogInFirstException();
+
+            case "InvalidUsername" -> throw new InvalidUsernameException();
+
+            case "UserAlreadyExist" -> throw new UserAlreadyExistException();
+
+            case "WrongPassword" -> throw new WrongPasswordException();
+
+            case "DuplicateAlias" -> throw new DuplicateAliasExeception();
+
+            case "InvalidSrcAccId" -> throw new InvalidSrcAccIdException();
+
+            case "InvalidDestAccId" -> throw new InvalidDestAccIdException();
+
+            case "InvalidAmount" -> throw new InvalidAmountException();
+
+            case "InsufficientFunds" -> throw new InsufficientFundsException();
+
+            case "BalanceIsNotZero" -> throw new BalanceIsNotZeroException();
         }
     }
 
@@ -112,7 +152,7 @@ public class Client {
                                  String nationalCode,
                                  String phoneNumber,
                                  String email,
-                                 String passHash
+                                 String password
     ) throws Exception {
         send("2");
         checkServerResponse();
@@ -123,7 +163,7 @@ public class Client {
         ja.put(nationalCode);
         ja.put(phoneNumber);
         ja.put(email);
-        ja.put(passHash);
+        ja.put(password);
 
         send(ja.toString());
 
@@ -144,7 +184,7 @@ public class Client {
         return checkServerResponse();
     }
 
-    public void getAllAccInfo() throws Exception {
+    public JSONArray getAllAccInfo() throws Exception {
         send("4");
         checkServerResponse();
 
@@ -155,6 +195,7 @@ public class Client {
         }
 
         System.out.println(accJa);
+        return accJa;
     }
 
     public JSONObject getAccById(String id) throws Exception {
@@ -176,31 +217,30 @@ public class Client {
         return checkServerResponse();
     }
 
-//    public boolean transaction()
+    public boolean transaction(String srcId, String srcAccPassword, BigDecimal amount, String destId) throws Exception {
+        send("9");
+        checkServerResponse();
+
+        JSONArray ja = new JSONArray();
+        ja.put(srcId);
+        ja.put(amount.toString());
+        ja.put(srcAccPassword);
+        ja.put(destId);
+
+        send(ja.toString());
+        return checkServerResponse();
+    }
 //    public JSONArray getTheBills()
 //    public JSONArray loanRequest()
 
-    public boolean authAcc() throws Exception {
-        String passHash = null;
-        int cvv2 = 0;
-
-        //TODO : now we should get the password and cvv2 from the user
-
-        send(passHash);
-        send("" + cvv2);
-
-        return receive().equals("0");
-    }
-
-    public boolean closeAcc(int id) throws Exception {
+    public boolean closeAcc(String id, String AccPassword) throws Exception {
         send("13");
         checkServerResponse();
 
-        send("" + id);
+        send(id);
+        send(AccPassword);
 
-        if (receive().equals("12")) return authAcc();
-        // TODO: new kind of exception needed if something is not valid
-        return false;
+        return checkServerResponse();
     }
 
     public JSONArray getUserInfo() throws Exception {
@@ -217,10 +257,15 @@ public class Client {
     // just for test
     public static void main(String[] args)
             throws Exception {
-        Client test = new Client();
-        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
-        System.out.println(test.loginRequest("123456789", "testtest321"));
-        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
-        test.getAllAccInfo();
+//        Client test = new Client();
+//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+//        System.out.println(test.loginRequest("123456789", "testtest321"));
+//        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
+//        test.getAllAccInfo();
+        Client test2 = new Client();
+        test2.signupRequest("ali", "irv", "12312345", "0915551233", "ali@gmail.com", "aliali");
+        System.out.println(test2.loginRequest("12312345","aliali"));
+        System.out.println(test2.createAcc(Account.Type.CHECKING,null,"ahsant"));
+        test2.getAllAccInfo();
     }
 }

@@ -17,10 +17,9 @@
 13  ->  close account                   :   Account id or alias (?) - [x]
 14  ->  Get User info                   :   - [x]
 
-
 only Server-side:
 0   ->  Accepted                        :
 -1  ->  Rejected                        :   Reason
-20  ->  Requesting acc auth from Client :
+// 20  ->  Requesting acc auth from Client :
 
 

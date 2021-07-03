@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.Socket;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -63,6 +64,10 @@ public class Handler implements Runnable {
                         case "5" -> sendAccById();
 
                         case "7" -> setAccAlias();
+
+                        case "9" -> transactionResponse();
+
+                        case "13" -> closeAccResponse();
                     }
                 }
                 str = in.readLine();
@@ -180,5 +185,53 @@ public class Handler implements Runnable {
             send("0");
         } else
             rejectionResponse("InvalidAccId");
+    }
+
+    private void transactionResponse() throws IOException {
+        send("0");
+
+        JSONArray ja = new JSONArray(receive());
+        Account srcAcc = user.getAccById((String) ja.get(0));
+        BigDecimal amount = new BigDecimal((String) ja.get(1));
+        Account destAcc = User.getAccByIdInAll((String) ja.get(3));
+        if (srcAcc == null) {
+            rejectionResponse("InvalidSrcAccId");
+            return;
+        }
+        if (destAcc == null) {
+            rejectionResponse("InvalidDestAccId");
+            return;
+        }
+        if (amount.compareTo(new BigDecimal(0)) < 0) {
+            rejectionResponse("InvalidAmount");
+            return;
+        }
+
+        if (srcAcc.auth((String) ja.get(2))) {
+            if (srcAcc.withdraw(amount, destAcc)) {
+                send("0");
+            } else
+                rejectionResponse("InsufficientFunds");
+        } else
+            rejectionResponse("WrongPassword");
+
+    }
+
+    private void closeAccResponse() throws IOException {
+        send("0");
+
+        Account acc = user.getAccById(receive());
+        if (acc == null) {
+            rejectionResponse("InvalidSrcAccId");
+            return;
+        }
+
+        if (acc.auth(receive())) {
+            if (acc.getBalance().compareTo(new BigDecimal(0)) == 0) {
+                user.removeAcc(acc.getId());
+                send("0");
+            } else
+                rejectionResponse("BalanceIsNotZero");
+        }
     }
 }
