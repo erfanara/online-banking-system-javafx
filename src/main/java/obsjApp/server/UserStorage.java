@@ -1,5 +1,6 @@
 package obsjApp.server;
 
+import obsjApp.core.Account;
 import obsjApp.core.User;
 
 import java.io.*;
@@ -19,15 +20,19 @@ public final class UserStorage {
     public UserStorage(String outputDir) {
         this.outputDir = new File(outputDir);
 
+        int countUsers = 0;
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(outputDir))) {
             for (Path path : stream) {
                 if (!Files.isDirectory(path)) {
                     usersMap.put(path.getFileName().toString(), readUserFromBlk(path.getFileName().toString()));
+                    countUsers++;
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        User.numberOfUsers = countUsers;
+        User.allAccounts = getAllAccountsMap();
     }
 
     public void writeUser(User user) {
@@ -58,6 +63,19 @@ public final class UserStorage {
 
     public User readUser(String nationalCode) {
         return usersMap.get(nationalCode);
+    }
+
+    private Map<String, Account> getAllAccountsMap() {
+        Map<String, Account> allAcc = new HashMap<String, Account>();
+
+        for (User u : usersMap.values()) {
+            for (Account acc : u.getAccounts()) {
+                allAcc.put(acc.getId(), acc);
+                System.out.println(acc);
+            }
+        }
+
+        return allAcc;
     }
 
     public boolean userExist(String nationalCode) {

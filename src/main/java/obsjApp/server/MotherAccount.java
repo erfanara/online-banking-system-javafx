@@ -23,11 +23,11 @@ public final class MotherAccount extends Account {
 
     @Override
     public boolean withdraw(BigDecimal amount, Account toAccId) {
-        super.lock.lock();
-        setBalance(getBalance().add(amount.negate()));
-        transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), true));
-        toAccId.deposit(amount, this);
-        lock.unlock();
+        synchronized (balance) {
+            setBalance(getBalance().add(amount.negate()));
+            transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), true));
+            toAccId.deposit(amount, this);
+        }
         return true;
     }
 

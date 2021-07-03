@@ -10,8 +10,10 @@ import java.util.Scanner;
 public class ServerCli {
     private final static String HELP_MENU = "COMMANDS >> \n"
             + "deposit <Account Id> <amount>\n"
-            + "listAllAcc\n"
+            + "lsAllAcc\n"
             + "exit\n";
+
+    public static final UserStorage db = new UserStorage("Users");
 
     // server has a mother account for depositing money to user accounts,
     // the password is just for decoration and some protection.
@@ -33,7 +35,7 @@ public class ServerCli {
         while (!cmd.equals("exit")) {
             switch (cmd.split(" ")[0]) {
                 case "deposit" -> deposit(cmd);
-                case "listAllAcc" -> listAllAcc();
+                case "lsAllAcc" -> listAllAcc();
                 default -> System.out.println(HELP_MENU);
             }
             cmd = in.nextLine();
@@ -62,9 +64,8 @@ public class ServerCli {
     }
 
     private static void listAllAcc() {
-        for (Map.Entry<String, Account> mapElement : User.getAllAccountsMap().entrySet()) {
-            System.out.print(mapElement.getKey() + "\t");
-            System.out.println(mapElement.getValue());
+        for (Account acc : User.getAllAccountsMap().values()) {
+            System.out.println(acc);
         }
     }
 }

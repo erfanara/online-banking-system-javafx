@@ -10,12 +10,10 @@ import java.math.BigDecimal;
 import java.net.Socket;
 
 public class Handler implements Runnable {
-    private static final UserStorage db = new UserStorage("Users");
-
     private User user = null;
-    private Socket sock;
-    PrintWriter out;
-    BufferedReader in;
+    private final Socket sock;
+    private PrintWriter out;
+    private BufferedReader in;
 
     public Handler(Socket acceptedSocket) throws IOException {
         this.sock = acceptedSocket;
@@ -90,7 +88,7 @@ public class Handler implements Runnable {
         send("0");
         JSONArray loginJa = new JSONArray(receive());
         // TODO: validation of received data
-        User u = db.readUser((String) loginJa.get(0));
+        User u = ServerCli.db.readUser((String) loginJa.get(0));
         if (u != null) {
             if (u.auth((String) (loginJa.get(1)))) {
                 user = u;
@@ -107,8 +105,8 @@ public class Handler implements Runnable {
         send("0");
         JSONArray signUpJa = new JSONArray(receive());
         // TODO: validation of received data
-        if (!db.userExist((String) (signUpJa.get(2)))) {
-            db.writeUser(new User(
+        if (!ServerCli.db.userExist((String) (signUpJa.get(2)))) {
+            ServerCli.db.writeUser(new User(
                     (String) (signUpJa.get(0)),
                     (String) (signUpJa.get(1)),
                     (String) (signUpJa.get(2)),
@@ -136,7 +134,8 @@ public class Handler implements Runnable {
             );
 
             // update the db
-            db.writeUser(user);
+            ServerCli.db.writeUser(user);
+
             send("0");
         } else
             rejectionResponse("DuplicateAlias");
@@ -165,9 +164,7 @@ public class Handler implements Runnable {
         jo.put("balance", ac.getBalance().toString());
         jo.put("creationDate", ac.getCreationDate());
 
-        JSONArray ja = new JSONArray();
-        ja.put(ac.getTransactions());
-        jo.accumulate("transactions", ja);
+        jo.accumulate("transactions", ac.getTransactions());
 
         send(jo.toString());
     }
@@ -179,6 +176,10 @@ public class Handler implements Runnable {
         if (ac != null) {
             // TODO: validation of received data
             ac.setAlias(receive());
+
+            // update the db
+            ServerCli.db.writeUser(user);
+
             send("0");
         } else
             rejectionResponse("InvalidAccId");
@@ -209,6 +210,10 @@ public class Handler implements Runnable {
                 send("0");
             } else
                 rejectionResponse("InsufficientFunds");
+
+            // update the db
+            ServerCli.db.writeUser(user);
+            ServerCli.db.writeUser(destAcc.getOwner());
         } else
             rejectionResponse("WrongPassword");
 
@@ -226,6 +231,10 @@ public class Handler implements Runnable {
         if (acc.auth(receive())) {
             if (acc.getBalance().compareTo(new BigDecimal(0)) == 0) {
                 user.removeAcc(acc.getId());
+
+                // update the db
+                ServerCli.db.writeUser(user);
+
                 send("0");
             } else
                 rejectionResponse("BalanceIsNotZero");

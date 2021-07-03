@@ -6,8 +6,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Account extends RecursiveTreeObject<Account> implements Serializable {
     public static final long ACC_ID_START = 6037000000000000L;
@@ -25,7 +23,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     private final User owner;
 
-    private BigDecimal balance = new BigDecimal(0);
+    protected BigDecimal balance = new BigDecimal(0);
 
     private final LocalDateTime creationDate = LocalDateTime.now();
 
@@ -33,10 +31,9 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     private String passHash;
     private String passSalt;
 
-    // preventing race conditions using lock for withdraw,deposite methods
-    protected final Lock lock = new ReentrantLock();
+    protected final ArrayList<Transaction> transactions;
 
-    protected final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    // preventing race conditions using lock for withdraw,deposite methods
 
     // alias in parameters can be null
     public Account(String password, String alias, User owner) {
@@ -45,6 +42,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
         this.id = String.valueOf(this.hashCode() + ACC_ID_START);
         setPassHash(password);
         type = Type.CHECKING;
+        transactions = new ArrayList<Transaction>();
     }
 
     public Account(String password, String alias, BigDecimal balance, User owner) {
@@ -54,23 +52,23 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     }
 
     public boolean withdraw(BigDecimal amount, Account toAccId) {
-        lock.lock();
-        if (getBalance().compareTo(amount) < 0) {
-            transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), false));
-            return false;
+        synchronized (balance) {
+            if (getBalance().compareTo(amount) < 0) {
+                transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), false));
+                return false;
+            }
+            setBalance(getBalance().add(amount.negate()));
+            transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), true));
+            toAccId.deposit(amount, this);
+            return true;
         }
-        setBalance(getBalance().add(amount.negate()));
-        transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.WITHDRAW, toAccId, amount, getBalance(), true));
-        toAccId.deposit(amount, this);
-        lock.unlock();
-        return true;
     }
 
     public void deposit(BigDecimal amount, Account fromAcc) {
-        lock.lock();
-        setBalance(getBalance().add(amount));
-        transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.DEPOSIT, fromAcc, amount, getBalance(), true));
-        lock.unlock();
+        synchronized (balance) {
+            setBalance(getBalance().add(amount));
+            transactions.add(new Transaction(Transaction.Reason.TRANSFER, Transaction.Type.DEPOSIT, fromAcc, amount, getBalance(), true));
+        }
     }
 
     public String getAlias() {
@@ -122,6 +120,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     @Override
     public String toString() {
         return "Account{" +
+                "id=" + this.getId() +
                 ", owner=" + owner.getFirstname() + "~" + owner.getLastName() +
                 ", type=" + type +
                 ", balance=" + balance +

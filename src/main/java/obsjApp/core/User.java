@@ -6,14 +6,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 // TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
-    private static int numberOfUsers;
-
+    // THESE STATIC FIELDS WILL NOT SERIALIZED , so we will initialize them at the start of our server
+    public static int numberOfUsers;
     // this map is global for all of users that key represent Acc id using String
-    private static final Map<String, Account> allAccounts = new LinkedHashMap<String, Account>();
+    public static Map<String, Account> allAccounts = null;
 
 
     private String firstname, lastName, nationalCode, phoneNumber, email;
@@ -72,7 +71,7 @@ public class User implements Serializable {
     }
 
     public Account[] getAccounts() {
-        return (Account[]) (userAccountsById.values().toArray());
+        return (Account[]) (userAccountsById.values().toArray(new Account[0]));
     }
 
     public Account getAccById(String id) {
@@ -96,7 +95,7 @@ public class User implements Serializable {
         Account acc = null;
         switch (type) {
             case SAVING -> {
-                acc = new SavingAccount(accPassword, alias,this);
+                acc = new SavingAccount(accPassword, alias, this);
             }
             case CHECKING -> {
                 acc = new Account(accPassword, alias, this);
