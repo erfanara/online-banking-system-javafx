@@ -157,15 +157,15 @@ public class Client {
         send("2");
         checkServerResponse();
 
-        JSONObject ja = new JSONObject();
-        ja.put("firstname", firstName);
-        ja.put("lastname", lastName);
-        ja.put("nationalCode", nationalCode);
-        ja.put("phoneNumber", phoneNumber);
-        ja.put("email", email);
-        ja.put("password", password);
+        JSONObject jo = new JSONObject();
+        jo.put("firstname", firstName);
+        jo.put("lastname", lastName);
+        jo.put("nationalCode", nationalCode);
+        jo.put("phoneNumber", phoneNumber);
+        jo.put("email", email);
+        jo.put("password", password);
 
-        send(ja.toString());
+        send(jo.toString());
 
         return checkServerResponse();
     }
@@ -174,11 +174,11 @@ public class Client {
         send("3");
         checkServerResponse();
 
-        JSONObject ja = new JSONObject();
-        ja.put("type", type.toString());
-        ja.put("alias", (alias != null) ? alias : "");
-        ja.put("accPass", accPassword);
-        send(ja.toString());
+        JSONObject jo = new JSONObject();
+        jo.put("type", type.toString());
+        jo.put("alias", (alias != null) ? alias : "");
+        jo.put("accPass", accPassword);
+        send(jo.toString());
 
         // TODO: receive the id of created Acc and then fetch the accInfo
         return checkServerResponse();
@@ -194,7 +194,8 @@ public class Client {
             accJa.put(getAccById(id));
         }
 
-        System.out.println(accJa);
+        //debug purposes:
+//        System.out.println(accJa);
         return accJa;
     }
 
@@ -211,9 +212,11 @@ public class Client {
         send("7");
         checkServerResponse();
 
-        send(accId);
-        send(alias);
+        JSONObject jo = new JSONObject();
+        jo.put("accId", accId);
+        jo.put("alias", alias);
 
+        send(jo.toString());
         return checkServerResponse();
     }
 
@@ -221,33 +224,35 @@ public class Client {
         send("9");
         checkServerResponse();
 
-        JSONArray ja = new JSONArray();
-        ja.put(srcId);
-        ja.put(amount.toString());
-        ja.put(srcAccPassword);
-        ja.put(destId);
+        JSONObject jo = new JSONObject();
+        jo.put("srcId", srcId);
+        jo.put("amount", amount.toString());
+        jo.put("accPass", srcAccPassword);
+        jo.put("destId", destId);
 
-        send(ja.toString());
+        send(jo.toString());
         return checkServerResponse();
     }
 //    public JSONArray getTheBills()
 //    public JSONArray loanRequest()
 
-    public boolean closeAcc(String id, String AccPassword) throws Exception {
+    public boolean closeAcc(String id, String accPassword) throws Exception {
         send("13");
         checkServerResponse();
 
-        send(id);
-        send(AccPassword);
+        JSONObject jo = new JSONObject();
+        jo.put("id", id);
+        jo.put("accPass", accPassword);
 
+        send(jo.toString());
         return checkServerResponse();
     }
 
-    public JSONArray getUserInfo() throws Exception {
+    public JSONObject getUserInfo() throws Exception {
         send("14");
         checkServerResponse();
 
-        return new JSONArray(receive());
+        return new JSONObject(receive());
     }
 
     public void closeSocket() throws Exception {

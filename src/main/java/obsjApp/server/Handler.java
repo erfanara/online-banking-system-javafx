@@ -171,10 +171,11 @@ public class Handler implements Runnable {
     private void setAccAlias() throws IOException {
         send("0");
 
-        Account ac = user.getAccById(receive());
+        JSONObject jo = new JSONObject(receive());
+        Account ac = user.getAccById((String) jo.get("accId"));
         if (ac != null) {
             // TODO: validation of received data
-            ac.setAlias(receive());
+            ac.setAlias((String) jo.get("alias"));
 
             // update the db
             ServerCli.db.writeUser(user);
@@ -187,10 +188,10 @@ public class Handler implements Runnable {
     private void transactionResponse() throws IOException {
         send("0");
 
-        JSONArray ja = new JSONArray(receive());
-        Account srcAcc = user.getAccById((String) ja.get(0));
-        BigDecimal amount = new BigDecimal((String) ja.get(1));
-        Account destAcc = User.getAccByIdInAll((String) ja.get(3));
+        JSONObject jo = new JSONObject(receive());
+        Account srcAcc = user.getAccById((String) jo.get("srcId"));
+        BigDecimal amount = new BigDecimal((String) jo.get("amount"));
+        Account destAcc = User.getAccByIdInAll((String) jo.get("destId"));
         if (srcAcc == null) {
             rejectionResponse("InvalidSrcAccId");
             return;
@@ -204,7 +205,7 @@ public class Handler implements Runnable {
             return;
         }
 
-        if (srcAcc.auth((String) ja.get(2))) {
+        if (srcAcc.auth((String) jo.get("accPass"))) {
             if (srcAcc.withdraw(amount, destAcc)) {
                 send("0");
             } else
@@ -221,13 +222,14 @@ public class Handler implements Runnable {
     private void closeAccResponse() throws IOException {
         send("0");
 
-        Account acc = user.getAccById(receive());
+        JSONObject jo = new JSONObject(receive());
+        Account acc = user.getAccById((String) jo.get("id"));
         if (acc == null) {
             rejectionResponse("InvalidSrcAccId");
             return;
         }
 
-        if (acc.auth(receive())) {
+        if (acc.auth((String) jo.get("accPass"))) {
             if (acc.getBalance().compareTo(new BigDecimal(0)) == 0) {
                 user.removeAcc(acc.getId());
 
