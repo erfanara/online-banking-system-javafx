@@ -1,19 +1,20 @@
 package obsjApp.client.controllers;
 
+import obsjApp.client.Main;
+import obsjApp.client.formViews.Loading;
+import obsjApp.client.formViews.Message;
+import obsjApp.core.Account;
+import obsjApp.core.Validation;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import obsjApp.client.formViews.Message;
-import obsjApp.core.User;
-import obsjApp.core.Validation;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.*;
 import java.net.URL;
@@ -21,11 +22,10 @@ import java.util.ResourceBundle;
 
 public class AddAccountController implements Initializable {
 
-    Stage stage;
-    Scene scene;
-    Parent root;
+    Loading loadingWindow = new Loading();
 
-    User user;
+    @FXML
+    Pane screen = new Pane();
 
     @FXML
     JFXTextField id = new JFXTextField();
@@ -39,33 +39,30 @@ public class AddAccountController implements Initializable {
     @FXML
     JFXPasswordField repeat_pass = new JFXPasswordField();
 
+    @FXML
+    JFXRadioButton checkingAccountCheck = new JFXRadioButton();
+
+    @FXML
+    JFXRadioButton savingAccountCheck = new JFXRadioButton();
+
+    ToggleGroup toggleGroup = new ToggleGroup();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
-
-    public void InitUser(User user) {
-        this.user = user;
+        checkingAccountCheck.setToggleGroup(toggleGroup);
+        savingAccountCheck.setToggleGroup(toggleGroup);
     }
 
     @FXML
     public void SubmitAccount(ActionEvent event) throws Exception {
+        loadingWindow.Show();
 
-        if (isValidAccount()) {
-            File user_info = new File("data/" + user.getFirstname() + "_" + user.getLastName() + ".java");
-            User current_user = null;
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(user_info));
+        Account.Type selectedType = toggleGroup.getSelectedToggle() == savingAccountCheck?
+                Account.Type.SAVING : Account.Type.CHECKING;
 
-            if (user_info.exists()) {
-                current_user = (User) inputStream.readObject();
-                //this code is wrong entirely but just leaving it like this until further notice
-//            current_user.getAccounts().put("1", new Account(id.getText(), pass.getText(), alias.getText()));
-                user_info.delete();
-                user_info.createNewFile();
-                ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(user_info));
-                outputStream.writeObject(current_user);
-            }
-        }
-
+        if (isValidAccount())
+            Main.getClient().createAcc(selectedType, alias.getText(), pass.getText());
+        loadingWindow.Close();
     }
 
     public boolean isValidAccount() {
@@ -83,7 +80,7 @@ public class AddAccountController implements Initializable {
         } else
             message.AddStatement("لطفا رمز عبور را وارد کنید.");
 
-        if (message.getMessage() == null) {
+        if (!message.getMessage().equals("")) {
             message.ShowFinalMessage();
             return false;
         }
@@ -91,29 +88,9 @@ public class AddAccountController implements Initializable {
     }
 
     @FXML
-    public void SwitchToMain(ActionEvent event) throws IOException {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../formViews/Dashboard.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void SwitchToServices(ActionEvent event) throws IOException {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void SwitchToAccountManagement(ActionEvent event) throws IOException {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../formViews/AccountManagement.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void ReturnToManagement(ActionEvent event) throws IOException {
+        AnchorPane load = FXMLLoader.load(getClass().getResource("../formViews/AccountManagement.fxml"));
+        screen.getChildren().clear();
+        screen.getChildren().add(load);
     }
 }

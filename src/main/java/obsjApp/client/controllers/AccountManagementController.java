@@ -1,28 +1,33 @@
 package obsjApp.client.controllers;
 
+import obsjApp.client.formViews.Loading;
+import obsjApp.core.Account;
+import obsjApp.core.User;
 import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.stage.Stage;
-import obsjApp.core.Account;
-import obsjApp.core.User;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AccountManagementController implements Initializable {
 
-    Stage stage;
-    Scene scene;
-    Parent root;
+    Loading loadingWindow = new Loading();
+
+    @FXML
+    AnchorPane screen = new AnchorPane();
 
     private User user;
 
@@ -30,10 +35,10 @@ public class AccountManagementController implements Initializable {
     JFXTreeTableView<Account> accounts = new JFXTreeTableView<Account>();
 
     @FXML
-    TreeTableColumn<Account, String> alias_or_id = new TreeTableColumn<Account, String>();
+    TreeTableColumn<Account, String> alias = new TreeTableColumn<Account, String>("Alias");
 
     @FXML
-    TreeTableColumn<Account, String> balance = new TreeTableColumn<Account, String>();
+    TreeTableColumn<Account, String> balance_A = new TreeTableColumn<Account, String>("Balance");
 
     @FXML
     TreeTableColumn<Account, String> date_created = new TreeTableColumn<Account, String>();
@@ -41,48 +46,43 @@ public class AccountManagementController implements Initializable {
     public AccountManagementController() throws Exception {
     }
 
-    public void InitUser(User user) {
-        this.user = user;
-    }
-
-//    public ObservableList<Account> list = FXCollections.observableArrayList( //example
-//            new Account("9991", "0012", "", BigDecimal.valueOf(888)),
-//            new Account("9992", "0013", "", BigDecimal.valueOf(889)),
-//            new Account("9993", "0014", "Favorite", BigDecimal.valueOf(890))
-//    );
+    public ObservableList<Account> list = FXCollections.observableArrayList( //example
+            new Account("9991", "0012", BigDecimal.valueOf(888), user),
+            new Account("9992", "0013", BigDecimal.valueOf(889), user),
+            new Account("9993", "0014", BigDecimal.valueOf(890), user)
+    );
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        alias_or_id.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("ID"));
-        balance.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("Balance"));
-        accounts.getColumns().add(alias_or_id);
-        accounts.getColumns().add(balance);
+
+        loadingWindow.Show();
+
+        alias.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("alias"));
+        balance_A.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("balance"));
+
+        final RecursiveTreeItem<Account> root = new RecursiveTreeItem<Account>(list, RecursiveTreeObject::getChildren);
+        try {
+            root.getChildren().add(new TreeItem<>(new Account("9994", "0015", BigDecimal.valueOf(891), user))); //test
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        accounts.getColumns().setAll(alias, balance_A);
+        accounts.setRoot(root);
+        accounts.setShowRoot(false);
+
+        accounts.setPrefWidth(600);
+        alias.setPrefWidth(accounts.getPrefWidth() / 2);
+        balance_A.setPrefWidth(accounts.getPrefWidth() / 2);
+
+        loadingWindow.Close();
     }
 
     @FXML
-    public void SwitchToMain(ActionEvent event) throws IOException {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../formViews/Dashboard.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void SwitchToServices(ActionEvent event) throws IOException {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void SwitchToAccountManagement(ActionEvent event) throws IOException {
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("../formViews/AccountManagement.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void GoToAddAccount(ActionEvent event) throws IOException {
+        loadingWindow.Show();
+        AnchorPane loader = FXMLLoader.load(getClass().getResource("../formViews/AddAccount.fxml"));
+        screen.getChildren().clear();
+        screen.getChildren().add(loader);
+        loadingWindow.Close();
     }
 }
