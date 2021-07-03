@@ -13,7 +13,7 @@
 9   ->  Transaction request             :   Transaction Object (?)
 10  ->  get the bills                   :
 11  ->  Loan request                    :
-12  ->  Sending passhash of acc for auth:   - [x]
+// 12  ->  Sending passhash of acc for auth:   - [x]
 13  ->  close account                   :   Account id or alias (?) - [x]
 14  ->  Get User info                   :   - [x]
 

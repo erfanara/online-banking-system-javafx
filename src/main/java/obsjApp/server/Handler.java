@@ -63,6 +63,8 @@ public class Handler implements Runnable {
                         case "9" -> transactionResponse();
 
                         case "13" -> closeAccResponse();
+
+                        case "14" -> sendUserInfo();
                     }
                 }
                 str = in.readLine();
@@ -240,5 +242,18 @@ public class Handler implements Runnable {
             } else
                 rejectionResponse("BalanceIsNotZero");
         }
+    }
+
+    private void sendUserInfo() throws IOException {
+        send("0");
+
+        JSONObject jo = new JSONObject();
+        jo.put("firstName", user.getFirstname());
+        jo.put("lastName", user.getLastName());
+        jo.put("nationalCode", user.getNationalCode());
+        jo.put("phoneNumber", user.getPhoneNumber());
+        jo.put("email", user.getEmail());
+
+        send(jo.toString());
     }
 }
