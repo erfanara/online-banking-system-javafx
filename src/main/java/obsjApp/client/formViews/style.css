@@ -1,0 +1,6 @@
+.background{
+-fx-background-image: url('../resources/signup.jpg');
+}
+.login{
+-fx-background-image: url('../resources/login.png');
+}

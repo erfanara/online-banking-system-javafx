@@ -54,5 +54,6 @@
             </cursor>
         </JFXButton>
       <JFXTextField fx:id="user_name" layoutX="674.0" layoutY="344.0" prefHeight="40.0" prefWidth="272.0" />
+      <Pane layoutY="1.0" prefHeight="768.0" prefWidth="577.0" styleClass="login" stylesheets="@style.css" />
     </children>
 </Pane>

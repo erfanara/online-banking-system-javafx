@@ -1,4 +1,4 @@
-package obsjApp.client.formViews;
+package OBSApp.client.formViews;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
