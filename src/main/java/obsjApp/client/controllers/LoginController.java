@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    JSONObject user;
 
     Loading loadingWindow = new Loading();
 

@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 
 public class TranactionsViewController implements Initializable {
 
+    int userID;
+
     @FXML
     JFXTreeTableView<Transaction> transactions = new JFXTreeTableView<Transaction>();
 
@@ -24,8 +26,15 @@ public class TranactionsViewController implements Initializable {
     @FXML
     TreeTableColumn<Transaction, String> balance = new TreeTableColumn<Transaction, String>("موجودی باقی مانده");
 
+    public void InitData(int userID){
+        this.userID = userID;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+
         amount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
         reason.setCellValueFactory(new TreeItemPropertyValueFactory<>("reason"));
         balance.setCellValueFactory(new TreeItemPropertyValueFactory<>("balance"));

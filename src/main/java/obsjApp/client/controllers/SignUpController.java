@@ -2,7 +2,7 @@ package obsjApp.client.controllers;
 
 import obsjApp.client.Main;
 import obsjApp.client.formViews.Loading;
-import ObsjApp.client.formViews.Message;
+import obsjApp.client.formViews.Message;
 import obsjApp.core.User;
 import obsjApp.core.Validation;
 import com.jfoenix.controls.JFXTextField;

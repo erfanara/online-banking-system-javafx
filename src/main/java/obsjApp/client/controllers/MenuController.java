@@ -2,7 +2,6 @@ package obsjApp.client.controllers;
 
 import obsjApp.client.Main;
 import obsjApp.client.formViews.Loading;
-import OBSApp.core.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,25 +18,19 @@ import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
 
-    User user;
+    JSONObject user;
 
     Loading loadingWindow = new Loading();
 
     @FXML
     Pane screen = new Pane();
 
-    @FXML
-    ImageView profileImage = new ImageView();
+    public void InitUser(String id) throws Exception {
+        this.user = Main.getClient().getUserInfo();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        File image = new File("OBSApp/client/database/resources/" + user.getNationalCode() + ".jpg");
-        if (image.exists())
-            profileImage.setImage(new Image("OBSApp/client/database/" + user.getNationalCode() + ".jpg"));
-        else
-            profileImage.setImage(new Image("OBSApp/client/resources/user.jpg"));
-        profileImage.setFitWidth(100);
-        profileImage.setFitHeight(100);
     }
 
     public void InitData(String id) throws Exception {
