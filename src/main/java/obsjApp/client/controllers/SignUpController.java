@@ -1,8 +1,8 @@
-package OBSApp.client.controllers;
+package obsjApp.client.controllers;
 
 import obsjApp.client.Main;
 import obsjApp.client.formViews.Loading;
-import obsjApp.client.formViews.Message;
+import ObsjApp.client.formViews.Message;
 import obsjApp.core.User;
 import obsjApp.core.Validation;
 import com.jfoenix.controls.JFXTextField;
@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -87,6 +88,22 @@ public class SignUpController implements Initializable {
         BufferedImage BI = SwingFXUtils.fromFXImage(profileImage, null);
 
         ImageIO.write(BI, "png", output);
+
+//        String imageString = null;
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//
+//        try {
+//            ImageIO.write(image, type, bos);
+//            byte[] imageBytes = bos.toByteArray();
+//
+//            BASE64Encoder encoder = new BASE64Encoder();
+//            imageString = encoder.encode(imageBytes);
+//
+//            bos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     public boolean isValidSignUp() {

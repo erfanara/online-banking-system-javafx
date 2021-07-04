@@ -7,10 +7,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import obsjApp.core.SavingAccount;
+import obsjApp.core.SecurePass;
+import obsjApp.core.Bill;
+import obsjApp.core.Account;
+
 // TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
     // THESE STATIC FIELDS WILL NOT SERIALIZED , so we will initialize them at the start of our server manually
     public static int numberOfUsers;
+
     // this map is global for all of users that key represent Acc id using String
     public static Map<String, Account> allAccounts = null;
 

@@ -1,5 +1,8 @@
 package obsjApp.core;
 
+import obsjApp.core.SecurePass;
+import obsjApp.core.Transaction;
+import obsjApp.core.User;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import java.io.Serializable;
@@ -8,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class Account extends RecursiveTreeObject<Account> implements Serializable {
     public static final long ACC_ID_START = 6037000000000000L;
 
-    // TODO: type of Account should specified using enum or maybe inheritance ? inheritance
     public static enum Type {
         SAVING, CHECKING;
     }
@@ -34,7 +37,6 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     protected final ArrayList<Transaction> transactions;
 
-
     // alias in parameters can be null
     public Account(String password, String alias, User owner) {
         this.owner = owner;
@@ -55,7 +57,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
         this(password, alias, balance, null);
     }
 
-    // preventing race conditions using synchronized for withdraw,deposite methods
+    // preventing race conditions using synchronized for withdraw,deposit methods
     public boolean withdraw(BigDecimal amount, Account toAccId) {
         synchronized (balance) {
             if (getBalance().compareTo(amount) < 0) {
@@ -141,4 +143,3 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
                 '}';
     }
 }
-

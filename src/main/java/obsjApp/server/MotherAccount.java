@@ -7,7 +7,7 @@ import obsjApp.core.User;
 import java.math.BigDecimal;
 
 public final class MotherAccount extends Account {
-    private final String id = "0";
+    private final String id = String.valueOf(this.hashCode());
 
     public MotherAccount(String password, String alias) {
         super(password, null, (User) null);

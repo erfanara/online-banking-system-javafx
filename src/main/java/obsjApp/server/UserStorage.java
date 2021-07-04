@@ -1,7 +1,7 @@
 package obsjApp.server;
 
-import obsjApp.core.Account;
 import obsjApp.core.User;
+import obsjApp.core.Account;
 
 import java.io.*;
 import java.nio.file.DirectoryStream;
@@ -14,7 +14,7 @@ import java.util.Map;
 public final class UserStorage {
     private final File outputDir;
 
-    // Map for loading users into the ram for faster operations, Map<NationalCode,User>
+    // Map for loading users into the ram for faster operations, Map<NationalCode, User>
     private static final Map<String, User> usersMap = new HashMap<String, User>();
 
     public UserStorage(String outputDir) {
