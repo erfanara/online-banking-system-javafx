@@ -35,7 +35,7 @@
             <Font name="IRKoodak" size="24.0" />
          </font>
       </JFXButton>
-      <JFXRadioButton layoutX="294.0" layoutY="411.0" text="حساب جاری">
+      <JFXRadioButton fx:id="checkingAccountCheck" layoutX="294.0" layoutY="411.0" text="حساب جاری">
          <selectedColor>
             <Color green="0.01666666753590107" blue="1.0" />
          </selectedColor>
@@ -43,7 +43,7 @@
             <Font name="IRKoodak" size="16.0" />
          </font>
       </JFXRadioButton>
-      <JFXRadioButton layoutX="294.0" layoutY="454.0" text="حساب پس انداز">
+      <JFXRadioButton fx:id="savingAccountCheck" layoutX="294.0" layoutY="454.0" text="حساب پس انداز">
          <selectedColor>
             <Color green="0.01666666753590107" blue="1.0" />
          </selectedColor>
