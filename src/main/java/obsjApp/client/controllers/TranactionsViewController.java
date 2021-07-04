@@ -24,18 +24,15 @@ public class TranactionsViewController implements Initializable {
     @FXML
     TreeTableColumn<Transaction, String> balance = new TreeTableColumn<Transaction, String>("موجودی باقی مانده");
 
-    @FXML
-    TreeTableColumn<Transaction, String> date = new TreeTableColumn<Transaction, String>("تاریخ");
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         amount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
         reason.setCellValueFactory(new TreeItemPropertyValueFactory<>("reason"));
         balance.setCellValueFactory(new TreeItemPropertyValueFactory<>("balance"));
 
-        transactions.setPrefWidth(700);
-        amount.setPrefWidth(transactions.getPrefWidth() / 4);
-        reason.setPrefWidth(transactions.getPrefWidth() / 4);
-        balance.setPrefWidth(transactions.getPrefWidth() / 4);
+        transactions.setPrefWidth(450);
+        amount.setPrefWidth(transactions.getPrefWidth() / 3);
+        reason.setPrefWidth(transactions.getPrefWidth() / 3);
+        balance.setPrefWidth(transactions.getPrefWidth() / 3);
     }
 }
