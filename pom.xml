@@ -54,6 +54,9 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>obsjApp/client/formViews/*.fxml</include>
+                    <include>obsjApp/client/formViews/*.css</include>
+                    <include>obsjApp/client/formViews/*.html</include>
+                    <include>obsjApp/client/formViews/*.htm</include>
                     <include>obsjApp/client/resources/**</include>
                 </includes>
             </resource>
