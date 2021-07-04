@@ -2,6 +2,7 @@ package obsjApp.server;
 
 import obsjApp.core.Account;
 import obsjApp.core.Transaction;
+import obsjApp.core.User;
 
 import java.math.BigDecimal;
 
@@ -9,7 +10,7 @@ public final class MotherAccount extends Account {
     private final String id = "0";
 
     public MotherAccount(String password, String alias) {
-        super(password, null, null);
+        super(password, null, (User) null);
     }
 
     public MotherAccount(String password, String alias, BigDecimal balance) {

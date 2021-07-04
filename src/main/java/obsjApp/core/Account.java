@@ -51,6 +51,10 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
         type = Type.CHECKING;
     }
 
+    public Account(String password, String alias, BigDecimal balance) {
+        this(password, alias, balance, null);
+    }
+
     // preventing race conditions using synchronized for withdraw,deposite methods
     public boolean withdraw(BigDecimal amount, Account toAccId) {
         synchronized (balance) {
