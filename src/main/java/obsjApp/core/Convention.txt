@@ -17,6 +17,7 @@
 // 12  ->  Sending passhash of acc for auth:   - [x]
 13  ->  close account                   :   Account id or alias (?) - [x]
 14  ->  Get User info                   :   - [x]
+15  ->  Get Profile Pic                 :
 
 only Server-side:
 0   ->  Accepted                        :

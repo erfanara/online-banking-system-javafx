@@ -1,5 +1,6 @@
 package obsjApp.client;
 
+import javafx.scene.image.Image;
 import obsjApp.core.Account;
 import obsjApp.server.Server;
 import org.json.JSONArray;
@@ -64,9 +65,15 @@ class WrongPasswordException extends RuntimeException {
     }
 }
 
-class DuplicateAliasExeception extends RuntimeException {
-    public DuplicateAliasExeception() {
+class DuplicateAliasException extends RuntimeException {
+    public DuplicateAliasException() {
         super("this alias is already submited for another account");
+    }
+}
+
+class PictureNotFoundException extends RuntimeException {
+    public PictureNotFoundException() {
+        super("requested picture not found");
     }
 }
 
@@ -110,7 +117,7 @@ public class Client {
 
             case "WrongPassword" -> throw new WrongPasswordException();
 
-            case "DuplicateAlias" -> throw new DuplicateAliasExeception();
+            case "DuplicateAlias" -> throw new DuplicateAliasException();
 
             case "InvalidSrcAccId" -> throw new InvalidSrcAccIdException();
 
@@ -121,6 +128,8 @@ public class Client {
             case "InsufficientFunds" -> throw new InsufficientFundsException();
 
             case "BalanceIsNotZero" -> throw new BalanceIsNotZeroException();
+
+            case "PictureNotFound" -> throw new PictureNotFoundException();
         }
     }
 
@@ -260,6 +269,15 @@ public class Client {
         checkServerResponse();
 
         return new JSONObject(receive());
+    }
+
+    public Image getProfilePic() throws Exception {
+        send("15");
+        checkServerResponse();
+
+        checkServerResponse();
+        ByteArrayInputStream stream = new ByteArrayInputStream(receive().getBytes());
+        return new Image(stream);
     }
 
     public void closeSocket() throws Exception {

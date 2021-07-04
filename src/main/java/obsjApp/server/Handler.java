@@ -67,6 +67,8 @@ public class Handler implements Runnable {
                         case "13" -> closeAccResponse();
 
                         case "14" -> sendUserInfo();
+
+                        case "15" -> sendProfilePic();
                     }
                 }
                 str = in.readLine();
@@ -257,7 +259,7 @@ public class Handler implements Runnable {
         }
     }
 
-    private void sendUserInfo() throws IOException {
+    private void sendUserInfo() {
         send("0");
 
         JSONObject jo = new JSONObject();
@@ -268,5 +270,18 @@ public class Handler implements Runnable {
         jo.put("email", user.getEmail());
 
         send(jo.toString());
+    }
+
+    private void sendProfilePic() {
+        send("0");
+
+        String imgStr = null;
+        try {
+            imgStr = ServerCli.db.getProfilePicInStr(user.getNationalCode());
+            send("0");
+        } catch (IOException e) {
+            rejectionResponse("PictureNotFound");
+        }
+        send(imgStr);
     }
 }
