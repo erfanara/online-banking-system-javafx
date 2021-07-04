@@ -208,6 +208,13 @@ public class Client {
         return new JSONObject(receive());
     }
 
+    public JSONArray getAllAccIDs() throws Exception {
+        send("6");
+        checkServerResponse();
+
+        return new JSONArray(receive());
+    }
+
     public boolean setAccAlias(String accId, String alias) throws Exception {
         send("7");
         checkServerResponse();

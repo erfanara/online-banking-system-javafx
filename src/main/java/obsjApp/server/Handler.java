@@ -58,6 +58,8 @@ public class Handler implements Runnable {
 
                         case "5" -> sendAccById();
 
+                        case "6" -> sendAllAccIDs();
+
                         case "7" -> setAccAlias();
 
                         case "9" -> transactionResponse();
@@ -168,6 +170,17 @@ public class Handler implements Runnable {
         jo.accumulate("transactions", ac.getTransactions());
 
         send(jo.toString());
+    }
+
+    private void sendAllAccIDs() {
+        send("0");
+
+        JSONArray ja = new JSONArray();
+        for (String id : user.getAllAccIds()) {
+            ja.put(id);
+        }
+
+        send(ja.toString());
     }
 
     private void setAccAlias() throws IOException {
