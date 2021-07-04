@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Account extends RecursiveTreeObject<Account> implements Serializable {
     public static final long ACC_ID_START = 6037000000000000L;
@@ -33,13 +34,12 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     protected final ArrayList<Transaction> transactions;
 
-    // preventing race conditions using lock for withdraw,deposite methods
 
     // alias in parameters can be null
     public Account(String password, String alias, User owner) {
         this.owner = owner;
         this.alias = alias;
-        this.id = String.valueOf(this.hashCode() + ACC_ID_START);
+        this.id = generateId();
         setPassHash(password);
         type = Type.CHECKING;
         transactions = new ArrayList<Transaction>();
@@ -51,6 +51,7 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
         type = Type.CHECKING;
     }
 
+    // preventing race conditions using synchronized for withdraw,deposite methods
     public boolean withdraw(BigDecimal amount, Account toAccId) {
         synchronized (balance) {
             if (getBalance().compareTo(amount) < 0) {
@@ -115,6 +116,14 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
 
     public User getOwner() {
         return owner;
+    }
+
+    private static String generateId() {
+        String id = String.valueOf(ACC_ID_START + new Random().nextInt(999999999));
+        while (User.allAccounts.containsKey(id)) {
+            id = String.valueOf(ACC_ID_START + new Random().nextInt(999999999));
+        }
+        return id;
     }
 
     @Override
