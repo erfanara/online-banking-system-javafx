@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.DashboardController">
     <children>
-        <Text fx:id="image_holder" layoutX="26.0" layoutY="153.0" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="نام کاربری" wrappingWidth="521.13671875">
+        <Text fx:id="user_name" layoutX="26.0" layoutY="153.0" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="نام کاربری" wrappingWidth="521.13671875">
             <font>
                 <Font name="IRKoodak" size="36.0" />
             </font>
