@@ -44,6 +44,9 @@ public class User implements Serializable {
     public final Map<String, Bill> currentBills = new LinkedHashMap<String, Bill>();
     public final Map<String, Bill> paidBills = new LinkedHashMap<String, Bill>();
 
+    // Loan Section
+    public final Map<String, Loan> currentLoans = new LinkedHashMap<String, Loan>();
+
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
     public User(String firstname,

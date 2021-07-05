@@ -2,13 +2,17 @@ package OBSApp.server;
 
 import OBSApp.core.Account;
 import OBSApp.core.Bill;
+import OBSApp.core.Loan;
 import OBSApp.core.User;
+import OBSApp.core.exceptions.BillAlreadyPaidException;
+import OBSApp.core.exceptions.BillNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.Socket;
+import java.util.Map;
 
 public class Handler implements Runnable {
     private User user = null;
@@ -65,11 +69,21 @@ public class Handler implements Runnable {
 
                         case "9" -> transactionResponse();
 
+                        case "10" -> sendCurrentBills();
+
+                        case "11" -> loanResponse();
+
                         case "13" -> closeAccResponse();
 
                         case "14" -> sendUserInfo();
 
                         case "15" -> sendProfilePic();
+
+                        case "16" -> sendCurrentLoans();
+
+                        case "17" -> payBillResponse();
+
+                        case "18" -> sendPayedBills();
                     }
                 }
                 str = in.readLine();
@@ -284,5 +298,71 @@ public class Handler implements Runnable {
             rejectionResponse("PictureNotFound");
         }
         send(imgStr);
+    }
+
+    private void sendCurrentBills() {
+        send("0");
+
+        JSONArray ja = new JSONArray();
+        for (Map.Entry<String, Bill> entry : user.currentBills.entrySet()) {
+            JSONObject jo = new JSONObject(entry.getValue());
+            ja.put(jo);
+        }
+
+        send(ja.toString());
+    }
+
+    private void sendPayedBills() {
+        send("0");
+
+        JSONArray ja = new JSONArray();
+        for (Map.Entry<String, Bill> entry : user.currentBills.entrySet()) {
+            JSONObject jo = new JSONObject(entry.getValue());
+            ja.put(jo);
+        }
+
+        send(ja.toString());
+    }
+
+    private void payBillResponse() throws IOException {
+        send("0");
+
+        JSONObject jo = new JSONObject(receive());
+        Account acc = user.getAccById((String) jo.get("accId"));
+        String pass = (String) jo.get("accPass");
+        if (acc != null)
+            if (acc.auth(pass))
+                try {
+                    BillManagment.payBill(user, acc, (String) jo.get("key"));
+                } catch (BillAlreadyPaidException e) {
+                    rejectionResponse("BillAlreadyPaid");
+                } catch (BillNotFoundException e) {
+                    rejectionResponse("BillNotFound");
+                }
+            else
+                rejectionResponse("WrongPassword");
+        else
+            rejectionResponse("InvalidSrcAccId");
+    }
+
+    private void sendCurrentLoans() {
+        send("0");
+
+        JSONArray ja = new JSONArray();
+        for (Map.Entry<String, Loan> entry : user.currentLoans.entrySet()) {
+            JSONObject jo = new JSONObject(entry.getValue());
+            ja.put(jo);
+        }
+
+        send(ja.toString());
+    }
+
+    // TODO : incompleted section
+    private void loanResponse() throws IOException{
+        send("0");
+
+        JSONObject jo = new JSONObject(receive());
+
+
     }
 }

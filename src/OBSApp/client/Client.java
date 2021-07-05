@@ -65,10 +65,15 @@ public class Client {
             case "BalanceIsNotZero" -> throw new BalanceIsNotZeroException();
 
             case "PictureNotFound" -> throw new PictureNotFoundException();
+
+            case "BillAlreadyPaid" -> throw new BillAlreadyPaidException();
+
+            case "BillNotFound" -> throw new BillNotFoundException();
         }
     }
 
     // TODO: throwing Exception is so imprecise
+    // TODO: try to change return type from JSONArray to Array
     public boolean checkServerResponse() throws Exception {
         switch (receive()) {
             case "0":
@@ -186,8 +191,15 @@ public class Client {
         return checkServerResponse();
     }
 
-    public JSONArray getTheBills() throws Exception {
+    public JSONArray getCurrentBills() throws Exception {
         send("10");
+        checkServerResponse();
+
+        return new JSONArray(receive());
+    }
+
+    public JSONArray getPayedBills() throws Exception {
+        send("18");
         checkServerResponse();
 
         return new JSONArray(receive());

@@ -52,5 +52,17 @@ public class Bill {
     public String getPaymentId() {
         return paymentId;
     }
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public String getSubsidiaryCompanyId() {
+        return subsidiaryCompanyId;
+    }
 }
 

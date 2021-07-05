@@ -15,9 +15,8 @@ public class BillManagment {
         return bill;
     }
 
-    public static boolean payBill(User user, Account fromAcc, String billId, String paymentId)
+    public static boolean payBill(User user, Account fromAcc, String key)
             throws BillNotFoundException, BillAlreadyPaidException {
-        String key = billId + paymentId;
         if (!user.paidBills.containsKey(key)) {
             Bill bill = user.currentBills.get(key);
             if (bill != null) {

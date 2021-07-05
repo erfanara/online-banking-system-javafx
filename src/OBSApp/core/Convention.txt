@@ -12,7 +12,7 @@
 7   ->  Set alias for account           :   - [x]
 // 8   ->  Move Account to the Favorites   :   Account id or alias ?
 9   ->  Transaction request             :   Transaction Object (?)
-10  ->  get the bills                   :
+10  ->  Get Current bills                   :
 11  ->  Loan request                    :
 // 12  ->  Sending passhash of acc for auth:   - [x]
 13  ->  close account                   :   Account id or alias (?) - [x]
@@ -20,6 +20,7 @@
 15  ->  Get Profile Pic                 :
 16  ->  Get the loans
 17  ->  pay bill
+18  ->  Get payed Bills
 
 only Server-side:
 0   ->  Accepted                        :
