@@ -1,5 +1,6 @@
 package OBSApp.client;
 
+import OBSApp.core.exceptions.*;
 import javafx.scene.image.Image;
 import OBSApp.core.Account;
 import OBSApp.server.Server;
@@ -10,72 +11,6 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.Socket;
-
-class LogInFirstException extends RuntimeException {
-    public LogInFirstException() {
-        super("you have to LogIn first");
-    }
-}
-
-class InvalidSrcAccIdException extends RuntimeException {
-    public InvalidSrcAccIdException() {
-        super("Source Account id is invalid");
-    }
-}
-
-class InvalidDestAccIdException extends RuntimeException {
-    public InvalidDestAccIdException() {
-        super("Destination Account id is invalid");
-    }
-}
-
-class InvalidAmountException extends RuntimeException {
-    public InvalidAmountException() {
-        super("this amount is invalid");
-    }
-}
-
-class InsufficientFundsException extends RuntimeException {
-    public InsufficientFundsException() {
-        super("your account balance is not enough");
-    }
-}
-
-class BalanceIsNotZeroException extends RuntimeException {
-    public BalanceIsNotZeroException() {
-        super("your account balance is not zero, please deposit your balance to another account, and try agian");
-    }
-}
-
-class InvalidUsernameException extends RuntimeException {
-    public InvalidUsernameException() {
-        super("Username is invalid");
-    }
-}
-
-class UserAlreadyExistException extends RuntimeException {
-    public UserAlreadyExistException() {
-        super("This user with this national code already Exist");
-    }
-}
-
-class WrongPasswordException extends RuntimeException {
-    public WrongPasswordException() {
-        super("Password is wrong");
-    }
-}
-
-class DuplicateAliasException extends RuntimeException {
-    public DuplicateAliasException() {
-        super("this alias is already submited for another account");
-    }
-}
-
-class PictureNotFoundException extends RuntimeException {
-    public PictureNotFoundException() {
-        super("requested picture not found");
-    }
-}
 
 public class Client {
     public final InetAddress addr = InetAddress.getByName(null);
