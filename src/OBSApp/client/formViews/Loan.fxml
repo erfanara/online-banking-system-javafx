@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.LoanController">
+<AnchorPane fx:id="screen" maxHeight="768.0" maxWidth="814.0" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.LoanController">
    <children>
       <JFXTextField fx:id="account_id" layoutX="298.0" layoutY="273.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="شماره حساب">
          <font>
@@ -18,7 +17,7 @@
             <Font name="IRKoodak" size="19.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="697.0" layoutY="718.0" onAction="#ReturnToServices" prefHeight="46.0" prefWidth="113.0" ripplerFill="WHITE" style="-fx-background-color: blue;" text="بازگشت" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="687.0" layoutY="708.0" onAction="#ReturnToServices" prefHeight="46.0" prefWidth="113.0" ripplerFill="WHITE" style="-fx-background-color: blue;" text="بازگشت" textFill="WHITE">
          <font>
             <Font name="IRKoodak" size="19.0" />
          </font>

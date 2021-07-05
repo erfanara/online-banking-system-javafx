@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.AddAccountController">
+<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.AddAccountController">
    <children>
       <JFXTextField fx:id="alias" layoutX="294.0" layoutY="225.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="196.0" promptText="نام مستعار (اختیاری)">
          <font>

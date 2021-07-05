@@ -1,17 +1,26 @@
 package OBSApp.client.controllers;
 
+import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TransferController implements Initializable {
+
+    Loading loadingWindow = new Loading();
+
+    @FXML
+    AnchorPane screen = new AnchorPane();
 
     @FXML
     JFXTextField source_user = new JFXTextField();
@@ -85,4 +94,14 @@ public class TransferController implements Initializable {
 
         return true;
     }
+
+    @FXML
+    public void ReturnToServices(ActionEvent event) throws IOException {
+        loadingWindow.Show();
+        AnchorPane load = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
+        screen.getChildren().clear();
+        screen.getChildren().add(load);
+        loadingWindow.Close();
+    }
+
 }

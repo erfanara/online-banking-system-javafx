@@ -5,7 +5,10 @@ import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import OBSApp.core.User;
 import OBSApp.core.Validation;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,10 +52,10 @@ public class SignUpController implements Initializable {
     JFXTextField email = new JFXTextField();
 
     @FXML
-    JFXTextField pass = new JFXTextField();
+    JFXPasswordField pass = new JFXPasswordField();
 
     @FXML
-    JFXTextField repeat_pass = new JFXTextField();
+    JFXPasswordField repeat_pass = new JFXPasswordField();
 
     @FXML
     FileChooser imageChooser = new FileChooser();
@@ -67,7 +70,7 @@ public class SignUpController implements Initializable {
     public void SubmitUserInfo(ActionEvent event) throws Exception {
         test.setText(first_name.getText());
         loadingWindow.Show();
-//        if (isValidSignUp()) {
+        if (isValidSignUp()) {
             Main.getClient().signupRequest(first_name.getText(), last_name.getText(), national_code.getText(),
                     phone_number.getText(), email.getText(), pass.getText());
 
@@ -75,7 +78,7 @@ public class SignUpController implements Initializable {
             loadingWindow.Close();
             Message.ShowMessage("اطلاعات کاربر با موفقیت ثبت شد!");
             ReturnToLogin(event);
-//        }
+        }
     }
 
     @FXML
@@ -111,14 +114,12 @@ public class SignUpController implements Initializable {
         if (!Validation.isValidPhoneNumber(phone_number.getText()))
             message.AddStatement("شماره همراه معتبر نیست!");
 
-        if (pass.getText() != null) {
-            if (!pass.getText().equals(repeat_pass.getText()))
-                message.AddStatement("رمز عبور به درستی تکرار نشده است!");
-
-            if (pass.getText().length() < 5 || pass.getText().length() > 12)
-                message.AddStatement("رمز عبور باید بین 5 الی 12 کاراکتر داشته باشد.");
-        } else
-            message.AddStatement("لطفا رمز عبور را وارد کنید.");
+//        if (!pass.getText().equals("")) {
+//            if (!pass.getText().equals(repeat_pass.getText()))
+//                message.AddStatement("رمز عبور به درستی تکرار نشده است!");
+//
+//        } else
+//            message.AddStatement("لطفا رمز عبور را وارد کنید.");
 
         if (message.getMessage() != null) {
             message.ShowFinalMessage();
@@ -136,5 +137,13 @@ public class SignUpController implements Initializable {
         stage.setScene(scene);
         loadingWindow.Close();
         stage.show();
+    }
+
+    public void exit(ActionEvent event){
+        Platform.exit();
+    }
+
+    public void minimize(ActionEvent event){
+        ((Stage)((JFXButton)event.getSource()).getScene().getWindow()).setIconified(true);
     }
 }
