@@ -19,6 +19,7 @@
 14  ->  Get User info                   :   - [x]
 15  ->  Get Profile Pic                 :
 16  ->  Get the loans
+17  ->  pay bill
 
 only Server-side:
 0   ->  Accepted                        :

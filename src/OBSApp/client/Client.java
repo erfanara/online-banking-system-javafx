@@ -193,6 +193,19 @@ public class Client {
         return new JSONArray(receive());
     }
 
+    public boolean payBill(String billId, String paymentId, String fromAcc, String accPass) throws Exception {
+        send("17");
+        checkServerResponse();
+
+        JSONObject jo = new JSONObject();
+        jo.put("key", billId + paymentId);
+        jo.put("accId", fromAcc);
+        jo.put("accPass", accPass);
+
+        send(jo.toString());
+        return checkServerResponse();
+    }
+
     public boolean loanRequest(BigDecimal amount, int paymentPeriodInDays) throws Exception {
         send("11");
         checkServerResponse();
