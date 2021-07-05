@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="obsjApp.client.controllers.MenuController">
+   <children>
+      <Pane prefHeight="768.0" prefWidth="210.0" style="-fx-background-color: darkblue;">
+         <children>
+            <Text fill="WHITE" layoutX="7.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O.B.S.S" wrappingWidth="196.0">
+               <font>
+                  <Font name="GORECH" size="55.0" />
+               </font>
+            </Text>
+            <JFXButton layoutX="7.0" layoutY="301.0" onAction="#SwitchToAccountManagement" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="مدیریت حساب ها" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="7.0" layoutY="377.0" onAction="#SwitchToServices" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="خدمات" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="7.0" layoutY="223.0" onAction="#SwitchToMain" prefHeight="54.0" prefWidth="196.0" ripplerFill="#1a00ff" text="صفحه اصلی" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
