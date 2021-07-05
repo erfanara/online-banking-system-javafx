@@ -8,18 +8,20 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ServerCli {
-    private final static String HELP_MENU = "COMMANDS >> \n"
-            + "deposit <Account Id> <amount>\n"
-            + "lsAllAcc\n"
-            + "exit\n";
+    private final static String HELP_MENU = """
+            COMMANDS >>\s
+            deposit <Account Id> <amount>
+            lsAllAcc
+            exit
+            """;
 
     public static final UserStorage db = new UserStorage("Users");
 
     // server has a mother account for depositing money to user accounts,
     // the password is just for decoration and some protection.
-    private static MotherAccount motherAcc = new MotherAccount("MyServer!@#", null, new BigDecimal("0"));
+    public static final MotherAccount motherAcc = new MotherAccount("MyServer!@#", null, new BigDecimal("0"));
 
-    private static Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
         Server server = new Server();

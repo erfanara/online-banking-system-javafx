@@ -6,11 +6,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import OBSApp.core.SavingAccount;
 import OBSApp.core.SecurePass;
 import OBSApp.core.Bill;
 import OBSApp.core.Account;
+import OBSApp.server.Handler;
+import OBSApp.server.ServerCli;
 
 // TODO: it seems this class is only used by server package ,so we can move it to the server package
 public class User implements Serializable {
@@ -37,8 +40,11 @@ public class User implements Serializable {
     private final Map<String, Account> userAccountsById = new LinkedHashMap<String, Account>();
     private final Map<String, Account> userAccountsByAlias = new LinkedHashMap<String, Account>();
 
-    private final ArrayList<Bill> issuedBills = new ArrayList<Bill>();
-    private BigDecimal remainingBill;
+    // Bill section
+    public final Map<String, Bill> currentBills = new LinkedHashMap<String, Bill>();
+    public final Map<String, Bill> paidBills = new LinkedHashMap<String, Bill>();
+    private BigDecimal billAmount;
+
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
     public User(String firstname,
@@ -97,7 +103,7 @@ public class User implements Serializable {
     }
 
     // returns id of created Acc
-    public String createAcc(Account.Type type, String alias, String accPassword){
+    public String createAcc(Account.Type type, String alias, String accPassword) {
         Account acc = null;
         switch (type) {
             case SAVING -> {
@@ -139,5 +145,9 @@ public class User implements Serializable {
         allAccounts.remove(accId);
         userAccountsById.remove(accId);
         userAccountsByAlias.remove(accId);
+    }
+
+    public BigDecimal getBillAmount() {
+        return billAmount;
     }
 }

@@ -1,6 +1,7 @@
 package OBSApp.server;
 
 import OBSApp.core.Account;
+import OBSApp.core.Bill;
 import OBSApp.core.User;
 import org.json.JSONArray;
 import org.json.JSONObject;

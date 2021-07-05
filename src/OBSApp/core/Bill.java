@@ -31,7 +31,8 @@ public class Bill {
     private final String paymentId;
     private boolean wasPaid;
 
-    Bill(Type type, BigDecimal amount, BigDecimal remainingDebt, String subsidiaryCompanyId, String userHash) {
+    // userHash is user's nationalCode
+    public Bill(Type type, BigDecimal amount, BigDecimal remainingDebt, String subsidiaryCompanyId, String userHash) {
         this.type = type;
         this.amount = amount.add(remainingDebt);
         this.remainingDebt = remainingDebt;
@@ -44,6 +45,14 @@ public class Bill {
 
     public BigDecimal getAmount() {
         return amount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
     }
 }
 
