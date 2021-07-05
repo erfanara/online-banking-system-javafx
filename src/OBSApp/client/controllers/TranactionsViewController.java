@@ -1,18 +1,28 @@
 package OBSApp.client.controllers;
 
+import OBSApp.client.formViews.Loading;
 import OBSApp.core.Transaction;
 import com.jfoenix.controls.JFXTreeTableView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TranactionsViewController implements Initializable {
 
     int userID;
+
+    @FXML
+    AnchorPane screen = new AnchorPane();
+
+    Loading loadingWindow = new Loading();
 
     @FXML
     JFXTreeTableView<Transaction> transactions = new JFXTreeTableView<Transaction>();
@@ -33,8 +43,6 @@ public class TranactionsViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-
         amount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
         reason.setCellValueFactory(new TreeItemPropertyValueFactory<>("reason"));
         balance.setCellValueFactory(new TreeItemPropertyValueFactory<>("balance"));
@@ -43,5 +51,14 @@ public class TranactionsViewController implements Initializable {
         amount.setPrefWidth(transactions.getPrefWidth() / 3);
         reason.setPrefWidth(transactions.getPrefWidth() / 3);
         balance.setPrefWidth(transactions.getPrefWidth() / 3);
+    }
+
+    @FXML
+    public void ReturnToServices(ActionEvent event) throws IOException {
+        loadingWindow.Show();
+        AnchorPane load = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
+        screen.getChildren().clear();
+        screen.getChildren().add(load);
+        loadingWindow.Close();
     }
 }

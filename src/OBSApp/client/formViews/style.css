@@ -4,3 +4,8 @@
 .login{
 -fx-background-image: url('../resources/login.png');
 }
+.screen{
+-fx-background-color:white;
+-fx-border-color:darkblue;
+-fx-border-width:5px;
+}

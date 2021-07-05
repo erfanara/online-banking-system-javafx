@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="768.0" prefWidth="814.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.TranactionsViewController">
+<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.TranactionsViewController">
    <children>
       <JFXTreeTableView fx:id="transactions" layoutX="58.0" layoutY="47.0" prefHeight="600.0" prefWidth="700.0">
          <columns>
@@ -17,7 +16,7 @@
             <TreeTableColumn fx:id="Success" prefWidth="201.0" text="موفقیت آمیز" />
          </columns>
       </JFXTreeTableView>
-      <JFXButton buttonType="RAISED" layoutX="361.0" layoutY="686.0" prefHeight="40.0" prefWidth="93.0" ripplerFill="WHITE" style="-fx-background-color: green;" text="بازگشت" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="361.0" layoutY="686.0" onAction="#ReturnToServices" prefHeight="40.0" prefWidth="93.0" ripplerFill="WHITE" style="-fx-background-color: green;" text="بازگشت" textFill="WHITE">
          <font>
             <Font name="IRKoodak" size="18.0" />
          </font>

@@ -7,16 +7,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.MenuController">
+<AnchorPane fx:id="window" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.MenuController">
    <children>
       <Pane prefHeight="768.0" prefWidth="210.0" style="-fx-background-color: darkblue;">
          <children>
-            <Text fill="WHITE" layoutX="7.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O.B.S.S" wrappingWidth="196.0">
+            <Text fill="WHITE" layoutX="7.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O.B.S.S" wrappingWidth="196.0">
                <font>
                   <Font name="GORECH" size="55.0" />
                </font>
             </Text>
-            <JFXButton layoutX="7.0" layoutY="301.0" onAction="#SwitchToAccountManagement" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="مدیریت حساب ها" textFill="WHITE">
+            <JFXButton layoutX="7.0" layoutY="345.0" onAction="#SwitchToAccountManagement" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="مدیریت حساب ها" textFill="WHITE">
                <font>
                   <Font name="IRKoodak" size="24.0" />
                </font>
@@ -24,7 +24,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton layoutX="7.0" layoutY="377.0" onAction="#SwitchToServices" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="خدمات" textFill="WHITE">
+            <JFXButton layoutX="7.0" layoutY="421.0" onAction="#SwitchToServices" prefHeight="54.0" prefWidth="196.0" ripplerFill="WHITE" text="خدمات" textFill="WHITE">
                <font>
                   <Font name="IRKoodak" size="24.0" />
                </font>
@@ -32,7 +32,25 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="7.0" layoutY="223.0" onAction="#SwitchToMain" prefHeight="54.0" prefWidth="196.0" ripplerFill="#1a00ff" text="صفحه اصلی" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="7.0" layoutY="267.0" onAction="#SwitchToMain" prefHeight="54.0" prefWidth="196.0" ripplerFill="#1a00ff" text="صفحه اصلی" textFill="WHITE">
+               <font>
+                  <Font name="IRKoodak" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="4.0" layoutY="4.0" onAction="#exit" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: red;" text="X" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="36.0" layoutY="3.0" onAction="#minimize" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: blue;" text="-" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="7.0" layoutY="700.0" onAction="#exit" prefHeight="54.0" prefWidth="196.0" ripplerFill="RED" text="خروج" textFill="WHITE">
                <font>
                   <Font name="IRKoodak" size="24.0" />
                </font>
@@ -42,6 +60,6 @@
             </JFXButton>
          </children>
       </Pane>
-      <Pane fx:id="screen" layoutX="210.0" prefHeight="768.0" prefWidth="814.0" />
+      <Pane fx:id="screen" layoutX="210.0" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" />
    </children>
 </AnchorPane>
