@@ -43,7 +43,9 @@ public class User implements Serializable {
     // Bill section
     public final Map<String, Bill> currentBills = new LinkedHashMap<String, Bill>();
     public final Map<String, Bill> paidBills = new LinkedHashMap<String, Bill>();
-    private BigDecimal billAmount;
+    private BigDecimal remainingBillAmount = new BigDecimal(0);
+    // <BillType, nextIssuanceTime>
+    private Map<Bill.Type, LocalDateTime> nextIssuanceTimes = new LinkedHashMap<>();
 
     // TODO : favorite accounts (we need to store favorite accounts maybe ?)
 
@@ -147,7 +149,23 @@ public class User implements Serializable {
         userAccountsByAlias.remove(accId);
     }
 
-    public BigDecimal getBillAmount() {
-        return billAmount;
+    public LocalDateTime getSignUpDate() {
+        return signUpDate;
+    }
+
+    public BigDecimal getRemainingBillAmount() {
+        return remainingBillAmount;
+    }
+
+    public void addToRemainingBillAmount(BigDecimal amount) {
+        this.remainingBillAmount = this.remainingBillAmount.add(amount);
+    }
+
+    public LocalDateTime getNextIssuanceTime(Bill.Type billType) {
+        return nextIssuanceTimes.get(billType);
+    }
+
+    public void setFutureIssuanceTime(Bill.Type billType, LocalDateTime nextIssuance) {
+        this.nextIssuanceTimes.put(billType, nextIssuance);
     }
 }
