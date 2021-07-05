@@ -92,11 +92,11 @@ public class Handler implements Runnable {
 
     private void logInResponse() throws IOException {
         send("0");
-        JSONArray loginJa = new JSONArray(receive());
+        JSONObject loginJo = new JSONObject(receive());
         // TODO: validation of received data
-        User u = ServerCli.db.readUser((String) loginJa.get(0));
+        User u = ServerCli.db.readUser((String) loginJo.get("username"));
         if (u != null) {
-            if (u.auth((String) (loginJa.get(1)))) {
+            if (u.auth((String) (loginJo.get("passhash")))) {
                 user = u;
                 send("0");
             } else {
