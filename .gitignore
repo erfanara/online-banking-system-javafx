@@ -3,3 +3,12 @@ Users/*
 out/*
 out
 O.B.S.iml
+target
+target/*
+.classpath
+.project
+object.java
+.idea
+.idea/*
+.settings/*
+.settings
