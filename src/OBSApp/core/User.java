@@ -97,7 +97,7 @@ public class User implements Serializable {
     }
 
     // returns id of created Acc
-    public String createAcc(Account.Type type, String alias, String accPassword) throws Exception {
+    public String createAcc(Account.Type type, String alias, String accPassword){
         Account acc = null;
         switch (type) {
             case SAVING -> {

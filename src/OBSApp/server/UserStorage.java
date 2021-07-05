@@ -97,4 +97,15 @@ public final class UserStorage {
         }
         return true;
     }
+
+    public String getProfilePicInStr(String nationalCode)
+            throws IOException{
+        try (
+                FileInputStream in =
+                        new FileInputStream(new File(outputDir, nationalCode + ".png"))) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            stream.write(in.readAllBytes());
+            return stream.toString();
+        }
+    }
 }

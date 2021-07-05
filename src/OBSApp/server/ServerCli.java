@@ -6,7 +6,6 @@ import OBSApp.core.User;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Scanner;
-import OBSApp.server.UserStorage;
 
 public class ServerCli {
     private final static String HELP_MENU = "COMMANDS >> \n"

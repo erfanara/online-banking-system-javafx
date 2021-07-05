@@ -2,16 +2,9 @@ package OBSApp.server;
 
 import OBSApp.core.Account;
 import OBSApp.core.User;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.Socket;
@@ -65,6 +58,8 @@ public class Handler implements Runnable {
 
                         case "5" -> sendAccById();
 
+                        case "6" -> sendAllAccIDs();
+
                         case "7" -> setAccAlias();
 
                         case "9" -> transactionResponse();
@@ -73,12 +68,12 @@ public class Handler implements Runnable {
 
                         case "14" -> sendUserInfo();
 
-                        case "16" -> sendProfPicAddress();
+                        case "15" -> sendProfilePic();
                     }
                 }
                 str = in.readLine();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -131,7 +126,7 @@ public class Handler implements Runnable {
         }
     }
 
-    private void createAccResponse() throws Exception {
+    private void createAccResponse() throws IOException {
         send("0");
         JSONObject jo = new JSONObject(receive());
         // TODO: validation of received data
@@ -179,6 +174,17 @@ public class Handler implements Runnable {
         send(jo.toString());
     }
 
+    private void sendAllAccIDs() {
+        send("0");
+
+        JSONArray ja = new JSONArray();
+        for (String id : user.getAllAccIds()) {
+            ja.put(id);
+        }
+
+        send(ja.toString());
+    }
+
     private void setAccAlias() throws IOException {
         send("0");
 
@@ -224,7 +230,7 @@ public class Handler implements Runnable {
 
             // update the db
             ServerCli.db.writeUser(user);
-//            ServerCli.db.writeUser(destAcc.getOwner());
+            ServerCli.db.writeUser(destAcc.getOwner());
         } else
             rejectionResponse("WrongPassword");
 
@@ -253,7 +259,7 @@ public class Handler implements Runnable {
         }
     }
 
-    private void sendUserInfo() throws IOException {
+    private void sendUserInfo() {
         send("0");
 
         JSONObject jo = new JSONObject();
@@ -266,13 +272,16 @@ public class Handler implements Runnable {
         send(jo.toString());
     }
 
-    public void sendProfPicAddress() {
+    private void sendProfilePic() {
         send("0");
 
-        File image = new File("OBSApp/client/database/resources/" + user.getNationalCode() + ".png");
-        if (image.exists())
-            send("OBSApp/client/database/" + user.getNationalCode() + ".jpg");
-        else
-            send("OBSApp/client/resources/user.jpg");
+        String imgStr = null;
+        try {
+            imgStr = ServerCli.db.getProfilePicInStr(user.getNationalCode());
+            send("0");
+        } catch (IOException e) {
+            rejectionResponse("PictureNotFound");
+        }
+        send(imgStr);
     }
 }
