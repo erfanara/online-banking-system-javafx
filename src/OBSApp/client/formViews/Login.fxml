@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.LoginController">
     <children>
         <JFXButton alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="671.0" layoutY="529.0" onAction="#LoginRequest" prefHeight="41.0" prefWidth="82.0" ripplerFill="WHITE" style="-fx-background-color: blue; -fx-background-radius: 30px;" text="ورود" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
             <font>
@@ -54,6 +54,18 @@
             </cursor>
         </JFXButton>
       <JFXTextField fx:id="user_name" layoutX="674.0" layoutY="344.0" prefHeight="40.0" prefWidth="272.0" />
-      <Pane layoutY="1.0" prefHeight="768.0" prefWidth="577.0" styleClass="login" stylesheets="@style.css" />
+      <Pane layoutY="1.0" prefHeight="768.0" prefWidth="577.0" styleClass="login" stylesheets="@style.css">
+         <children>
+            <JFXButton layoutX="6.0" layoutY="5.0" onAction="#exit" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: red;" text="X" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="38.0" layoutY="4.0" onAction="#minimize" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: blue;" text="-" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXButton>
+         </children></Pane>
     </children>
 </Pane>

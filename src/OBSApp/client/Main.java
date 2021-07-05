@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -14,6 +13,9 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static Client client;
+
+    final double[] xOffset = new double[1];
+    final double[] yOffset = new double[1];
 
     static {
         try {
@@ -32,11 +34,21 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         Parent root = FXMLLoader.load(getClass().getResource("formViews/Login.fxml"));
         Scene scene = new Scene(root, 1024, 768);
+        scene.setFill(Color.TRANSPARENT);
 
+
+        root.setOnMousePressed(event -> { // for dragging the window
+            xOffset[0] = event.getSceneX();
+            yOffset[0] = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            primaryStage.setX(event.getScreenX() - xOffset[0]);
+            primaryStage.setY(event.getScreenY() - yOffset[0]);
+        });
 
         primaryStage.setScene(scene);
         primaryStage.show();

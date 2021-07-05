@@ -4,8 +4,10 @@ import OBSApp.client.Main;
 import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import OBSApp.core.User;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,5 +75,13 @@ public class LoginController implements Initializable {
             return false;
         }
         return true;
+    }
+
+    public void exit(ActionEvent event){
+        Platform.exit();
+    }
+
+    public void minimize(ActionEvent event){
+        ((Stage)((JFXButton)event.getSource()).getScene().getWindow()).setIconified(true);
     }
 }
