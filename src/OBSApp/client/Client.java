@@ -1,8 +1,8 @@
 package OBSApp.client;
 
+import javafx.scene.image.Image;
 import OBSApp.core.Account;
 import OBSApp.server.Server;
-import javafx.scene.image.Image;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -65,9 +65,15 @@ class WrongPasswordException extends RuntimeException {
     }
 }
 
-class DuplicateAliasExeception extends RuntimeException {
-    public DuplicateAliasExeception() {
+class DuplicateAliasException extends RuntimeException {
+    public DuplicateAliasException() {
         super("this alias is already submited for another account");
+    }
+}
+
+class PictureNotFoundException extends RuntimeException {
+    public PictureNotFoundException() {
+        super("requested picture not found");
     }
 }
 
@@ -111,7 +117,7 @@ public class Client {
 
             case "WrongPassword" -> throw new WrongPasswordException();
 
-            case "DuplicateAlias" -> throw new DuplicateAliasExeception();
+            case "DuplicateAlias" -> throw new DuplicateAliasException();
 
             case "InvalidSrcAccId" -> throw new InvalidSrcAccIdException();
 
@@ -122,6 +128,8 @@ public class Client {
             case "InsufficientFunds" -> throw new InsufficientFundsException();
 
             case "BalanceIsNotZero" -> throw new BalanceIsNotZeroException();
+
+            case "PictureNotFound" -> throw new PictureNotFoundException();
         }
     }
 
@@ -200,13 +208,6 @@ public class Client {
         return accJa;
     }
 
-    public JSONArray getAllAccIDs() throws Exception {
-        send("4");
-        checkServerResponse();
-
-        return new JSONArray(receive());
-    }
-
     public JSONObject getAccById(String id) throws Exception {
         send("5");
         checkServerResponse();
@@ -214,6 +215,13 @@ public class Client {
         send(id);
 
         return new JSONObject(receive());
+    }
+
+    public JSONArray getAllAccIDs() throws Exception {
+        send("6");
+        checkServerResponse();
+
+        return new JSONArray(receive());
     }
 
     public boolean setAccAlias(String accId, String alias) throws Exception {
@@ -263,15 +271,17 @@ public class Client {
         return new JSONObject(receive());
     }
 
-    public void closeSocket() throws Exception {
-        socket.close();
-    }
-
     public Image getProfilePic() throws Exception {
-        send("16");
+        send("15");
         checkServerResponse();
 
-        return new Image(new File(receive()).toURI().toString());
+        checkServerResponse();
+        ByteArrayInputStream stream = new ByteArrayInputStream(receive().getBytes());
+        return new Image(stream);
+    }
+
+    public void closeSocket() throws Exception {
+        socket.close();
     }
 
     // just for test
