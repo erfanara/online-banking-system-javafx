@@ -23,7 +23,6 @@ public class Bill {
 
     private final Type type;
     private final BigDecimal amount;
-    private final BigDecimal remainingDebt;
     private final LocalDateTime creationDate = LocalDateTime.now();
     private final String subsidiaryCompanyId;
     // source : https://hamrahcard.ir/%D8%B4%D9%86%D8%A7%D8%B3%D9%87-%D9%82%D8%A8%D8%B6-%D9%88-%D9%BE%D8%B1%D8%AF%D8%A7%D8%AE%D8%AA-%DA%86%D9%87-%D9%85%D8%B9%D9%86%D8%A7%DB%8C%DB%8C-%D8%AF%D8%A7%D8%B1%D8%AF%D8%9F/
@@ -32,10 +31,9 @@ public class Bill {
     private boolean wasPaid;
 
     // userHash is user's nationalCode
-    public Bill(Type type, BigDecimal amount, BigDecimal remainingDebt, String subsidiaryCompanyId, String userHash) {
+    public Bill(Type type, BigDecimal amount, String subsidiaryCompanyId, String userHash) {
         this.type = type;
-        this.amount = amount.add(remainingDebt);
-        this.remainingDebt = remainingDebt;
+        this.amount = amount;
         this.subsidiaryCompanyId = subsidiaryCompanyId;
 
         this.id = userHash + subsidiaryCompanyId + type.getValue();

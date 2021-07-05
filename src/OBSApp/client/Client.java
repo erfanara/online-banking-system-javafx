@@ -68,6 +68,7 @@ public class Client {
         }
     }
 
+    // TODO: throwing Exception is so imprecise
     public boolean checkServerResponse() throws Exception {
         switch (receive()) {
             case "0":
@@ -184,8 +185,32 @@ public class Client {
         send(jo.toString());
         return checkServerResponse();
     }
-//    public JSONArray getTheBills()
-//    public JSONArray loanRequest()
+
+    public JSONArray getTheBills() throws Exception {
+        send("10");
+        checkServerResponse();
+
+        return new JSONArray(receive());
+    }
+
+    public boolean loanRequest(BigDecimal amount, int paymentPeriodInDays) throws Exception {
+        send("11");
+        checkServerResponse();
+
+        JSONObject jo = new JSONObject();
+        jo.put("amount", amount);
+        jo.put("ppDays", paymentPeriodInDays);
+
+        send(jo.toString());
+        return checkServerResponse();
+    }
+
+    public JSONArray getLoans() throws Exception {
+        send("16");
+        checkServerResponse();
+
+        return new JSONArray(receive());
+    }
 
     public boolean closeAcc(String id, String accPassword) throws Exception {
         send("13");

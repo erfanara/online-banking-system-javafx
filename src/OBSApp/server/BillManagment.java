@@ -10,8 +10,7 @@ import java.math.BigDecimal;
 
 public class BillManagment {
     private static Bill createBill(User user, Bill.Type type, BigDecimal amount, String subsidiaryCompanyId) {
-        user.addToRemainingBillAmount(amount);
-        Bill bill = new Bill(type, amount, user.getRemainingBillAmount(), subsidiaryCompanyId, user.getNationalCode());
+        Bill bill = new Bill(type, amount, subsidiaryCompanyId, user.getNationalCode());
         user.currentBills.put(bill.getId() + bill.getPaymentId(), bill);
         return bill;
     }
@@ -26,7 +25,6 @@ public class BillManagment {
                 if (success) {
                     user.paidBills.put(key, bill);
                     user.currentBills.remove(key);
-                    user.addToRemainingBillAmount(bill.getAmount().negate());
                 }
                 return success;
             } else {
@@ -35,9 +33,5 @@ public class BillManagment {
         } else {
             throw new BillAlreadyPaidException();
         }
-    }
-
-    public void createBillsWithSchedule(User user, Bill.Type type, BigDecimal amount, String subsidiaryCompanyId, int periodInDays) {
-
     }
 }
