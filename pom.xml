@@ -49,15 +49,20 @@
         </dependency>
     </dependencies>
     <build>
+        <directory>target</directory>
+        <outputDirectory>target/classes</outputDirectory>
+        <finalName>${artifactId}-${version}</finalName>
+        <testOutputDirectory>target/test-classes</testOutputDirectory>
+        <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>src</directory>
                 <includes>
-                    <include>obsjApp/client/formViews/*.fxml</include>
-                    <include>obsjApp/client/formViews/*.css</include>
-                    <include>obsjApp/client/formViews/*.html</include>
-                    <include>obsjApp/client/formViews/*.htm</include>
-                    <include>obsjApp/client/resources/**</include>
+                    <include>OBSApp/client/formViews/*.fxml</include>
+                    <include>OBSApp/client/formViews/*.css</include>
+                    <include>OBSApp/client/formViews/*.html</include>
+                    <include>OBSApp/client/formViews/*.htm</include>
+                    <include>OBSApp/client/resources/**</include>
                 </includes>
             </resource>
         </resources>
@@ -75,7 +80,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
-                    <mainClass>obsjApp.client.Main</mainClass>
+                    <mainClass>OBSApp.client.Main</mainClass>
                     <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
