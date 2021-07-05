@@ -99,7 +99,7 @@ public final class UserStorage {
     }
 
     public String getProfilePicInStr(String nationalCode)
-            throws IOException{
+            throws IOException {
         try (
                 FileInputStream in =
                         new FileInputStream(new File(outputDir, nationalCode + ".png"))) {
@@ -107,5 +107,9 @@ public final class UserStorage {
             stream.write(in.readAllBytes());
             return stream.toString();
         }
+    }
+
+    public static User[] getUsers() {
+        return usersMap.values().toArray(new User[0]);
     }
 }

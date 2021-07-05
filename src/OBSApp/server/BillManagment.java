@@ -9,7 +9,7 @@ import OBSApp.core.exceptions.BillNotFoundException;
 import java.math.BigDecimal;
 
 public class BillManagment {
-    private static Bill createBill(User user, Bill.Type type, BigDecimal amount, String subsidiaryCompanyId) {
+    public static Bill createBill(User user, Bill.Type type, BigDecimal amount, String subsidiaryCompanyId) {
         Bill bill = new Bill(type, amount, subsidiaryCompanyId, user.getNationalCode());
         user.currentBills.put(bill.getId() + bill.getPaymentId(), bill);
         return bill;

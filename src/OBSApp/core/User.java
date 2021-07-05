@@ -152,4 +152,16 @@ public class User implements Serializable {
     public LocalDateTime getSignUpDate() {
         return signUpDate;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstname='" + firstname + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", nationalCode='" + nationalCode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", signUpDate=" + signUpDate +
+                '}';
+    }
 }
