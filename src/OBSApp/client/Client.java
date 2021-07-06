@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class Client extends Thread{
+public class Client extends Thread {
     private BufferedReader in;
     private PrintWriter out;
     private Socket socket;
@@ -72,6 +72,9 @@ public class Client extends Thread{
             case "BillAlreadyPaid" -> throw new BillAlreadyPaidException();
 
             case "BillNotFound" -> throw new BillNotFoundException();
+
+            // Debugging purposes
+            case "ImAliveIdiot" -> System.out.println("oh! he's alive :)");
         }
     }
 
@@ -141,13 +144,7 @@ public class Client extends Thread{
         send("4");
         checkServerResponse();
 
-        String str = receive();
-        System.out.println(str);
-        JSONArray accJa = new JSONArray(str);
-
-        //debug purposes:
-        System.out.println(accJa);
-        return accJa;
+        return new JSONArray(receive());
     }
 
     public JSONObject getAccById(String id) throws Exception {
@@ -266,6 +263,13 @@ public class Client extends Thread{
         return new Image(stream);
     }
 
+    // DEBUGGING
+    public boolean areYouAliveServer() throws Exception {
+        send("100");
+
+        return checkServerResponse();
+    }
+
     public void closeSocket() throws Exception {
         socket.close();
     }
@@ -274,18 +278,18 @@ public class Client extends Thread{
     public static void main(String[] args)
             throws Exception {
         Client test = new Client();
-//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
-//        System.out.println(test.loginRequest("123456789", "testtest321"));
-//        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
-//        test.getAllAccInfo();
+        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+        System.out.println(test.loginRequest("123456789", "testtest321"));
+        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
+        System.out.println(test.getAllAccInfo());
 //        Client test2 = new Client();
 //        test2.signupRequest("ali", "irv", "12312345", "0915551233", "ali@gmail.com", "aliali");
 //        System.out.println(test2.loginRequest("12312345","aliali"));
 //        System.out.println(test2.createAcc(Account.Type.CHECKING,null,"ahsant"));
 //        test2.getAllAccInfo();
 
-        System.out.println(test.loginRequest("099999998", null));
-        System.out.println(test.getUserInfo());
-        System.out.println(test.getAllAccInfo());
+//        System.out.println(test.loginRequest("099999998", ""));
+//        System.out.println(test.getUserInfo());
+//        System.out.println(test.getAllAccInfo());
     }
 }

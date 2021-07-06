@@ -84,6 +84,8 @@ public class Handler implements Runnable {
                         case "17" -> payBillResponse();
 
                         case "18" -> sendPayedBills();
+
+                        case "100"  -> imAlive();
                     }
                 }
                 str = in.readLine();
@@ -371,5 +373,10 @@ public class Handler implements Runnable {
         JSONObject jo = new JSONObject(receive());
 
 
+    }
+
+    // DEBUGGING PURPOSES
+    private void imAlive() {
+        rejectionResponse("ImAliveIdiot");
     }
 }

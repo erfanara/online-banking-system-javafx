@@ -28,3 +28,6 @@ only Server-side:
 // 20  ->  Requesting acc auth from Client :
 
 
+DEBUGGING:
+100 ->  client sends this only for checking the server response
+

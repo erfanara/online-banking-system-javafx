@@ -12,3 +12,5 @@ object.java
 .idea/*
 .settings/*
 .settings
+.vscode
+.vscode/*
