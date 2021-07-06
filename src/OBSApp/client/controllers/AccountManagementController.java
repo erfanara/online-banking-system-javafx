@@ -3,25 +3,20 @@ package OBSApp.client.controllers;
 import OBSApp.client.Main;
 import OBSApp.client.formViews.Loading;
 import OBSApp.core.Account;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,28 +27,23 @@ public class AccountManagementController implements Initializable {
     @FXML
     AnchorPane screen = new AnchorPane();
 
-    private JSONObject user;
+    @FXML
+    TableView<JSONObject> accounts = new TableView<>();
 
     @FXML
-    JFXTreeTableView<Account> accounts = new JFXTreeTableView<Account>();
+    TableColumn<JSONObject, String> id = new TableColumn<>();
 
     @FXML
-    JFXTreeTableColumn<Account, String> id = new JFXTreeTableColumn<>("ID");
+    TableColumn<JSONObject, String> alias = new TableColumn<>();
 
     @FXML
-    TreeTableColumn<Account, String> alias = new TreeTableColumn<Account, String>("Alias");
+    TableColumn<JSONObject, String> balance = new TableColumn<>();
 
     @FXML
-    TreeTableColumn<Account, String> balance_A = new TreeTableColumn<Account, String>("Balance");
+    TableColumn<JSONObject, String> type = new TableColumn<>();
 
-    @FXML
-    TreeTableColumn<Account, String> date_created = new TreeTableColumn<Account, String>();
-
-    public AccountManagementController() throws Exception {
+    public AccountManagementController() {
     }
-
-    public ObservableList<Account> list = FXCollections.observableArrayList();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,33 +54,18 @@ public class AccountManagementController implements Initializable {
             e.printStackTrace();
         }
 
+        ObservableList data = FXCollections.observableArrayList(array);
+
         loadingWindow.Show();
 
-        alias.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("alias"));
-        balance_A.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("balance"));
-        id.setCellValueFactory(new TreeItemPropertyValueFactory<Account, String>("id"));
+        id.setCellFactory(new PropertyValueFactory("id"));
+        alias.setCellFactory(new PropertyValueFactory("alias"));
+        balance.setCellFactory(new PropertyValueFactory("balance"));
+        type.setCellFactory(new PropertyValueFactory("type"));
 
-        final RecursiveTreeItem<Account> root = new RecursiveTreeItem<Account>(list, RecursiveTreeObject::getChildren);
-        try {
-            for (String id : array.toList().toArray(new String[0])) {
+        accounts.getColumns().setAll(id, alias, balance, type);
 
-                JSONObject account = Main.getClient().getAccById(id);
-
-                root.getChildren().add(new TreeItem<>(
-                        new Account(account.getString("accPass"), account.getString("alias"),
-                                BigDecimal.valueOf(Long.parseLong(account.getString("balance"))))));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        accounts.getColumns().setAll(alias, balance_A, id);
-        accounts.setRoot(root);
-        accounts.setShowRoot(false);
-
-        accounts.setPrefWidth(600);
-        id.setPrefWidth(accounts.getPrefWidth() / accounts.getColumns().size());
-        alias.setPrefWidth(accounts.getPrefWidth() / accounts.getColumns().size());
-        balance_A.setPrefWidth(accounts.getPrefWidth() / accounts.getColumns().size());
+        accounts.setItems(data);
 
         loadingWindow.Close();
     }
@@ -98,9 +73,31 @@ public class AccountManagementController implements Initializable {
     @FXML
     public void GoToAddAccount(ActionEvent event) throws IOException {
         loadingWindow.Show();
+
         AnchorPane loader = FXMLLoader.load(getClass().getResource("../formViews/AddAccount.fxml"));
+
         screen.getChildren().clear();
         screen.getChildren().add(loader);
+
         loadingWindow.Close();
+    }
+
+    @FXML
+    public void deleteAccount(ActionEvent event) throws IOException {
+        if (accounts.getSelectionModel().getSelectedItem() != null) {
+
+            JSONObject target = accounts.getSelectionModel().getSelectedItem();
+
+            accounts.getItems().remove(accounts.getSelectionModel().getSelectedItem());
+
+            FXMLLoader fxmlloader = new FXMLLoader();
+            AnchorPane loader = fxmlloader.load(getClass().getResource("../formViews/AddAccount.fxml"));
+
+            DeleteAccount controller = fxmlloader.getController();
+            controller.InitData((String) target.get("id"));
+
+            screen.getChildren().clear();
+            screen.getChildren().add(loader);
+        }
     }
 }
