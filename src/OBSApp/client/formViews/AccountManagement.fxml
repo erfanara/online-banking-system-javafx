@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
-<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.AccountManagementController">
    <children>
-      <JFXTreeTableView fx:id="accounts" layoutX="117.0" layoutY="162.0" prefHeight="424.0" prefWidth="600.0" style="-fx-rippler-fill: -fx-tree-table-rippler-color;">
-         <columns>
-            <TreeTableColumn fx:id="alias" editable="false" prefWidth="302.0" resizable="false" style="-fx-rippler-fill: -fx-tree-table-rippler-color;" />
-            <TreeTableColumn fx:id="balance" editable="false" prefWidth="297.0" resizable="false" style="-fx-rippler-fill: -fx-tree-table-rippler-color;" />
-         </columns>
-      </JFXTreeTableView>
       <JFXButton layoutX="554.0" layoutY="602.0" onAction="#GoToAddAccount" prefHeight="36.0" prefWidth="163.0" ripplerFill="#008607" style="-fx-background-radius: 10px; -fx-background-color: #F3F3F3;" text="ایجاد حساب جدید ➕">
          <font>
             <Font name="IRKoodak" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="117.0" layoutY="602.0" prefHeight="41.0" prefWidth="144.0" ripplerFill="RED" style="-fx-background-radius: 10px; -fx-background-color: #F3F3F3;" text="حذف حساب   ✘">
+      <JFXButton layoutX="105.0" layoutY="602.0" prefHeight="41.0" prefWidth="144.0" ripplerFill="RED" style="-fx-background-radius: 10px; -fx-background-color: #F3F3F3;" text="حذف حساب   ✘">
          <font>
             <Font name="IRKoodak" size="18.0" />
          </font>
       </JFXButton>
+      <TableView layoutX="35.0" layoutY="65.0" prefHeight="507.0" prefWidth="744.0" style="-fx-background-color: white;">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="141.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="ID" />
+            <TableColumn fx:id="alias" prefWidth="136.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="Alias" />
+            <TableColumn fx:id="type" prefWidth="132.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Type" />
+          <TableColumn fx:id="balance" prefWidth="146.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="Balance" />
+            <TableColumn fx:id="dateCreated" prefWidth="188.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="Date Created" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
