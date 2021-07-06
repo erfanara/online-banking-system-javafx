@@ -17,23 +17,13 @@ public class Main extends Application {
     final double[] xOffset = new double[1];
     final double[] yOffset = new double[1];
 
-    static {
-        try {
-            client = new Client();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Client getClient() {
         return client;
     }
 
-    public Main() throws IOException {
-    }
-
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws IOException {
+        client = new Client();
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         Parent root = FXMLLoader.load(getClass().getResource("formViews/Login.fxml"));
