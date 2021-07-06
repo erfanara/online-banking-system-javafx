@@ -12,11 +12,12 @@ import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class Client {
+public class Client{
     public final InetAddress addr = InetAddress.getByName(null);
     private BufferedReader in;
     private PrintWriter out;
     private Socket socket;
+
 
     public Client() throws IOException {
         System.out.println("addr = " + addr);
@@ -140,14 +141,10 @@ public class Client {
 
         String str = receive();
         System.out.println(str);
-        JSONArray idsJa = new JSONArray(str);
-        JSONArray accJa = new JSONArray();
-        for (String id : idsJa.toList().toArray(new String[0])) {
-            accJa.put(getAccById(id));
-        }
+        JSONArray accJa = new JSONArray(str);
 
         //debug purposes:
-//        System.out.println(accJa);
+        System.out.println(accJa);
         return accJa;
     }
 

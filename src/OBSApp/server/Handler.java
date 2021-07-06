@@ -167,7 +167,14 @@ public class Handler implements Runnable {
 
         JSONArray ja = new JSONArray();
         for (String id : user.getAllAccIds()) {
-            ja.put(id);
+            Account ac = user.getAccById(id);
+            JSONObject jo = new JSONObject();
+            jo.put("type", ac.getType());
+            jo.put("alias", ac.getAlias());
+            jo.put("balance", ac.getBalance().toString());
+            jo.put("creationDate", ac.getCreationDate());
+
+            ja.put(jo);
         }
         send(ja.toString());
     }
@@ -358,7 +365,7 @@ public class Handler implements Runnable {
     }
 
     // TODO : incompleted section
-    private void loanResponse() throws IOException{
+    private void loanResponse() throws IOException {
         send("0");
 
         JSONObject jo = new JSONObject(receive());
