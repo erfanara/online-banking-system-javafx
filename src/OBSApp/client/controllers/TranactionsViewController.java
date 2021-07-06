@@ -2,13 +2,13 @@ package OBSApp.client.controllers;
 
 import OBSApp.client.formViews.Loading;
 import OBSApp.core.Transaction;
-import com.jfoenix.controls.JFXTreeTableView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -25,16 +25,19 @@ public class TranactionsViewController implements Initializable {
     Loading loadingWindow = new Loading();
 
     @FXML
-    JFXTreeTableView<Transaction> transactions = new JFXTreeTableView<Transaction>();
+    TableView<Transaction> transactions = new TableView<>();
 
     @FXML
-    TreeTableColumn<Transaction, String> amount = new TreeTableColumn<Transaction, String>("مقدار");
+    TableColumn<Transaction, String> amount = new TableColumn<>();
 
     @FXML
-    TreeTableColumn<Transaction, String> reason = new TreeTableColumn<Transaction, String>("علت");
+    TableColumn<Transaction, String> balance = new TableColumn<>();
 
     @FXML
-    TreeTableColumn<Transaction, String> balance = new TreeTableColumn<Transaction, String>("موجودی باقی مانده");
+    TableColumn<Transaction, Transaction.Reason> reason = new TableColumn<>();
+
+    @FXML
+    TableColumn<Transaction, Transaction.Type> type = new TableColumn<>();
 
     public void InitData(int userID){
         this.userID = userID;
@@ -42,15 +45,12 @@ public class TranactionsViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        amount.setCellFactory(new PropertyValueFactory("amount"));
+        balance.setCellFactory(new PropertyValueFactory("balance"));
+        reason.setCellFactory(new PropertyValueFactory("reason"));
+        type.setCellFactory(new PropertyValueFactory("type"));
 
-        amount.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
-        reason.setCellValueFactory(new TreeItemPropertyValueFactory<>("reason"));
-        balance.setCellValueFactory(new TreeItemPropertyValueFactory<>("balance"));
-
-        transactions.setPrefWidth(600);
-        amount.setPrefWidth(transactions.getPrefWidth() / 3);
-        reason.setPrefWidth(transactions.getPrefWidth() / 3);
-        balance.setPrefWidth(transactions.getPrefWidth() / 3);
+        transactions.getColumns().addAll(amount, balance, reason, type);
     }
 
     @FXML
