@@ -3,11 +3,13 @@ package OBSApp.client.controllers;
 import OBSApp.client.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,9 +33,15 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             profileImage.setImage(Main.getClient().getProfilePic());
-            user_name.setText(user.get("firstname") + " " + user.get("lastname"));
         } catch (Exception e) {
-            e.printStackTrace();
+            //set a backup image
+            profileImage.setImage(new Image(new File("src/OBSApp/client/resources/user.png").toURI().toString()));
+        }
+        image_holder.getChildren().add(profileImage);
+        try {
+            user_name.setText(user.get("firstname") + " " + user.get("lastname"));
+        } catch (Exception ignored){
+            user_name.setText("نام کاربری!");
         }
         profileImage.setFitWidth(200);
         profileImage.setFitHeight(200);
