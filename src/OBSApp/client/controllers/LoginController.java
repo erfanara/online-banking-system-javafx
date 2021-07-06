@@ -54,7 +54,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void LoginRequest(ActionEvent event) throws Exception {
-        Main.getClient().loginRequest(user_name.getText(), pass.getText());
+        System.out.println(Main.getClient().loginRequest(user_name.getText(), pass.getText()));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../formViews/Menu.fxml"));
         Scene scene = new Scene(root);

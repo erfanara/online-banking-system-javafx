@@ -67,7 +67,7 @@ public class ServerCli {
                     + " " + u.getLastName()
                     + ".\nAre you sure? Y/n");
             if (in.nextLine().equals("Y")) {
-                BillManagment.createBill(u, Bill.Type.valueOf(cmdSplit[2]), new BigDecimal(cmdSplit[3]), cmdSplit[4]);
+                BillManagment.createBill(u, Bill.Type.valueOf(cmdSplit[2].toUpperCase()), new BigDecimal(cmdSplit[3]), cmdSplit[4]);
                 System.out.println("<successful>");
             } else {
                 System.out.println("<you cancelled operation>");

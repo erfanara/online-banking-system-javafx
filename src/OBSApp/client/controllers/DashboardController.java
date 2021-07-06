@@ -39,7 +39,7 @@ public class DashboardController implements Initializable {
         }
         image_holder.getChildren().add(profileImage);
         try {
-            user_name.setText(user.get("firstname") + " " + user.get("lastname"));
+            user_name.setText(user.get("firstName") + " " + user.get("lastName"));
         } catch (Exception ignored){
             user_name.setText("نام کاربری!");
         }

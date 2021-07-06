@@ -138,7 +138,9 @@ public class Client {
         send("4");
         checkServerResponse();
 
-        JSONArray idsJa = new JSONArray(receive());
+        String str = receive();
+        System.out.println(str);
+        JSONArray idsJa = new JSONArray(str);
         JSONArray accJa = new JSONArray();
         for (String id : idsJa.toList().toArray(new String[0])) {
             accJa.put(getAccById(id));
@@ -273,14 +275,18 @@ public class Client {
     public static void main(String[] args)
             throws Exception {
         Client test = new Client();
-        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
-        System.out.println(test.loginRequest("123456789", "testtest321"));
-        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
-        test.getAllAccInfo();
+//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+//        System.out.println(test.loginRequest("123456789", "testtest321"));
+//        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
+//        test.getAllAccInfo();
 //        Client test2 = new Client();
 //        test2.signupRequest("ali", "irv", "12312345", "0915551233", "ali@gmail.com", "aliali");
 //        System.out.println(test2.loginRequest("12312345","aliali"));
 //        System.out.println(test2.createAcc(Account.Type.CHECKING,null,"ahsant"));
 //        test2.getAllAccInfo();
+
+        System.out.println(test.loginRequest("099999998", null));
+        System.out.println(test.getUserInfo());
+        System.out.println(test.getAllAccInfo());
     }
 }
