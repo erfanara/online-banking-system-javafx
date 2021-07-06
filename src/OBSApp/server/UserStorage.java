@@ -36,17 +36,19 @@ public final class UserStorage {
     }
 
     public void writeUser(User user) {
-        // first overwrite that user in map
-        usersMap.put(user.getNationalCode(), user);
-        // the overwrite in block device
-        try (
-                ObjectOutputStream out =
-                        new ObjectOutputStream(
-                                new FileOutputStream(new File(outputDir, user.getNationalCode())))
-        ) {
-            out.writeObject(user);
-        } catch (IOException e) {
-            e.printStackTrace();
+        synchronized (user) {
+            // first overwrite that user in map
+            usersMap.put(user.getNationalCode(), user);
+            // then overwrite in block device
+            try (
+                    ObjectOutputStream out =
+                            new ObjectOutputStream(
+                                    new FileOutputStream(new File(outputDir, user.getNationalCode())))
+            ) {
+                out.writeObject(user);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
