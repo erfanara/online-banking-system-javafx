@@ -85,7 +85,7 @@ public class Handler implements Runnable {
 
                         case "18" -> sendPayedBills();
 
-                        case "100"  -> imAlive();
+                        case "100" -> imAlive();
                     }
                 }
                 str = in.readLine();
@@ -171,6 +171,7 @@ public class Handler implements Runnable {
         for (String id : user.getAllAccIds()) {
             Account ac = user.getAccById(id);
             JSONObject jo = new JSONObject();
+            jo.put("id", ac.getId());
             jo.put("type", ac.getType());
             jo.put("alias", ac.getAlias());
             jo.put("balance", ac.getBalance().toString());

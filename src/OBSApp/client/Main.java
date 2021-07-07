@@ -24,6 +24,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
+        //debugging purposes:
+//        client.loginRequest("123456789","testtest321");
         Parent root = FXMLLoader.load(getClass().getResource("formViews/Login.fxml"));
         Scene scene = new Scene(root, 1024, 768);
         scene.setFill(Color.TRANSPARENT);

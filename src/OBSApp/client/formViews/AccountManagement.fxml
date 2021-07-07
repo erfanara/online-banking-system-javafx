@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.AccountManagementController">
+<AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.AccountManagementController">
    <children>
       <JFXButton layoutX="554.0" layoutY="602.0" onAction="#GoToAddAccount" prefHeight="36.0" prefWidth="163.0" ripplerFill="#008607" style="-fx-background-radius: 10px; -fx-background-color: #F3F3F3;" text="ایجاد حساب جدید ➕">
          <font>
@@ -18,13 +18,13 @@
             <Font name="IRKoodak" size="18.0" />
          </font>
       </JFXButton>
-      <TableView layoutX="35.0" layoutY="65.0" prefHeight="507.0" prefWidth="744.0">
+      <TableView fx:id="accounts" layoutX="35.0" layoutY="65.0" prefHeight="507.0" prefWidth="744.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="141.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="ID" />
-            <TableColumn fx:id="alias" prefWidth="136.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="Alias" />
-            <TableColumn fx:id="type" prefWidth="132.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Type" />
-          <TableColumn fx:id="balance" prefWidth="146.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="Balance" />
-            <TableColumn fx:id="dateCreated" prefWidth="188.0" style="-fx-background-color: blue; -fx-font-fill: white;" text="Date Created" />
+          <TableColumn fx:id="id" prefWidth="141.0" text="ID" />
+            <TableColumn fx:id="alias" prefWidth="136.0" text="Alias" />
+            <TableColumn fx:id="type" prefWidth="132.0" text="Type" />
+          <TableColumn fx:id="balance" prefWidth="146.0" text="Balance" />
+            <TableColumn fx:id="dateCreated" prefWidth="188.0" text="Date Created" />
         </columns>
       </TableView>
    </children>
