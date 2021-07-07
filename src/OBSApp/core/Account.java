@@ -79,6 +79,8 @@ public class Account extends RecursiveTreeObject<Account> implements Serializabl
     }
 
     public String getAlias() {
+        if (alias == null)
+            return "";
         return alias;
     }
 

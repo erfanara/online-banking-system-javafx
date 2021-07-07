@@ -145,8 +145,8 @@ public class User implements Serializable {
     public void removeAcc(String accId) {
         // this method assumes that accId is valid for this user
         allAccounts.remove(accId);
+        userAccountsByAlias.remove(userAccountsById.get(accId).getAlias());
         userAccountsById.remove(accId);
-        userAccountsByAlias.remove(accId);
     }
 
     public LocalDateTime getSignUpDate() {

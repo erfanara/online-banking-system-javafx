@@ -7,12 +7,14 @@ import OBSApp.core.User;
 import OBSApp.core.exceptions.BillAlreadyPaidException;
 import OBSApp.core.exceptions.BillNotFoundException;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.Socket;
 import java.util.Map;
+import java.util.jar.JarException;
 
 public class Handler implements Runnable {
     private User user = null;
@@ -271,16 +273,23 @@ public class Handler implements Runnable {
             return;
         }
 
-        if (acc.auth((String) jo.get("accPass"))) {
-            if (acc.getBalance().compareTo(new BigDecimal(0)) == 0) {
-                user.removeAcc(acc.getId());
+        try {
+            if (acc.auth((String) jo.get("accPass"))) {
+                if (acc.getBalance().compareTo(new BigDecimal(0)) == 0) {
+                    user.removeAcc(acc.getId());
 
-                // update the db
-                ServerCli.db.writeUser(user);
+                    // update the db
+                    ServerCli.db.writeUser(user);
 
-                send("0");
-            } else
-                rejectionResponse("BalanceIsNotZero");
+                    send("0");
+                } else
+                    rejectionResponse("BalanceIsNotZero");
+            } else {
+                rejectionResponse("WrongPassword");
+            }
+
+        } catch (JSONException e) {
+            rejectionResponse("WrongPassword");
         }
     }
 

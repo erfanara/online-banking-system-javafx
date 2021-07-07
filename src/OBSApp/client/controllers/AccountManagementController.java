@@ -1,7 +1,10 @@
 package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
+import OBSApp.client.formViews.GetPassword;
 import OBSApp.client.formViews.Loading;
+import OBSApp.client.formViews.Message;
+import OBSApp.core.exceptions.WrongPasswordException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AccountManagementController implements Initializable {
@@ -98,18 +102,21 @@ public class AccountManagementController implements Initializable {
 
             Map<String, String> target = (Map<String, String>) accounts.getSelectionModel().getSelectedItem();
 
+            GetPassword gp = new GetPassword();
+            Optional<String> result = gp.showAndWait();
+            result.ifPresent(password -> {
+                try {
+                    Main.getClient().closeAcc(target.get("id"), password);
+                } catch (WrongPasswordException e) {
+                    Message.ShowMessage("رمز حساب غلط می باشد!!");
+                    return;
+                } catch (Exception e) {
+                    return;
+                }
+
+            });
+
             accounts.getItems().remove(accounts.getSelectionModel().getSelectedItem());
-
-            FXMLLoader fxmlloader = new FXMLLoader();
-            fxmlloader.setLocation(getClass().getResource("AddAccount.fxml"));
-
-            AnchorPane loader = fxmlloader.load(getClass().getResource("../formViews/AddAccount.fxml"));
-
-            DeleteAccount controller = fxmlloader.getController();
-            controller.InitData((String) target.get("id"));
-
-            screen.getChildren().clear();
-            screen.getChildren().add(loader);
         }
     }
 }

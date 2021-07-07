@@ -27,6 +27,9 @@ public class PayBillController implements Initializable {
     JFXTextField account_id = new JFXTextField();
 
     @FXML
+    JFXTextField account_password = new JFXTextField();
+
+    @FXML
     JFXRadioButton choose_power = new JFXRadioButton();
 
     @FXML
@@ -58,7 +61,7 @@ public class PayBillController implements Initializable {
     }
 
     @FXML
-    public void Pay(){
-        Message.ShowMessage("پرداخت قبض"); //test
+    public void Pay() throws Exception {
+//        Main.getClient().payBill(, account_id.getText(), account_password.getText());
     }
 }

@@ -28,12 +28,12 @@
             <Font name="IRKoodak" size="15.0" />
          </font>
       </JFXRadioButton>
-      <JFXTextField fx:id="account_id" layoutX="312.0" layoutY="261.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="شماره حساب">
+      <JFXTextField fx:id="account_id" layoutX="309.0" layoutY="284.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="شماره حساب">
          <font>
             <Font name="IRKoodak" size="16.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="Pay" buttonType="RAISED" layoutX="353.0" layoutY="564.0" prefHeight="46.0" prefWidth="87.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="تأیید" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="353.0" layoutY="564.0" onAction="#Pay" prefHeight="46.0" prefWidth="87.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="تأیید" textFill="WHITE">
          <font>
             <Font name="IRKoodak" size="19.0" />
          </font>
@@ -43,5 +43,10 @@
             <Font name="IRKoodak" size="19.0" />
          </font>
       </JFXButton>
+      <JFXTextField fx:id="account_password" layoutX="315.0" layoutY="342.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="رمز عبور">
+         <font>
+            <Font name="IRKoodak" size="16.0" />
+         </font>
+      </JFXTextField>
    </children>
 </AnchorPane>

@@ -203,12 +203,12 @@ public class Client {
         return new JSONArray(receive());
     }
 
-    public boolean payBill(String billId, String paymentId, String fromAcc, String accPass) throws Exception {
+    public boolean payBill(String key, String fromAcc, String accPass) throws Exception {
         send("17");
         checkServerResponse();
 
         JSONObject jo = new JSONObject();
-        jo.put("key", billId + paymentId);
+        jo.put("key", key);
         jo.put("accId", fromAcc);
         jo.put("accPass", accPass);
 
@@ -293,12 +293,12 @@ public class Client {
 //        System.out.println(test.getAllAccInfo());
 
         test.loginRequest("123456789", "testtest321");
-        Thread.sleep(1000);
 
-        System.out.println(test.getProfilePic());
+//        System.out.println(test.getProfilePic());
         System.out.println(test.getUserInfo());
         System.out.println(test.getAllAccInfo());
         System.out.println(test.getAllAccIDs());
 
+//        System.out.println(test.closeAcc("6037000103997130","12345"));
     }
 }
