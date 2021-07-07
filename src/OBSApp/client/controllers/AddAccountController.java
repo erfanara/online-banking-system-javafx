@@ -4,7 +4,6 @@ import OBSApp.client.Main;
 import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import OBSApp.core.Account;
-import OBSApp.core.Validation;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -26,9 +25,6 @@ public class AddAccountController implements Initializable {
 
     @FXML
     Pane screen = new Pane();
-
-    @FXML
-    JFXTextField id = new JFXTextField();
 
     @FXML
     JFXTextField alias = new JFXTextField();
@@ -63,24 +59,19 @@ public class AddAccountController implements Initializable {
         if (isValidAccount())
             Main.getClient().createAcc(selectedType, alias.getText(), pass.getText());
         loadingWindow.Close();
+        ReturnToManagement(event);
     }
 
     public boolean isValidAccount() {
         Message message = new Message();
 
-        if (!Validation.isValidAccountID(id.getText())) {
-            message.AddStatement("شماره حساب معتبر نیست(16 رقم)!");
-        }
         if (pass.getText() != null) {
             if (!pass.getText().equals(repeat_pass.getText()))
                 message.AddStatement("رمز عبور به درستی تکرار نشده است!");
-
-            if (pass.getText().length() < 5 || pass.getText().length() > 12)
-                message.AddStatement("رمز عبور باید بین 5 الی 12 کاراکتر داشته باشد.");
         } else
             message.AddStatement("لطفا رمز عبور را وارد کنید.");
 
-        if (!message.getMessage().equals("")) {
+        if (message.isFilled()) {
             message.ShowFinalMessage();
             return false;
         }

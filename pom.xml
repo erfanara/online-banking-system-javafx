@@ -83,6 +83,7 @@
                 <configuration>
                     <mainClass>${mainClass}</mainClass>
                     <release>${maven.compiler.release}</release>
+                    <commandlineArgs>--illegal-access=permit</commandlineArgs>
                 </configuration>
                 <executions>
                     <execution>

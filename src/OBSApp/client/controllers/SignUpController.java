@@ -18,7 +18,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -32,9 +31,6 @@ import java.util.ResourceBundle;
 public class SignUpController implements Initializable {
 
     Loading loadingWindow = new Loading();
-
-    @FXML
-    Text test = new Text();
 
     @FXML
     JFXTextField first_name = new JFXTextField();
@@ -68,12 +64,10 @@ public class SignUpController implements Initializable {
 
     @FXML
     public void SubmitUserInfo(ActionEvent event) throws Exception {
-        test.setText(first_name.getText());
         loadingWindow.Show();
         if (isValidSignUp()) {
             Main.getClient().signupRequest(first_name.getText(), last_name.getText(), national_code.getText(),
                     phone_number.getText(), email.getText(), pass.getText());
-
 
             loadingWindow.Close();
             Message.ShowMessage("اطلاعات کاربر با موفقیت ثبت شد!");
@@ -88,10 +82,10 @@ public class SignUpController implements Initializable {
         imageChooser = new FileChooser();
         imageChooser.getExtensionFilters().add(imageFilter);
 
-        File imageFile = imageChooser.showOpenDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
+        File imageFile = imageChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
         Image profileImage = new Image(imageFile.toURI().toString());
 
-        File output = new File("src/OBSApp/client/database/" + user.getNationalCode() + ".png");
+        File output = new File("src/OBSApp/client/database/" + national_code.getText() + ".png");
         BufferedImage BI = SwingFXUtils.fromFXImage(profileImage, null);
 
         ImageIO.write(BI, "png", output);
@@ -114,14 +108,7 @@ public class SignUpController implements Initializable {
         if (!Validation.isValidPhoneNumber(phone_number.getText()))
             message.AddStatement("شماره همراه معتبر نیست!");
 
-//        if (!pass.getText().equals("")) {
-//            if (!pass.getText().equals(repeat_pass.getText()))
-//                message.AddStatement("رمز عبور به درستی تکرار نشده است!");
-//
-//        } else
-//            message.AddStatement("لطفا رمز عبور را وارد کنید.");
-
-        if (message.getMessage() != null) {
+        if (message.isFilled()) {
             message.ShowFinalMessage();
             loadingWindow.Close();
             return false;

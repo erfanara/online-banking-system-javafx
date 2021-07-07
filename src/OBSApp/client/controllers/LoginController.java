@@ -3,7 +3,6 @@ package OBSApp.client.controllers;
 import OBSApp.client.Main;
 import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
-import OBSApp.core.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -20,7 +19,6 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -34,8 +32,6 @@ public class LoginController implements Initializable {
 
     @FXML
     JFXPasswordField pass = new JFXPasswordField();
-
-    static final ArrayList<User> users = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,12 +50,14 @@ public class LoginController implements Initializable {
 
     @FXML
     public void LoginRequest(ActionEvent event) throws Exception {
-        System.out.println(Main.getClient().loginRequest(user_name.getText(), pass.getText()));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../formViews/Menu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if (isValidLogin()) {
+            Main.getClient().loginRequest(user_name.getText(), pass.getText());
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("../formViews/Menu.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public boolean isValidLogin() {
@@ -70,18 +68,20 @@ public class LoginController implements Initializable {
             if (pass.getText().equals(""))
                 message.AddStatement("لطفا رمز عبور خود را وارد کنید!");
         }
-        if (message.getMessage().equals("")) {
+        if (message.isFilled()) {
             message.ShowFinalMessage();
             return false;
         }
         return true;
     }
 
-    public void exit(ActionEvent event){
+    @FXML
+    public void exit(ActionEvent event) {
         Platform.exit();
     }
 
-    public void minimize(ActionEvent event){
-        ((Stage)((JFXButton)event.getSource()).getScene().getWindow()).setIconified(true);
+    @FXML
+    public void minimize(ActionEvent event) {
+        ((Stage) ((JFXButton) event.getSource()).getScene().getWindow()).setIconified(true);
     }
 }

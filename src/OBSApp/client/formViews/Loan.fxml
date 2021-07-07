@@ -12,7 +12,7 @@
             <Font name="IRKoodak" size="16.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="Pay" buttonType="RAISED" layoutX="363.0" layoutY="574.0" prefHeight="46.0" prefWidth="87.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="تأیید" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="363.0" layoutY="574.0" onAction="#requestLoan" prefHeight="46.0" prefWidth="87.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="تأیید" textFill="WHITE">
          <font>
             <Font name="IRKoodak" size="19.0" />
          </font>
@@ -22,7 +22,12 @@
             <Font name="IRKoodak" size="19.0" />
          </font>
       </JFXButton>
-      <JFXTextField fx:id="account_id1" layoutX="298.0" layoutY="374.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="مبلغ">
+      <JFXTextField fx:id="amount" layoutX="298.0" layoutY="374.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="مبلغ">
+         <font>
+            <Font name="IRKoodak" size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="paymentPerDay" layoutX="299.0" layoutY="429.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="پرداخت روزانه">
          <font>
             <Font name="IRKoodak" size="16.0" />
          </font>

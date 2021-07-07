@@ -9,10 +9,9 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.InetAddress;
 import java.net.Socket;
 
-public class Client extends Thread {
+public class Client {
     private BufferedReader in;
     private PrintWriter out;
     private Socket socket;
@@ -44,6 +43,7 @@ public class Client extends Thread {
     public String receive() throws IOException {
         return in.readLine();
     }
+
 
     public void throwException(String reason) throws Exception {
         switch (reason) {
@@ -94,11 +94,11 @@ public class Client extends Thread {
         send("1");
         checkServerResponse();
 
-        JSONObject ja = new JSONObject();
-        ja.put("username", username);
-        ja.put("passhash", passHash);
+        JSONObject jo = new JSONObject();
+        jo.put("username", username);
+        jo.put("passhash", passHash);
 
-        send(ja.toString());
+        send(jo.toString());
 
         return checkServerResponse();
     }
@@ -278,10 +278,10 @@ public class Client extends Thread {
     public static void main(String[] args)
             throws Exception {
         Client test = new Client();
-        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
-        System.out.println(test.loginRequest("123456789", "testtest321"));
-        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
-        System.out.println(test.getAllAccInfo());
+//        test.signupRequest("test", "test2", "123456789", "123123", "alo@gmail.com", "testtest321");
+//        System.out.println(test.loginRequest("123456789", "testtest321"));
+//        System.out.println(test.createAcc(Account.Type.CHECKING, "lol", "ajab"));
+//        System.out.println(test.getAllAccInfo());
 //        Client test2 = new Client();
 //        test2.signupRequest("ali", "irv", "12312345", "0915551233", "ali@gmail.com", "aliali");
 //        System.out.println(test2.loginRequest("12312345","aliali"));
@@ -291,5 +291,14 @@ public class Client extends Thread {
 //        System.out.println(test.loginRequest("099999998", ""));
 //        System.out.println(test.getUserInfo());
 //        System.out.println(test.getAllAccInfo());
+
+        test.loginRequest("123456789", "testtest321");
+        Thread.sleep(1000);
+
+        System.out.println(test.getProfilePic());
+        System.out.println(test.getUserInfo());
+        System.out.println(test.getAllAccInfo());
+        System.out.println(test.getAllAccIDs());
+
     }
 }

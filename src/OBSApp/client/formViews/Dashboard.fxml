@@ -17,5 +17,20 @@
             </effect>
         </Text>
       <Pane fx:id="image_holder" layoutX="580.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
+      <Text fx:id="email" layoutX="472.0" layoutY="531.0" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="ایمیل: " textAlignment="RIGHT">
+         <font>
+            <Font name="IRKoodak" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="phoneNumber" layoutX="539.0" layoutY="452.0" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="شماره همراه: " textAlignment="RIGHT">
+         <font>
+            <Font name="IRKoodak" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="nationalCode" layoutX="588.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" strokeType="OUTSIDE" strokeWidth="0.0" text="کد ملی:" textAlignment="RIGHT">
+         <font>
+            <Font name="IRKoodak" size="25.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

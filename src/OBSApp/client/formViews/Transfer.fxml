@@ -24,11 +24,6 @@
             <Font size="14.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="source_user" layoutX="379.0" layoutY="205.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="220.0" promptText="نام کاربر مبدأ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXTextField>
       <JFXTextField fx:id="target_user" layoutX="379.0" layoutY="250.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="220.0" promptText="نام کاربر مقصد">
          <font>
             <Font size="14.0" />

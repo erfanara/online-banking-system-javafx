@@ -22,12 +22,15 @@ public class Message {
 
     private StringBuilder message;
 
+    private boolean isFilled = false;
+
     public Message(){
         message = new StringBuilder();
     }
 
     public void AddStatement(String message){
         this.message.append(message).append("\n");
+        isFilled = true;
     }
 
     public static void ShowMessage(String message) {
@@ -100,5 +103,9 @@ public class Message {
 
     public void ShowFinalMessage(){
         ShowMessage(this.message.toString());;
+    }
+
+    public boolean isFilled() {
+        return isFilled;
     }
 }

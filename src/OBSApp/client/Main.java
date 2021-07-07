@@ -11,8 +11,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class Main extends Application {
-
-    private static Client client;
+    public static Client client = new Client();
 
     final double[] xOffset = new double[1];
     final double[] yOffset = new double[1];
@@ -22,8 +21,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        client = new Client();
+    public void start(Stage primaryStage) throws Exception {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         Parent root = FXMLLoader.load(getClass().getResource("formViews/Login.fxml"));

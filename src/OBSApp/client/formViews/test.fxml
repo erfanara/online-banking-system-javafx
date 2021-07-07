@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="462.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.testcontroller">
+   <children>
+      <JFXButton layoutX="232.0" layoutY="191.0" onAction="#hiya" prefHeight="54.0" prefWidth="99.0" text="Show" />
+   </children>
+</AnchorPane>

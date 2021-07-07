@@ -1,5 +1,6 @@
 package OBSApp.client.controllers;
 
+import OBSApp.client.Main;
 import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import com.jfoenix.controls.JFXRadioButton;
@@ -58,9 +59,6 @@ public class PayBillController implements Initializable {
 
     @FXML
     public void Pay(){
-        //Here goes paybill code :)
-        //TODO -> Another FXML page that gets the remaining debt and pays...
-        // the trouble is how do we get the type when there is just an enum and each of the types could have diferent conditions...
         Message.ShowMessage("پرداخت قبض"); //test
     }
 }

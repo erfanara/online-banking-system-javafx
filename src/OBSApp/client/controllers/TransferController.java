@@ -1,5 +1,6 @@
 package OBSApp.client.controllers;
 
+import OBSApp.client.Main;
 import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import com.jfoenix.controls.JFXCheckBox;
@@ -12,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,9 +25,6 @@ public class TransferController implements Initializable {
     AnchorPane screen = new AnchorPane();
 
     @FXML
-    JFXTextField source_user = new JFXTextField();
-
-    @FXML
     JFXTextField target_user = new JFXTextField();
 
     @FXML
@@ -33,6 +32,10 @@ public class TransferController implements Initializable {
 
     @FXML
     JFXTextField target_account = new JFXTextField();
+
+    @FXML
+
+    JFXTextField sourcePass = new JFXTextField();
 
     @FXML
     JFXTextField amount = new JFXTextField();
@@ -48,7 +51,7 @@ public class TransferController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        slider.setMax(Double.parseDouble(account.getBalance().toString()));
+        slider.setMax(200000);
         checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
             target_user.setEditable(!newValue);
             target_user.setVisible(!newValue);
@@ -56,12 +59,13 @@ public class TransferController implements Initializable {
         slider.valueProperty().addListener(((observableValue, number, t1) -> {
             amount.setText(String.valueOf(Math.round((Double) number)));
         }));
-//        amount.textProperty().bind(slider.valueProperty().asString("%.0f"));
     }
 
     @FXML
-    public void DoTransfer(ActionEvent event) {
+    public void DoTransfer(ActionEvent event) throws Exception {
         if (isValidTransfer()) {
+            Main.getClient().transaction(source_account.getText(), sourcePass.getText(),
+                    BigDecimal.valueOf(Long.parseLong(amount.getText())), target_account.getText());
             //the transfer code
         }
     }
@@ -69,12 +73,9 @@ public class TransferController implements Initializable {
     public boolean isValidTransfer() {
         Message message = new Message();
 
-        if (source_user.getText().equals(""))
-            message.AddStatement("لطفا کاربر مبدأ را مشخص کنید!");
-
         if (!target_user.getText().equals("") && !checkBox.isSelected())
             message.AddStatement("لطفا کاربر مقصد را مشخص کنید!");
-        else if (!target_user.getText().equals("") && source_user.getText().equals(target_user.getText()) && checkBox.isSelected())
+        else if (!target_user.getText().equals("") && !checkBox.isSelected())
             message.AddStatement("برای انتقال بین حساب های یک کاربر، چک باکس را فعال کنید!");
 
         if (source_account.getText().equals(""))
@@ -87,7 +88,7 @@ public class TransferController implements Initializable {
                 message.AddStatement("حساب های مبدا و مقصد یکسان وارد شده اند!");
         }
 
-        if (message.getMessage() != null) {
+        if (message.isFilled()) {
             message.ShowFinalMessage();
             return false;
         }
