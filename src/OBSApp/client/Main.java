@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 
 public class Main extends Application {
     public static Client client = new Client();
@@ -25,7 +24,7 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         //debugging purposes:
-//        client.loginRequest("123456789","testtest321");
+//        client.loginRequest("1234567890","12345");
         Parent root = FXMLLoader.load(getClass().getResource("formViews/Login.fxml"));
         Scene scene = new Scene(root, 1024, 768);
         scene.setFill(Color.TRANSPARENT);

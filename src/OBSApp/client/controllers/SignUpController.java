@@ -1,7 +1,6 @@
 package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
-import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import OBSApp.core.User;
 import OBSApp.core.Validation;
@@ -30,7 +29,7 @@ import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
 
-    Loading loadingWindow = new Loading();
+    
 
     @FXML
     JFXTextField first_name = new JFXTextField();
@@ -64,12 +63,12 @@ public class SignUpController implements Initializable {
 
     @FXML
     public void SubmitUserInfo(ActionEvent event) throws Exception {
-        loadingWindow.Show();
+        
         if (isValidSignUp()) {
             Main.getClient().signupRequest(first_name.getText(), last_name.getText(), national_code.getText(),
                     phone_number.getText(), email.getText(), pass.getText());
 
-            loadingWindow.Close();
+            
             Message.ShowMessage("اطلاعات کاربر با موفقیت ثبت شد!");
             ReturnToLogin(event);
         }
@@ -110,19 +109,19 @@ public class SignUpController implements Initializable {
 
         if (message.isFilled()) {
             message.ShowFinalMessage();
-            loadingWindow.Close();
+            
             return false;
         }
         return true;
     }
 
     public void ReturnToLogin(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../formViews/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        loadingWindow.Close();
+        
         stage.show();
     }
 

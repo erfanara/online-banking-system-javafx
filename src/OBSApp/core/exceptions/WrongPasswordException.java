@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class WrongPasswordException extends RuntimeException {
     public WrongPasswordException() {
-        super("Password is wrong");
+        Message.ShowMessage("Password is wrong");
+//        super("Password is wrong");
     }
 }

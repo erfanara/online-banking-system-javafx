@@ -1,52 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXRadioButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.PayBillController">
+<AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="814.0" styleClass="screen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OBSApp.client.controllers.PayBillController">
    <children>
-      <JFXRadioButton fx:id="choose_power" layoutX="597.0" layoutY="348.0" text="برق">
+      <TableView fx:id="bills" layoutX="35.0" layoutY="65.0" prefHeight="507.0" prefWidth="744.0">
+         <columns>
+            <TableColumn fx:id="id" prefWidth="141.0" text="ID" />
+            <TableColumn fx:id="paymentId" prefWidth="136.0" text="Payment ID" />
+            <TableColumn fx:id="subsidiaryCompanyId" prefWidth="132.0" text="Subsidiary Company Id" />
+            <TableColumn fx:id="type" prefWidth="146.0" text="Type" />
+            <TableColumn fx:id="amount" prefWidth="188.0" text="Amount" />
+            <TableColumn fx:id="creationDate" prefWidth="188.0" text="Date Created" />
+         </columns>
+      </TableView>
+      <JFXButton buttonType="RAISED" layoutX="345.0" layoutY="677.0" onAction="#pay" prefHeight="39.0" prefWidth="124.0" ripplerFill="#cddd17" style="-fx-background-color: white;" text="Pay" />
+      <TextField fx:id="account_id" layoutX="280.0" layoutY="600.0" prefHeight="39.0" prefWidth="254.0" promptText="account_id">
          <font>
-            <Font name="IRKoodak" size="15.0" />
+            <Font size="14.0" />
          </font>
-      </JFXRadioButton>
-      <JFXRadioButton fx:id="choose_water" layoutX="596.0" layoutY="439.0" text="آب">
-         <font>
-            <Font name="IRKoodak" size="15.0" />
-         </font>
-      </JFXRadioButton>
-      <JFXRadioButton fx:id="choose_gas" layoutX="596.0" layoutY="486.0" text="گاز">
-         <font>
-            <Font name="IRKoodak" size="15.0" />
-         </font>
-      </JFXRadioButton>
-      <JFXRadioButton fx:id="choose_phone" layoutX="596.0" layoutY="391.0" text="تلفن">
-         <font>
-            <Font name="IRKoodak" size="15.0" />
-         </font>
-      </JFXRadioButton>
-      <JFXTextField fx:id="account_id" layoutX="309.0" layoutY="284.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="شماره حساب">
-         <font>
-            <Font name="IRKoodak" size="16.0" />
-         </font>
-      </JFXTextField>
-      <JFXButton buttonType="RAISED" layoutX="353.0" layoutY="564.0" onAction="#Pay" prefHeight="46.0" prefWidth="87.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="تأیید" textFill="WHITE">
-         <font>
-            <Font name="IRKoodak" size="19.0" />
-         </font>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="687.0" layoutY="708.0" onAction="#ReturnToServices" prefHeight="46.0" prefWidth="113.0" ripplerFill="WHITE" style="-fx-background-color: blue;" text="بازگشت" textFill="WHITE">
-         <font>
-            <Font name="IRKoodak" size="19.0" />
-         </font>
-      </JFXButton>
-      <JFXTextField fx:id="account_password" layoutX="315.0" layoutY="342.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="37.0" prefWidth="217.0" promptText="رمز عبور">
-         <font>
-            <Font name="IRKoodak" size="16.0" />
-         </font>
-      </JFXTextField>
+      </TextField>
    </children>
 </AnchorPane>

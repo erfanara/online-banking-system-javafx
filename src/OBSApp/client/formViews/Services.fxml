@@ -16,11 +16,6 @@
             <Font name="IRKoodak" size="30.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="206.0" layoutY="529.0" onAction="#goToTransactionsView" prefHeight="77.0" prefWidth="402.0" ripplerFill="WHITE" style="-fx-background-color: blue;" text="مشاهده تراکنش ها 💳" textFill="WHITE">
-         <font>
-            <Font name="IRKoodak" size="30.0" />
-         </font>
-      </JFXButton>
       <JFXButton buttonType="RAISED" layoutX="206.0" layoutY="406.0" onAction="#goToTransfer" prefHeight="77.0" prefWidth="402.0" ripplerFill="WHITE" style="-fx-background-color: blue;" text="انتقال وجه 💸" textFill="WHITE">
          <font>
             <Font name="IRKoodak" size="30.0" />

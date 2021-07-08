@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,22 +23,12 @@
             <Font size="14.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="target_user" layoutX="379.0" layoutY="250.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="220.0" promptText="نام کاربر مقصد">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXTextField>
       <JFXTextField fx:id="amount" layoutX="379.0" layoutY="393.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="220.0" promptText="مقدار">
          <font>
             <Font size="14.0" />
          </font>
       </JFXTextField>
       <JFXSlider fx:id="slider" layoutX="151.0" layoutY="417.0" prefHeight="14.0" prefWidth="196.0" />
-      <JFXCheckBox fx:id="checkBox" layoutX="146.0" layoutY="266.0" prefHeight="31.0" prefWidth="172.0" text="انتقال بین حساب های خود کاربر">
-         <font>
-            <Font name="IRKoodak" size="16.0" />
-         </font>
-      </JFXCheckBox>
       <JFXButton buttonType="RAISED" layoutX="682.0" layoutY="702.0" onAction="#ReturnToServices" prefHeight="54.0" prefWidth="120.0" ripplerFill="WHITE" style="-fx-background-color: Green;" text="بازگشت" textFill="WHITE">
          <font>
             <Font name="IRKoodak" size="24.0" />

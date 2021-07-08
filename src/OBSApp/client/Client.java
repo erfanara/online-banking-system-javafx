@@ -147,7 +147,7 @@ public class Client {
         return new JSONArray(receive());
     }
 
-    public JSONObject getAccById(String id) throws Exception {
+    public JSONObject getAccTransactionsById(String id) throws Exception {
         send("5");
         checkServerResponse();
 
@@ -292,12 +292,15 @@ public class Client {
 //        System.out.println(test.getUserInfo());
 //        System.out.println(test.getAllAccInfo());
 
-        test.loginRequest("123456789", "testtest321");
+//        test.signupRequest("erfan", "ara", "1234567890", "12345678900", "ali@gmail.com", "12345");
+        test.loginRequest("1234567890", "12345");
 
 //        System.out.println(test.getProfilePic());
         System.out.println(test.getUserInfo());
         System.out.println(test.getAllAccInfo());
         System.out.println(test.getAllAccIDs());
+        System.out.println(test.getCurrentBills());
+        System.out.println(test.getAccTransactionsById("6037000630983667"));
 
 //        System.out.println(test.closeAcc("6037000103997130","12345"));
     }

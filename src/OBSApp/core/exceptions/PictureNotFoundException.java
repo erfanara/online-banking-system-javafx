@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class PictureNotFoundException extends RuntimeException {
     public PictureNotFoundException() {
-        super("requested picture not found");
+        Message.ShowMessage("requested picture not found");
+//        super("requested picture not found");
     }
 }

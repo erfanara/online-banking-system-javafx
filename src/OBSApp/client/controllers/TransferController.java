@@ -1,8 +1,12 @@
 package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
-import OBSApp.client.formViews.Loading;
+import OBSApp.client.formViews.GetPassword;
 import OBSApp.client.formViews.Message;
+import OBSApp.core.exceptions.InsufficientFundsException;
+import OBSApp.core.exceptions.InvalidDestAccIdException;
+import OBSApp.core.exceptions.InvalidSrcAccIdException;
+import OBSApp.core.exceptions.WrongPasswordException;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
@@ -15,27 +19,21 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TransferController implements Initializable {
 
-    Loading loadingWindow = new Loading();
+    
 
     @FXML
     AnchorPane screen = new AnchorPane();
-
-    @FXML
-    JFXTextField target_user = new JFXTextField();
 
     @FXML
     JFXTextField source_account = new JFXTextField();
 
     @FXML
     JFXTextField target_account = new JFXTextField();
-
-    @FXML
-
-    JFXTextField sourcePass = new JFXTextField();
 
     @FXML
     JFXTextField amount = new JFXTextField();
@@ -52,10 +50,6 @@ public class TransferController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slider.setMax(200000);
-        checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            target_user.setEditable(!newValue);
-            target_user.setVisible(!newValue);
-        });
         slider.valueProperty().addListener(((observableValue, number, t1) -> {
             amount.setText(String.valueOf(Math.round((Double) number)));
         }));
@@ -64,19 +58,31 @@ public class TransferController implements Initializable {
     @FXML
     public void DoTransfer(ActionEvent event) throws Exception {
         if (isValidTransfer()) {
-            Main.getClient().transaction(source_account.getText(), sourcePass.getText(),
-                    BigDecimal.valueOf(Long.parseLong(amount.getText())), target_account.getText());
-            //the transfer code
+            GetPassword gp = new GetPassword();
+            Optional<String> result = gp.showAndWait();
+            result.ifPresent(password -> {
+                try {
+                    Main.getClient().transaction(source_account.getText(), password,
+                            new BigDecimal(amount.getText()), target_account.getText());
+                    Message.ShowMessage("موفقیت آمیز!!");
+
+                } catch (
+                        InsufficientFundsException |
+                                InvalidDestAccIdException |
+                                InvalidSrcAccIdException |
+                                WrongPasswordException e
+                ) {
+                    Message.ShowMessage(e.getMessage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
+
     public boolean isValidTransfer() {
         Message message = new Message();
-
-        if (!target_user.getText().equals("") && !checkBox.isSelected())
-            message.AddStatement("لطفا کاربر مقصد را مشخص کنید!");
-        else if (!target_user.getText().equals("") && !checkBox.isSelected())
-            message.AddStatement("برای انتقال بین حساب های یک کاربر، چک باکس را فعال کنید!");
 
         if (source_account.getText().equals(""))
             message.AddStatement("لطفا حساب مبدا را مشخص کنید!");
@@ -98,11 +104,11 @@ public class TransferController implements Initializable {
 
     @FXML
     public void ReturnToServices(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         AnchorPane load = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
         screen.getChildren().clear();
         screen.getChildren().add(load);
-        loadingWindow.Close();
+        
     }
 
 }

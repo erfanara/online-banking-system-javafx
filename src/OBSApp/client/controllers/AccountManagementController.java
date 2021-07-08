@@ -2,7 +2,6 @@ package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
 import OBSApp.client.formViews.GetPassword;
-import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import OBSApp.core.exceptions.WrongPasswordException;
 import javafx.collections.FXCollections;
@@ -20,14 +19,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AccountManagementController implements Initializable {
 
-    Loading loadingWindow = new Loading();
+    
 
     @FXML
     AnchorPane screen = new AnchorPane();
@@ -47,6 +45,9 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     TableColumn<Map, String> type = new TableColumn<>();
+
+    @FXML
+    TableColumn<Map, String> creationDate = new TableColumn<>();
 
     public AccountManagementController() {
     }
@@ -69,35 +70,31 @@ public class AccountManagementController implements Initializable {
             data.add(jo.toMap());
         }
 
-        loadingWindow.Show();
 
         id.setCellValueFactory(new MapValueFactory("id"));
         alias.setCellValueFactory(new MapValueFactory("alias"));
         balance.setCellValueFactory(new MapValueFactory("balance"));
         type.setCellValueFactory(new MapValueFactory("type"));
+        creationDate.setCellValueFactory(new MapValueFactory("creationDate"));
 
-        accounts.getColumns().addAll(id, alias, balance, type);
-
-//        accounts.setItems(data);
         accounts.getItems().addAll(data);
 
-        loadingWindow.Close();
     }
 
     @FXML
     public void GoToAddAccount(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
 
         AnchorPane loader = FXMLLoader.load(getClass().getResource("../formViews/AddAccount.fxml"));
 
         screen.getChildren().clear();
         screen.getChildren().add(loader);
 
-        loadingWindow.Close();
+        
     }
 
     @FXML
-    public void deleteAccount(ActionEvent event) throws IOException {
+    public void deleteAccount(ActionEvent event) {
         if (accounts.getSelectionModel().getSelectedItem() != null) {
 
             Map<String, String> target = (Map<String, String>) accounts.getSelectionModel().getSelectedItem();
@@ -111,12 +108,26 @@ public class AccountManagementController implements Initializable {
                     Message.ShowMessage("رمز حساب غلط می باشد!!");
                     return;
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return;
                 }
 
             });
 
             accounts.getItems().remove(accounts.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    @FXML
+    public void transactions(ActionEvent event) throws IOException {
+        if (accounts.getSelectionModel().getSelectedItem() != null) {
+            Map<String, String> target = (Map<String, String>) accounts.getSelectionModel().getSelectedItem();
+
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("../formViews/TransactionsView.fxml"));
+//            Pane load = FXMLLoader.load(getClass().getResource("../formViews/TransactionsView.fxml"));
+
+            new TransactionsViewController (target.get("id"));
         }
     }
 }

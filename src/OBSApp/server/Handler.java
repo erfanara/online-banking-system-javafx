@@ -14,7 +14,6 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.net.Socket;
 import java.util.Map;
-import java.util.jar.JarException;
 
 public class Handler implements Runnable {
     private User user = null;
@@ -63,7 +62,7 @@ public class Handler implements Runnable {
 
                         case "4" -> sendAllAccInfo();
 
-                        case "5" -> sendAccById();
+                        case "5" -> sendAccTransactionsById();
 
                         case "6" -> sendAllAccIDs();
 
@@ -179,24 +178,20 @@ public class Handler implements Runnable {
             jo.put("balance", ac.getBalance().toString());
             jo.put("creationDate", ac.getCreationDate());
 
+
             ja.put(jo);
         }
         send(ja.toString());
     }
 
-    private void sendAccById() throws IOException {
+    private void sendAccTransactionsById() throws IOException {
         send("0");
 
         String id = receive();
         Account ac = user.getAccById(id);
 
         JSONObject jo = new JSONObject();
-        jo.put("type", ac.getType());
-        jo.put("alias", ac.getAlias());
-        jo.put("balance", ac.getBalance().toString());
-        jo.put("creationDate", ac.getCreationDate());
-
-        jo.accumulate("transactions", ac.getTransactions());
+        jo.put("transactions", ac.getTransactions());
 
         send(jo.toString());
     }
@@ -353,6 +348,7 @@ public class Handler implements Runnable {
             if (acc.auth(pass))
                 try {
                     BillManagment.payBill(user, acc, (String) jo.get("key"));
+                    send("0");
                 } catch (BillAlreadyPaidException e) {
                     rejectionResponse("BillAlreadyPaid");
                 } catch (BillNotFoundException e) {

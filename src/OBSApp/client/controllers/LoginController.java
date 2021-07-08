@@ -1,7 +1,6 @@
 package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
-import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -25,7 +24,7 @@ public class LoginController implements Initializable {
 
     JSONObject user;
 
-    Loading loadingWindow = new Loading();
+    
 
     @FXML
     JFXTextField user_name = new JFXTextField();
@@ -39,12 +38,12 @@ public class LoginController implements Initializable {
 
     @FXML
     public void SetOnSignUpPressed(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../formViews/SignUp.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        loadingWindow.Close();
+        
         stage.show();
     }
 

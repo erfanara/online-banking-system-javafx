@@ -1,64 +1,96 @@
 package OBSApp.client.controllers;
 
-import OBSApp.client.formViews.Loading;
-import OBSApp.core.Transaction;
+import OBSApp.client.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Map;
 
-public class TranactionsViewController implements Initializable {
+public class TransactionsViewController {
 
-    int userID;
+    String accID;
 
-    @FXML
     AnchorPane screen = new AnchorPane();
 
-    Loading loadingWindow = new Loading();
+    
 
-    @FXML
-    TableView<Transaction> transactions = new TableView<>();
+    TableView transactions = new TableView();
 
-    @FXML
-    TableColumn<Transaction, String> amount = new TableColumn<>();
+    TableColumn<Map, String> amount = new TableColumn<>("Amount");
 
-    @FXML
-    TableColumn<Transaction, String> balance = new TableColumn<>();
+    TableColumn<Map, String> balance = new TableColumn<>("Balance");
 
-    @FXML
-    TableColumn<Transaction, Transaction.Reason> reason = new TableColumn<>();
+    TableColumn<Map, String> reason = new TableColumn<>("Reason");
 
-    @FXML
-    TableColumn<Transaction, Transaction.Type> type = new TableColumn<>();
+    TableColumn<Map, String> type = new TableColumn<>("Type");
 
-    public void InitData(int userID){
-        this.userID = userID;
+    TableColumn<Map, String> id = new TableColumn<>("ID");
+
+    TableColumn<Map, String> creationDate = new TableColumn<>("Date Created");
+
+    public TransactionsViewController(String accID) {
+        this.accID = accID;
+
+
+        JSONArray array = null;
+        try {
+            JSONObject jo = Main.getClient().getAccTransactionsById(accID);
+            array = (JSONArray) jo.get("transactions");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ObservableList<Map<String, Object>> data
+                = FXCollections.<Map<String, Object>>observableArrayList();
+
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject jo = (JSONObject) array.get(i);
+
+            data.add(jo.toMap());
+        }
+
+        
+
+        type.setCellValueFactory(new MapValueFactory("type"));
+        amount.setCellValueFactory(new MapValueFactory("amount"));
+        balance.setCellValueFactory(new MapValueFactory("balance"));
+        reason.setCellValueFactory(new MapValueFactory("reason"));
+        id.setCellValueFactory(new MapValueFactory("peerObj"));
+        creationDate.setCellValueFactory(new MapValueFactory("creationDate"));
+
+        transactions.getItems().addAll(data);
+        transactions.getColumns().addAll(type, amount, balance, reason, id, creationDate);
+
+
+        transactions.setPrefWidth(700);
+        transactions.setPrefHeight(700);
+        Pane pane = new Pane();
+        pane.getChildren().add(transactions);
+        Scene scene = new Scene(pane);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+
+        
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        amount.setCellFactory(new PropertyValueFactory("amount"));
-        balance.setCellFactory(new PropertyValueFactory("balance"));
-        reason.setCellFactory(new PropertyValueFactory("reason"));
-        type.setCellFactory(new PropertyValueFactory("type"));
-
-        transactions.getColumns().addAll(amount, balance, reason, type);
-    }
-
-    @FXML
     public void ReturnToServices(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         AnchorPane load = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
         screen.getChildren().clear();
         screen.getChildren().add(load);
-        loadingWindow.Close();
+        
     }
 }

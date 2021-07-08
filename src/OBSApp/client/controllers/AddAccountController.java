@@ -1,7 +1,6 @@
 package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
-import OBSApp.client.formViews.Loading;
 import OBSApp.client.formViews.Message;
 import OBSApp.core.Account;
 import com.jfoenix.controls.JFXPasswordField;
@@ -21,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class AddAccountController implements Initializable {
 
-    Loading loadingWindow = new Loading();
+    
 
     @FXML
     Pane screen = new Pane();
@@ -51,14 +50,14 @@ public class AddAccountController implements Initializable {
 
     @FXML
     public void SubmitAccount(ActionEvent event) throws Exception {
-        loadingWindow.Show();
+        
 
         Account.Type selectedType = toggleGroup.getSelectedToggle() == savingAccountCheck?
                 Account.Type.SAVING : Account.Type.CHECKING;
 
         if (isValidAccount())
             Main.getClient().createAcc(selectedType, alias.getText(), pass.getText());
-        loadingWindow.Close();
+        
         ReturnToManagement(event);
     }
 

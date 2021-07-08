@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class BillAlreadyPaidException extends RuntimeException{
     public BillAlreadyPaidException() {
-        super("specified Bill already paid");
+        Message.ShowMessage("specified Bill already paid");
+//        super("specified Bill already paid");
     }
 }

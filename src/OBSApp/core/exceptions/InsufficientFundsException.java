@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class InsufficientFundsException extends RuntimeException {
     public InsufficientFundsException() {
-        super("your account balance is not enough");
+        Message.ShowMessage("your account balance is not enough");
+//        super("your account balance is not enough");
     }
 }

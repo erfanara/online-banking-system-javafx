@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class InvalidUsernameException extends RuntimeException {
     public InvalidUsernameException() {
-        super("Username is invalid");
+        Message.ShowMessage("Username is invalid");
+//        super("Username is invalid");
     }
 }

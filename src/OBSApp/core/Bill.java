@@ -64,5 +64,18 @@ public class Bill {
     public String getSubsidiaryCompanyId() {
         return subsidiaryCompanyId;
     }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "type=" + type +
+                ", amount=" + amount +
+                ", creationDate=" + creationDate +
+                ", subsidiaryCompanyId='" + subsidiaryCompanyId + '\'' +
+                ", id='" + id + '\'' +
+                ", paymentId='" + paymentId + '\'' +
+                ", wasPaid=" + wasPaid +
+                '}';
+    }
 }
 

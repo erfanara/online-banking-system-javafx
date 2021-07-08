@@ -9,13 +9,13 @@ import java.util.Scanner;
 
 public class ServerCli {
     private final static String HELP_MENU = """
-            COMMANDS >>\s
+            \n\nCOMMANDS >>\s
             deposit <Account Id> <amount>
             issueBill <User national code> <type=power,gas,water,phone> <amount> <subsidiaryCompanyId>
             lsAllUsers
             lsAllAcc
             numberOfUsers
-            exit
+            exit\n\n
             """;
 
     public static final UserStorage db = new UserStorage("Users");

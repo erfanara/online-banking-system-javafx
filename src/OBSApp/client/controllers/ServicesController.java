@@ -32,12 +32,6 @@ public class ServicesController implements Initializable {
         screen.getChildren().add(load);
     }
 
-    public void goToTransactionsView(ActionEvent event) throws IOException {
-        Pane load = FXMLLoader.load(getClass().getResource("../formViews/TranactionsView.fxml"));
-        screen.getChildren().clear();
-        screen.getChildren().add(load);
-    }
-
     public void goToTransfer(ActionEvent event) throws IOException {
         Pane load = FXMLLoader.load(getClass().getResource("../formViews/Transfer.fxml"));
         screen.getChildren().clear();

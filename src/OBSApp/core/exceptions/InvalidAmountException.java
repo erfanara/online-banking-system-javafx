@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class InvalidAmountException extends RuntimeException {
     public InvalidAmountException() {
-        super("this amount is invalid");
+        Message.ShowMessage("this amount is invalid");
+//        super("this amount is invalid");
     }
 }

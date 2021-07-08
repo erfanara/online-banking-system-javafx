@@ -1,7 +1,10 @@
 package OBSApp.core.exceptions;
 
+import OBSApp.client.formViews.Message;
+
 public class LogInFirstException extends RuntimeException {
     public LogInFirstException() {
-        super("you have to LogIn first");
+        Message.ShowMessage("you have to LogIn first");
+//        super("you have to LogIn first");
     }
 }

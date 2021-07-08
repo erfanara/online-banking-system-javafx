@@ -1,7 +1,6 @@
 package OBSApp.client.controllers;
 
 import OBSApp.client.Main;
-import OBSApp.client.formViews.Loading;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +21,7 @@ public class MenuController implements Initializable {
 
     JSONObject user = Main.getClient().getUserInfo();
 
-    Loading loadingWindow = new Loading();
+    
 
     @FXML
     Text welcomeMessage = new Text();
@@ -47,29 +46,29 @@ public class MenuController implements Initializable {
 
     @FXML
     public void SwitchToMain(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         Pane load = FXMLLoader.load(getClass().getResource("../formViews/Dashboard.fxml"));
         screen.getChildren().clear();
         screen.getChildren().add(load);
-        loadingWindow.Close();
+        
     }
 
     @FXML
     public void SwitchToServices(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         Pane load = FXMLLoader.load(getClass().getResource("../formViews/Services.fxml"));
         screen.getChildren().clear();
         screen.getChildren().add(load);
-        loadingWindow.Close();
+        
     }
 
     @FXML
     public void SwitchToAccountManagement(ActionEvent event) throws IOException {
-        loadingWindow.Show();
+        
         Pane load = FXMLLoader.load(getClass().getResource("../formViews/AccountManagement.fxml"));
         screen.getChildren().clear();
         screen.getChildren().add(load);
-        loadingWindow.Close();
+        
     }
 
     public void exit(ActionEvent event){

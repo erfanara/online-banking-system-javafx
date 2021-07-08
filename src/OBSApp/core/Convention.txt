@@ -7,7 +7,7 @@
 2   ->  User SignUp Request             :   - [x]
 3   ->  Create Account                  :
 4   ->  Get All Accounts info           :   List of Accounts using json - [x]
-5   ->  Get Account info                :   Account id or alias
+5   ->  Get Account transactions info   :   Account id
 6   ->  Get All Acc IDs                 :
 7   ->  Set alias for account           :   - [x]
 // 8   ->  Move Account to the Favorites   :   Account id or alias ?
